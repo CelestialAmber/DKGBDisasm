@@ -10,5 +10,5 @@ To set up the repository, see [**INSTALL.md**](INSTALL.md).
 
 # Credits
 
-- https://github.com/bailli/eDKit for the data decompression code
+- https://github.com/bailli/eDKit for the data compression code
 
