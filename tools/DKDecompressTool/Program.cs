@@ -16,7 +16,9 @@ namespace DKDecompressTool
         once finished looping, it reads a new byte, and the process continues
         the first byte has a zero at a specific bit, which is used as a variable
         it gets shifted until the zero is the rightmost bit
-        then, it interprets the next 2 bytes as a pointer for a byte in vram to copy and how many times to copy it
+        then, it interprets the next 2 bytes as a pointer for a byte in vram to start copying from and how many bytes to copy
+        the compression format often uses a trick where it first stores an uncompressed byte then references that byte
+        for the next compressed group for when a byte is repeated enough times
         the pointer is (vramDestAddress + (vramIndex - (swapNybbles(2nd byte & F0)<<8 + 1st byte)))
         the number of times to copy is (2nd byte & 0xF) + 3; (1st byte = ab and 2nd byte = cd; times to copy = d,relative offset = cab)
         it then copies it that many times after the previous data
