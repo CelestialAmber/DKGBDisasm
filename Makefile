@@ -13,6 +13,7 @@ all: $(ROM)
 
 compare: $(ROM)
 	@$(MD5) rom.md5
+	#python tools/unnamed.py -r . donkeykong.sym
 
 tidy:
 	rm -f $(ROM) $(OBJS) $(ROM:.gb=.sym) $(ROM:.gb=.map)

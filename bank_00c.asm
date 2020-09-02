@@ -4506,7 +4506,7 @@ jr_00c_5523:
     ld [hl], a
     ld a, $26
     ldh [$ff8f], a
-    ld a, [$da43]
+    ld a, [wLives]
     cp $0a
     jr c, jr_00c_55ad
 
@@ -4764,7 +4764,7 @@ jr_00c_5706:
     push bc
     call Call_000_2006
     pop bc
-    ld a, [$c81f]
+    ld a, [wTimerOnesDigit]
     or a
     jr nz, jr_00c_572a
     ld a, $0a

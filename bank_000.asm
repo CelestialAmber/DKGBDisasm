@@ -58,7 +58,7 @@ Call_000_01a4:
 UnknownTable_01a7::
 dw Jump_000_1d0b
 dw Jump_000_1d0b
-dw Call_33f4 ;address used for intro/title scene
+dw IntroTitleSceneLoop ;address used for intro/title scene
 dw Call_357b
 dw Call_288e
 dw Jump_000_1d0b
@@ -152,8 +152,8 @@ Call_000_0221:
     ld [$c0a2], a
     ld a, $01
     ld [$c851], a
-    ld a, $04
-    ld [$da43], a
+    ld a, $04 ;set lives to 4
+    ld [wLives], a
     ld hl, $c859
     xor a
     ld [hl-], a
@@ -1075,7 +1075,6 @@ Call_000_0857:
     ld a, $09
     rst $10
     call Call_000_0be8
-
 Call_000_085d:
     call Call_000_1c7a
     ld a, $08
@@ -1106,7 +1105,6 @@ Call_000_085d:
     ld a, [hl]
     dec a
     ret z
-
 jr_000_0894:
     ld a, $80
     ld [$c838], a
@@ -1117,7 +1115,6 @@ jr_000_0894:
     ld a, $09
     ld [$c82d], a
     ld [$c835], a
-
 Call_000_08aa:
     xor a
     ld [$c809], a
@@ -1172,11 +1169,9 @@ jr_000_08b9:
     ldh a, [$90]
     cp $0c
     ret z
-
     ld hl, wIsOnSGB
     bit 3, [hl]
     ret nz
-
     set 3, [hl]
     set 4, [hl]
     call Call_000_0db0
@@ -1184,40 +1179,33 @@ jr_000_08b9:
     ld a, c
     cp $02
     jr z, jr_000_093f
-
     cp $15
     jr z, jr_000_093f
-
     call Call_000_0db0
     call Call_000_0dc3
     ld a, c
     cp $02
     jr z, jr_000_093f
-
     cp $15
     jr z, jr_000_093f
-
     call Call_000_0da3
     call Call_000_0da3
     jr jr_000_0942
-
 jr_000_093f:
     xor a
     ldh [$ff90], a
-
 jr_000_0942:
     ld hl, $c858
     ld a, $ff
     ld [hl+], a
     xor a
     ld [hl], a
-    ld hl, $da43
-    dec [hl]
+    ld hl, wLives
+    dec [hl] ;decrease lives by 1
     ld a, [hl]
-    cp $ff
+    cp $ff ;check if the player has no lives left
     ret nz
-
-    ld a, SceneGameOverScreen
+    ld a, SceneGameOverScreen ;go to the game over screen
     ldh [hCurrentScene], a
     xor a
     ldh [$ff90], a
@@ -1614,7 +1602,7 @@ jr_000_0b70:
 
 
 Call_000_0ba3:
-    ld hl, $c81f
+    ld hl, wTimerOnesDigit
     ld b, $01
     ld a, [hl-]
     or a
@@ -2054,20 +2042,20 @@ Call_000_0dc3:
     ret
 
 
-    ld hl, $da43
+    ld hl, wLives
     add [hl]
     cp $64
     jr c, jr_000_0de7
     ld a, $63
 jr_000_0de7:
     ld [hl], a
-    ld a, [$da43]
+    ld a, [wLives]
     ld l, a
     ld h, $00
     call Call_000_2006
     call Call_000_205e
     ld c, $02
-    ld de, $c81f
+    ld de, wTimerOnesDigit
 jr_000_0df9:
     push bc
     call Call_000_1635
@@ -2201,15 +2189,15 @@ jr_000_0ec9:
     inc de
     dec b
     jr nz, jr_000_0ec9
-    ld a, [$da43]
+    ld a, [wLives]
     ld h, $00
     ld l, a
     call Call_000_2006
     ld hl, $9c12
-    ld a, [$c81e]
+    ld a, [wTimerTensDigit]
     add $01
     ld [hl+], a
-    ld a, [$c81f]
+    ld a, [wTimerOnesDigit]
     add $01
     ld [hl], a
     ld a, [$da4b]
@@ -5726,7 +5714,7 @@ Jump_000_206b:
     call Call_000_2006
     pop de
     pop bc
-    ld hl, $c81d
+    ld hl, wTimerHundredsDigit
     ld a, [hl+]
     add $01
     ld [bc], a
@@ -9311,7 +9299,7 @@ Call_000_3348:
     nop
     nop
 
-Call_33f4:
+IntroTitleSceneLoop:
     ld a, $01 ;switch to bank 1
     rst $10
     ldh a, [$ff90]
@@ -9466,14 +9454,14 @@ Call_000_34b0:
     ld l, a
     call Call_000_2006
     ld de, $9c8d
-    ld a, [$c81f]
+    ld a, [wTimerOnesDigit]
     call Call_000_3537
     ld a, [$c861]
     ld h, $00
     ld l, a
     call Call_000_2006
     ld de, $9c8f
-    ld a, [$c81e]
+    ld a, [wTimerTensDigit]
     or a
     jr z, jr_000_351a
 
@@ -9481,7 +9469,7 @@ Call_000_34b0:
     inc de
 
 jr_000_351a:
-    ld a, [$c81f]
+    ld a, [wTimerOnesDigit]
     call Call_000_3537
     ld a, $05
     call Call_000_1de6

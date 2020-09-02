@@ -912,7 +912,7 @@ jr_001_4509:
     ld l, a
     call Call_000_2006
     ld bc, $9a0a
-    ld hl, $c81e
+    ld hl, wTimerTensDigit
     ld a, [hl+]
     add a
     call nz, Call_001_4573
@@ -932,12 +932,12 @@ jr_001_4509:
     add hl, de
     ld a, [hl]
     ld [$c7fb], a
-    ld a, [$da43]
+    ld a, [wLives]
     ld h, $00
     ld l, a
     call Call_000_2006
     ld bc, $9a10
-    ld hl, $c81e
+    ld hl, wTimerTensDigit
     ld a, [hl+]
     add a
     call nz, Call_001_4573
@@ -2193,7 +2193,7 @@ jr_001_4c4c:
     ld [$c82d], a
     ld [$c835], a
     ld a, $04
-    ld [$da43], a
+    ld [wLives], a
     xor a
     ld [$da41], a
     ld [$da42], a
@@ -2272,7 +2272,7 @@ jr_001_4cc3:
     ld d, $00
     ld e, a
     add hl, de
-    ld a, [$da43]
+    ld a, [wLives]
     ld [hl+], a
     swap a
     ld [hl+], a
@@ -2353,7 +2353,7 @@ jr_001_4d26:
     and $0f
     swap a
     or b
-    ld [$da43], a
+    ld [wLives], a
     ld a, [hl+]
     and $0f
     ld b, a
@@ -2971,12 +2971,12 @@ Call_001_50c3:
 
 
 Call_001_50e0:
-    ld hl, $da43
+    ld hl, wLives
     ld a, [hl+]
     ld h, [hl]
     ld l, a
     call Call_000_2006
-    ld a, [$c81f]
+    ld a, [wTimerOnesDigit]
     ld c, a
     push bc
     ld hl, $da41
@@ -2985,7 +2985,7 @@ Call_001_50e0:
     ld l, a
     call Call_000_2006
     pop bc
-    ld hl, $c81f
+    ld hl, wTimerOnesDigit
     ld a, [hl-]
     cp c
     jr z, jr_001_5114
@@ -4191,7 +4191,7 @@ Call_001_57b3:
     ld l, a
     call Call_000_2006
     pop hl
-    ld de, $c81e
+    ld de, wTimerTensDigit
     ld bc, $0020
     ld a, [de]
     inc de
@@ -4549,7 +4549,7 @@ jr_001_59b5:
     push bc
     call Call_001_5a25
     push hl
-    ld hl, $c81d
+    ld hl, wTimerHundredsDigit
     call Call_001_5a56
     ld hl, $001d
     add hl, de
@@ -4950,7 +4950,7 @@ jr_001_5c32:
 Call_001_5c38:
     call Call_001_5a25
     push hl
-    ld hl, $c81d
+    ld hl, wTimerHundredsDigit
     call Call_001_5a56
     pop hl
     ret
@@ -4963,7 +4963,7 @@ Call_001_5c44:
     push de
     call Call_000_2006
     pop de
-    ld hl, $c81e
+    ld hl, wTimerTensDigit
     ld a, [hl+]
     or a
     jr z, jr_001_5c56

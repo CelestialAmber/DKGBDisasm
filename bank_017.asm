@@ -11455,7 +11455,7 @@ jr_017_73ce:
     pop hl
     call $16ab
     call IncrementFF90
-    ld a, [$da43]
+    ld a, [wLives]
     ld h, $00
     ld l, a
     call Call_000_2006
@@ -11555,7 +11555,7 @@ Call_017_7473:
 Call_017_747b:
     ld de, $986b
     ld bc, $988b
-    ld hl, $c81e
+    ld hl, wTimerTensDigit
     call Call_017_7467
     jr jr_017_7467
 
@@ -11748,7 +11748,7 @@ jr_017_758c:
     ld a, $37
     ld [$c82f], a
     ld [$c835], a
-    ld hl, $da43
+    ld hl, wLives
     ld a, [hl]
     cp $63
     jr z, jr_017_75a6
@@ -11760,7 +11760,7 @@ jr_017_75a6:
     ld h, $00
     ld l, a
     call Call_000_2006
-    ld hl, $c81e
+    ld hl, wTimerTensDigit
     ld de, $d783
     call Call_017_75d7
     call Call_017_75d7

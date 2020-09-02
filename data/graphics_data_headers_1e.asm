@@ -54,75 +54,74 @@ GraphicsDataHeaderTable::
 ;entry format: bank number, bank data offset (2 bytes),
 ;vram copying start offset
 GraphicsDataHeaders_7527::
-    db $02
+    db 2
     gfxheader $1b,$4000,$8000,1
     gfxheader $1b,$45b3,$8800,1
 GraphicsDataHeaders_7536::
-    db $03
+    db 3
     gfxheader $18,$4c3c,$9000,1
     gfxheader $18,$501f,$8080,1
     gfxheader $18,$50a3,$92b0,1
 GraphicsDataHeaders_754c::
-    db $01
-    gfxheader BANK(Bank1A_Graphics_4dc1),Bank1A_Graphics_4dc1,$9000,1
+    db 1
+    gfxheader BANK(IntroLevelScreenGraphics),IntroLevelScreenGraphics,$9000,1
 GraphicsDataHeaders_7554::
-    db $04
+    db 4
     gfxheader $04,$46f0,$8000,0,$300
     gfxheader $18,$4c3c,$9000,1
     gfxheader $04,$46d0,$82a0,0,$20
     gfxheader $04,$5f30,$8480,0,$80
 GraphicsDataHeaders_7571::
-    db $02
+    db 2
     gfxheader $1b,$732b,$86a0,2,$960
-    gfxheader BANK(Bank1A_Graphics_4ca9),Bank1A_Graphics_4ca9,$9000,2,$170
+    gfxheader BANK(UIGraphics1),UIGraphics1,$9000,2,$170
 GraphicsDataHeaders_7580::
-    db $02
-    gfxheader BANK(Bank1A_Graphics_4000),Bank1A_Graphics_4000,$8800,1
-    gfxheader BANK(Bank1A_Graphics_46c1),Bank1A_Graphics_46c1,$8000,1
+    db 2
+    gfxheader BANK(GameOverScreenGraphics),GameOverScreenGraphics,$8800,1
+    gfxheader BANK(DKMenuFingerGraphics),DKMenuFingerGraphics,$8000,1
 GraphicsDataHeaders_758f::
-    db $02
-    gfxheader BANK(Bank1A_Graphics_47a2),Bank1A_Graphics_47a2,$87e0,2,$820
-    gfxheader BANK(Bank1A_Graphics_4ca9),Bank1A_Graphics_4ca9,$9000,2,$170
+    db 2
+    gfxheader BANK(BonusGameGraphics),BonusGameGraphics,$87e0,2,$820
+    gfxheader BANK(UIGraphics1),UIGraphics1,$9000,2,$170
 GraphicsDataHeaders_759e::
-    db $07
+    db 7
     ;length: 0x874
-    gfxheader BANK(Bank1A_Graphics_4ff5),Bank1A_Graphics_4ff5,$8800,1
-    gfxheader BANK(Bank1A_Graphics_5869),Bank1A_Graphics_5869,$8400,1
+    gfxheader BANK(FileSelectScreenGraphics),FileSelectScreenGraphics,$8800,1
+    gfxheader BANK(DeleteFileBombGraphics),DeleteFileBombGraphics,$8400,1
     gfxheader $0e,$4f55,$8000,2,$2e0
     gfxheader $04,$4ef0,$8600,0,$1c0
     gfxheader $04,$46f0,$8300,0,$40
     gfxheader $04,$4bf0,$8340,0,$80
     gfxheader $04,$4730,$83c0,0,$40
-
 ;75d0
 IntroTitleGraphicsHeaders::
-    db $02
+    db 2
     ;title/intro graphics 1 header
     gfxheader BANK(IntroCutsceneGraphics),IntroCutsceneGraphics,$8000,1
     ;title/intro screen graphics 2 header
-    gfxheader BANK(Bank1A_Graphics_5a54),Bank1A_Graphics_5a54,$8800,1
+    gfxheader BANK(TitleScreenGraphics),TitleScreenGraphics,$8800,1
 
 ;75df
 GraphicsDataHeaders_75df::
-    db $02
+    db 2
     gfxheader $19,$6103,$8c00,1
     gfxheader $19,$642c,$9500,1
 ;75ee
 GraphicsDataHeaders_75ee::
-    db $04
+    db 4
     gfxheader $18,$4c3c,$9000,1
     gfxheader $1b,$4689,$8800,1
     gfxheader $1b,$49c7,$8000,1
-    gfxheader BANK(Bank1A_Graphics_4ca9),Bank1A_Graphics_4ca9,$9000,2,$170
+    gfxheader BANK(UIGraphics1),UIGraphics1,$9000,2,$170
 ;760b
 GraphicsDataHeaders_760b::
-    db $03
+    db 3
     gfxheader $18,$4c3c,$9000,1
     gfxheader $1b,$6e83,$9500,1
     gfxheader $1b,$6f53,$8800,1
 ;7621
 GraphicsDataHeaders_7621::
-    db $0d
+    db 13
     gfxheader $1b,$49e8,$8fe0,1
     gfxheader $18,$4c3c,$9000,1
     gfxheader $1b,$49fc,$94c0,1
@@ -138,7 +137,7 @@ GraphicsDataHeaders_7621::
     gfxheader $04,$47b0,$8700,0,$40
 ;767d
 GraphicsDataHeaders_767d::
-    db $0e
+    db 14
     gfxheader $1b,$4a0e,$94e0,1
     gfxheader $13,$58ef,$9740,2,$40
     gfxheader $04,$4ef0,$8740,0,$80
@@ -155,7 +154,7 @@ GraphicsDataHeaders_767d::
     gfxheader $13,$5d0a,$8ec0,2,$60
 ;76e0
 GraphicsDataHeaders_76e0::
-    db $0c
+    db 12
     gfxheader $1b,$4b4d,$94e0,1
     gfxheader $04,$47f0,$8740,0,$40
     gfxheader $04,$4c70,$8780,0,$40
@@ -170,7 +169,7 @@ GraphicsDataHeaders_76e0::
     gfxheader $1c,$6a23,$8c80,2,$e0
 ;7735
 GraphicsDataHeaders_7735::
-    db $0a
+    db 10
     gfxheader $1b,$4c18,$94e0,1 
     gfxheader $04,$47f0,$8740,0,$40
     gfxheader $04,$4c70,$8780,0,$40
@@ -183,14 +182,14 @@ GraphicsDataHeaders_7735::
     gfxheader $04,$4000,$8f70,0,$10
 ;777c    
 GraphicsDataHeaders_777c::
-    db $04
+    db 4
     gfxheader $1b,$4c18,$94e0,1 
     gfxheader $0d,$4414,$8800,2,$4c0
     gfxheader $04,$5770,$8740,0,$180
     gfxheader $04,$4730,$88c0,0,$40
 ;7799   
 GraphicsDataHeaders_7799:: 
-    db $0b
+    db 11
     gfxheader $1b,$4c18,$94e0,1 
     gfxheader $04,$47f0,$8740,0,$40
     gfxheader $04,$58f0,$8780,0,$80
@@ -204,7 +203,7 @@ GraphicsDataHeaders_7799::
     gfxheader $04,$59f0,$8e00,0,$180
 ;77e7    
 GraphicsDataHeaders_77e7::
-    db $0b
+    db 11
     gfxheader $1b,$4c18,$94e0,1 
     gfxheader $04,$47f0,$8740,0,$40
     gfxheader $04,$4c70,$8780,0,$40
@@ -218,7 +217,7 @@ GraphicsDataHeaders_77e7::
     gfxheader $1b,$6038,$8f00,1 
 ;7835
 GraphicsDataHeaders_7835:: 
-    db $0d
+    db 13
     gfxheader $0d,$475a,$8c00,2,$560
     gfxheader $11,$4870,$8800,0,$4c0
     gfxheader $04,$47f0,$8740,0,$40
@@ -234,7 +233,7 @@ GraphicsDataHeaders_7835::
     gfxheader $1b,$4eeb,$94e0,1 
 ;7891
 GraphicsDataHeaders_7891::
-    db $06
+    db 6
     gfxheader $1b,$5104,$94e0,1 
     gfxheader $0d,$49df,$8800,2,$4e0
     gfxheader $1b,$6120,$8800,1 
@@ -243,7 +242,7 @@ GraphicsDataHeaders_7891::
     gfxheader $04,$6870,$89e0,0,$40
 ;78bc
 GraphicsDataHeaders_78bc::
-    db $0a
+    db 10
     gfxheader $1b,$5104,$94e0,1 
     gfxheader $1b,$61ec,$8740,1 
     gfxheader $1c,$6106,$8800,2,$240
@@ -256,7 +255,7 @@ GraphicsDataHeaders_78bc::
     gfxheader $0e,$652e,$8fa0,0,$10
 ;7903
 GraphicsDataHeaders_7903::
-    db $0a
+    db 10
     gfxheader $1b,$5104,$94e0,1 
     gfxheader $1b,$61ec,$8740,1 
     gfxheader $1c,$6106,$8800,2,$240
@@ -269,14 +268,14 @@ GraphicsDataHeaders_7903::
     gfxheader $0e,$652e,$8fa0,0,$10
 ;794a
 GraphicsDataHeaders_794a::
-    db $04
+    db 4
     gfxheader $1b,$52a1,$94e0,1 
     gfxheader $1b,$61ec,$8740,1 
     gfxheader $04,$4ef0,$8800,0,$1c0
     gfxheader $16,$75ee,$89c0,2,$80
 ;7967
 GraphicsDataHeaders_7967::
-    db $11
+    db 17
     gfxheader $0d,$475a,$8c00,2,$560
     gfxheader $11,$4870,$8800,0,$4c0
     gfxheader $04,$47f0,$8740,0,$40
@@ -296,7 +295,7 @@ GraphicsDataHeaders_7967::
     gfxheader $1b,$52a1,$94e0,1 
 ;79df
 GraphicsDataHeaders_79df:: 
-    db $08
+    db 8
     gfxheader $1b,$544b,$94e0,1 
     gfxheader $1b,$61ec,$8740,1 
     gfxheader $04,$4ef0,$8800,0,$1c0
@@ -307,7 +306,7 @@ GraphicsDataHeaders_79df::
     gfxheader $1c,$6887,$8fa0,2,$40
 ;7a18
 GraphicsDataHeaders_7a18::
-    db $05
+    db 5
     gfxheader $1b,$544b,$94e0,1 
     gfxheader $1b,$61ec,$8740,1 
     gfxheader $1c,$6106,$8800,2,$240
@@ -315,7 +314,7 @@ GraphicsDataHeaders_7a18::
     gfxheader $13,$70b7,$8960,2,$200
 ;7a3c    
 GraphicsDataHeaders_7a3c::
-    db $08
+    db 8
     gfxheader $1b,$544b,$94e0,1 
     gfxheader $04,$4870,$8740,0,$40
     gfxheader $04,$4af0,$8780,0,$40
@@ -326,7 +325,7 @@ GraphicsDataHeaders_7a3c::
     gfxheader $1b,$63ee,$9780,1 
 ;7a75    
 GraphicsDataHeaders_7a75::
-    db $0c
+    db 12
     gfxheader $1b,$566f,$94e0,1 
     gfxheader $04,$47f0,$8740,0,$40
     gfxheader $04,$58f0,$8780,0,$80
@@ -341,14 +340,14 @@ GraphicsDataHeaders_7a75::
     gfxheader $0d,$62ce,$8d60,2,$60
 ;7aca    
 GraphicsDataHeaders_7aca::
-    db $04
+    db 4
     gfxheader $1b,$572d,$94e0,1 
     gfxheader $13,$7afe,$8800,2,$40
     gfxheader $1b,$62fc,$8840,1 
     gfxheader $0e,$5a58,$8a00,2,$140
 ;7ae7   
 GraphicsDataHeaders_7ae7:: 
-    db $0c
+    db 12
     gfxheader $1b,$572d,$94e0,1 
     gfxheader $04,$47f0,$8740,0,$40
     gfxheader $04,$58f0,$8780,0,$80
@@ -363,7 +362,7 @@ GraphicsDataHeaders_7ae7::
     gfxheader $1b,$6414,$8d60,1 
 ;7b3c   
 GraphicsDataHeaders_7b3c:: 
-    db $0e
+    db 14
     gfxheader $1b,$572d,$94e0,1 
     gfxheader $04,$47f0,$8740,0,$40
     gfxheader $04,$58f0,$8780,0,$80
@@ -380,7 +379,7 @@ GraphicsDataHeaders_7b3c::
     gfxheader $04,$59f0,$8e00,0,$180
 ;7b9f
 GraphicsDataHeaders_7b9f::
-    db $0f
+    db 15
     gfxheader $1b,$572d,$94e0,1 
     gfxheader $04,$4ef0,$8740,0,$80
     gfxheader $04,$4fb0,$87c0,0,$100
@@ -398,7 +397,7 @@ GraphicsDataHeaders_7b9f::
     gfxheader $13,$7b42,$8fa0,2,$40
 ;7c09    
 GraphicsDataHeaders_7c09::
-    db $0b
+    db 11
     gfxheader $1b,$58c5,$94e0,1 
     gfxheader $1b,$61ec,$8740,1 
     gfxheader $1c,$6106,$8800,2,$240
@@ -412,7 +411,7 @@ GraphicsDataHeaders_7c09::
     gfxheader $1b,$652e,$8da0,1 
 ;7c57    
 GraphicsDataHeaders_7c57::
-    db $08
+    db 8
     gfxheader $1b,$59b7,$94e0,1 
     gfxheader $0d,$4414,$8800,2,$4c0
     gfxheader $04,$5770,$8740,0,$180
@@ -423,26 +422,26 @@ GraphicsDataHeaders_7c57::
     gfxheader $1b,$6593,$9690,1 
 ;7c90
 GraphicsDataHeaders_7c90::
-    db $02
+    db 2
     gfxheader $1b,$5af2,$9000,1 
     gfxheader $1b,$65eb,$8000,1 
 ;7c9f    
 GraphicsDataHeaders_7c9f::
-    db $02
+    db 2
     gfxheader $19,$65cc,$9000,1 
-    gfxheader BANK(Bank1A_Graphics_698a),Bank1A_Graphics_698a,$8000,1 
+    gfxheader BANK(MarioCircusDemoSprites),MarioCircusDemoSprites,$8000,1 
 ;7cae    
 GraphicsDataHeaders_7cae::
-    db $04
+    db 4
     gfxheader $1b,$59b7,$94e0,1 
     gfxheader $11,$5970,$8000,0,$4c0
     gfxheader $11,$5e30,$84c0,0,$700
     gfxheader $1b,$65ce,$8bc0,1 
 ;7ccb   
 GraphicsDataHeaders_7ccb:: 
-    db $02
-    gfxheader BANK(Bank1A_Graphics_6361),Bank1A_Graphics_6361,$8000,2,$800
-    gfxheader BANK(Bank1A_Graphics_6361),Bank1A_Graphics_6361,$8f10,2,$800
+    db 2
+    gfxheader BANK(CreditsGraphics),CreditsGraphics,$8000,2,$800
+    gfxheader BANK(CreditsGraphics),CreditsGraphics,$8f10,2,$800
 
     REPT $326
     db $FF

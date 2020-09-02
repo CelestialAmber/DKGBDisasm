@@ -8,8 +8,9 @@ FontGraphics::
 INCBIN "gfx/font.2bpp"
 ds 16
 ;offset 0x46f0
+;palette: 5500AAFF
 Bank4MarioGraphics::
-INCBIN "gfx/bank4graphics.2bpp"
+INCBIN "gfx/bank4mariosprites.2bpp"
 
 ;offset 136b0
 ;0x950 ff bytes

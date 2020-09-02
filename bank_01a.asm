@@ -5,38 +5,44 @@
 SECTION "ROM Bank $01a", ROMX[$4000], BANK[$1a]
 
 ;the top two files aren't recompressed correctly, but match in 2bpp format
-Bank1A_Graphics_4000::
-    INCBIN "gfx/bank1a/bank1a_4000.bin"
+GameOverScreenGraphics::
+    INCBIN "gfx/bank1a/gameover_screen.bin"
 ;46c1
-Bank1A_Graphics_46c1::
-    INCBIN "gfx/bank1a/bank1a_46c1.bin"    
+;uses special tile format
+DKMenuFingerGraphics::
+    INCBIN "gfx/bank1a/dk_menu_finger.bin"
 ;47a2    
-Bank1A_Graphics_47a2::
-    INCBIN "gfx/bank1a/bank1a_47a2.bin"   
+BonusGameGraphics::
+    INCBIN "gfx/bank1a/bonus_game_graphics.bin"   
 
-Bank1A_Graphics_4ca9::
-    INCBIN "gfx/bank1a/bank1a_4ca9.bin"   
+UIGraphics1::
+    INCBIN "gfx/bank1a/ui1.bin"   
 
-Bank1A_Graphics_4dc1::
-    INCBIN "gfx/bank1a/bank1a_4dc1.bin"   
+IntroLevelScreenGraphics::
+    INCBIN "gfx/bank1a/intro_level_screen_graphics.bin"   
 
-Bank1A_Graphics_4ff5::
-    INCBIN "gfx/bank1a/bank1a_4ff5.bin"  
+FileSelectScreenGraphics::
+    INCBIN "gfx/bank1a/file_select_screen_graphics.bin"  
 
-Bank1A_Graphics_5869::
-    INCBIN "gfx/bank1a/bank1a_5869.bin"    
+DeleteFileBombGraphics::
+    INCBIN "gfx/bank1a/delete_file_bomb.bin"    
 
 IntroCutsceneGraphics::
     INCBIN "gfx/bank1a/introCutsceneGraphics.2bpp.lz"
 
-Bank1A_Graphics_5a54::
-    INCBIN "gfx/bank1a/bank1a_5a54.bin"   
+TitleScreenGraphics::
+    INCBIN "gfx/bank1a/title_screen_graphics.bin"   
 
-Bank1A_Graphics_6361::
-    INCBIN "gfx/bank1a/bank1a_6361.bin"   
+;palette: 0123
+;the portrait uses the special tile format
+CreditsGraphics::
+    INCBIN "gfx/bank1a/credits_graphics.bin"   
 
-Bank1A_Graphics_698a::
-    INCBIN "gfx/bank1a/bank1a_698a.bin"   
+;palette: 0213?
+;uses special tile format
+;the other mario/dk sprites also use the same palette?
+MarioCircusDemoSprites::
+    INCBIN "gfx/bank1a/mario_circus_demo_sprites.bin"   
 
 REPT 4003
     db $FF
