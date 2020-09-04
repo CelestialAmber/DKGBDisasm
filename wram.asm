@@ -1,5 +1,4 @@
 SECTION "WRAM Bank 0", WRAM0
-wRAMStart::
 ds $81d
 
 ;c81d
@@ -14,7 +13,7 @@ ds 1
 wTimerOnesDigit::
 ds 1
 
-ds $0c
+ds $0b
 
 ;c82b
 ;bit 7: set to 1 if the game is running on sgb, otherwise 0
@@ -28,8 +27,6 @@ ds $5f4
 wSelectedFileSlot::
 ds 1
 
-
-ds $1df
 
 SECTION "WRAM Bank 1", WRAMX
 ds $a40

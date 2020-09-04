@@ -39,10 +39,10 @@ $(ROM): $(OBJS)
 	rgbfix -sv -k 01 -l 0x33 -m 0x03 -p 0xFF -r 02 -t "DONKEY KONG" $@
 
 gfx/font.2bpp: tools/gfx += --trim-whitespace
-gfx/bank4graphics.2bpp: tools/gfx += --trim-whitespace
+gfx/bank4mariosprites.2bpp: tools/gfx += --trim-whitespace
 gfx/bank11graphics.2bpp: tools/gfx += --trim-whitespace
-gfx/bank1a_4000.2bpp: tools/gfx += -w 2
-#gfx/bank1a_46c1.2bpp: tools/gfx += --trim-whitespace
+gfx/gameover_screen.2bpp: tools/gfx += -w 2
+#gfx/dk_menu_finger.2bpp: tools/gfx += --trim-whitespace
 
 %.2bpp.lz : %.2bpp
 	$(if $(tools/dkcompress),\

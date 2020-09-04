@@ -1,4 +1,4 @@
-PointerTable_1e_4000::
+Table_1e_4000::
     dw $40e0
     dw $40f0
     dw $4100

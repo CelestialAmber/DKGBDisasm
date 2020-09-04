@@ -5196,7 +5196,7 @@ Call_000_1de1:
     call Call_000_10ab
     pop af
 Call_000_1de6:
-    ld hl, $7918
+    ld hl, Table_1b_7918
     ld d, $00
     add a
     ld e, a
@@ -9867,7 +9867,7 @@ jr_000_3879:
     push af
     ld a, $1e
     rst $10
-    ld hl, PointerTable_1e_4000
+    ld hl, Table_1e_4000
     ld a, b
     add a
     ld d, $00

@@ -7,7 +7,7 @@ SECTION "ROM Bank $004", ROMX[$4000], BANK[$4]
 FontGraphics::
 INCBIN "gfx/font.2bpp"
 ds 16
-;offset 0x46f0
+;offset 106f0
 ;palette: 5500AAFF
 Bank4MarioGraphics::
 INCBIN "gfx/bank4mariosprites.2bpp"
