@@ -6,8 +6,6 @@ INCLUDE "hardware.inc"
 INCLUDE "constants.asm"
 INCLUDE "macros.asm"
 INCLUDE "home.asm"
-
-SECTION 
 INCLUDE "bank_000.asm"
 INCLUDE "bank_001.asm"
 INCLUDE "bank_002.asm"
