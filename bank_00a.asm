@@ -4458,7 +4458,7 @@ Jump_00a_57dd:
     xor a
     ld [hl], a
     ld de, $c7f7
-    call $1685
+    call Call_000_1685
     ld a, $42
     ld [$c82f], a
     ld [$c835], a

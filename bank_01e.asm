@@ -5,17 +5,24 @@
 SECTION "ROM Bank $01e", ROMX[$4000], BANK[$1e]
 
 INCLUDE "data/bank_1e_table_data.asm"
-;the first data of this file is the sgb border's palette
-UnknownData_1E_46F0::
-INCBIN "data/bank_1e_46f0.bin"
+
+;46f0
+;sgb border palette data
+SGBBorderPaletteData::
+INCBIN "data/sgb_border_palette_data.bin"
+
 UnknownData_1E_4C72::
-INCBIN "data/bank_1e_4c72.bin"   
+INCBIN "data/bank_1e_4c72.bin" 
+
 SGBBorderGraphics1::
 INCBIN "gfx/sgb_border_1.bin"
+
 SGBBorderGraphics2::
 INCBIN "gfx/sgb_border_2.bin"
+
 Bank1E_Graphics_6125::
 INCBIN "gfx/bank1e_graphics_6125.bin"
+
 ;offset 0x64c5
 UnknownData_1e_64c5::
     db $ff, $00, $38, $7c, $1c, $3e, $ff, $00, $ff, $00, $38

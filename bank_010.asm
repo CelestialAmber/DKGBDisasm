@@ -8427,7 +8427,7 @@ jr_010_6bb2:
     ret
 
 
-    call $1635
+    call Call_000_1635
     ld de, $c211
     ld a, [de]
     ld c, a
@@ -8460,7 +8460,7 @@ jr_010_6bd0:
     ret
 
 
-    call $1635
+    call Call_000_1635
     ld de, $c20f
     ld a, [de]
     ld c, a
@@ -8532,7 +8532,7 @@ jr_010_6c2f:
     ld l, a
     dec hl
     push hl
-    call $1635
+    call Call_000_1635
     pop bc
     ld [hl], c
     inc hl
@@ -9119,7 +9119,7 @@ jr_010_6f21:
 
     push bc
     push de
-    call $1635
+    call Call_000_1635
     pop de
     inc de
     ld a, [de]
@@ -9183,7 +9183,7 @@ jr_010_6f21:
     push de
     add hl, bc
     push hl
-    call $1635
+    call Call_000_1635
     pop bc
     ld [hl], c
     inc hl
@@ -9599,7 +9599,7 @@ jr_010_7138:
     inc hl
     push hl
     push de
-    call $1635
+    call Call_000_1635
     pop de
     ld [hl], e
     inc hl
@@ -9618,7 +9618,7 @@ jr_010_7138:
     inc hl
     push hl
     push de
-    call $1635
+    call Call_000_1635
     pop de
     ld [hl], e
     inc hl
@@ -12091,7 +12091,7 @@ jr_010_7d8a:
     ld [hl+], a
     ld [hl], $7b
     pop hl
-    call $338d
+    call Call_000_338d
     ld de, $c7f7
     push de
     ld a, l
@@ -12112,7 +12112,7 @@ jr_010_7d8a:
     xor a
     ld [hl], a
     pop de
-    call $1685
+    call Call_000_1685
     ld a, $05
     jp $0e12
 

@@ -21,5 +21,4 @@ SceneGameOverScreen equ $1c
 SceneCutscene equ $1e
 
 
-
-
+;Sprite ID Values?

@@ -134,4 +134,4 @@ Bank1B_Graphics_6F53::
 Bank1B_Graphics_732B::
     INCBIN "gfx/bank1b/bank1b_732b.bin"
 
-INCLUDE "data/bank1b_table_data.asm"
+INCLUDE "data/bank_1b_table_data.asm"

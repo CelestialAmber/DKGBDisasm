@@ -1896,7 +1896,7 @@ jr_007_4a4d:
     xor a
     ld [hl], a
     ld de, $c7f7
-    call $1685
+    call Call_000_1685
     call $1080
     inc [hl]
     inc hl
@@ -6385,7 +6385,7 @@ jr_007_6335:
     inc hl
     ld [hl], b
     ld de, $c7f1
-    call $1685
+    call Call_000_1685
     pop hl
     ld a, l
     sub $6d
@@ -10159,7 +10159,7 @@ Jump_007_7671:
     push hl
     ld h, d
     ld l, e
-    call $338d
+    call Call_000_338d
     ld d, h
     ld e, l
     pop hl
@@ -10177,7 +10177,7 @@ Jump_007_7671:
     xor a
     ld [hl], a
     pop de
-    jp $1685
+    jp Call_000_1685
 
 
     push de
@@ -10226,7 +10226,7 @@ Jump_007_7671:
     ld a, [de]
     ld [hl], a
     pop hl
-    call $338d
+    call Call_000_338d
     ld de, $c7f7
     push de
     ld a, l
@@ -10246,7 +10246,7 @@ Jump_007_7671:
     xor a
     ld [de], a
     pop de
-    jp $1685
+    jp Call_000_1685
 
 
 Jump_007_7705:
@@ -10254,7 +10254,7 @@ Jump_007_7705:
     ld l, e
     push hl
     push hl
-    call $338d
+    call Call_000_338d
     push hl
     ld de, $c7f1
     ld a, l
@@ -10263,7 +10263,7 @@ Jump_007_7705:
     ld a, h
     ld [de], a
     dec de
-    call $1685
+    call Call_000_1685
     pop hl
     call $313d
     push de
@@ -10429,9 +10429,9 @@ Call_007_77a7:
     or c
     ld [hl], a
     pop hl
-    call $338d
+    call Call_000_338d
     push hl
-    call $1635
+    call Call_000_1635
     pop de
     ld a, e
     ld [hl+], a
@@ -10646,9 +10646,9 @@ Call_007_78ac:
     or c
     ld [hl], a
     pop hl
-    call $338d
+    call Call_000_338d
     push hl
-    call $1635
+    call Call_000_1635
     pop de
     ld a, e
     ld [hl+], a
@@ -11055,7 +11055,7 @@ jr_007_7a9a:
     ld a, [de]
     ld [hl], a
     pop hl
-    call $338d
+    call Call_000_338d
     ld de, $c7f7
     push de
     ld a, l
@@ -11075,7 +11075,7 @@ jr_007_7a9a:
     xor a
     ld [de], a
     pop de
-    jp $1685
+    jp Call_000_1685
 
 
     ld h, d
@@ -11120,7 +11120,7 @@ jr_007_7a9a:
     push hl
     ld h, d
     ld l, e
-    call $338d
+    call Call_000_338d
     ld d, h
     ld e, l
     pop hl
@@ -11146,7 +11146,7 @@ jr_007_7a9a:
     ld [$c70b], a
     ld [hl], $16
     pop de
-    jp $1685
+    jp Call_000_1685
 
 
     ld h, d
@@ -11191,7 +11191,7 @@ jr_007_7a9a:
     push hl
     ld h, d
     ld l, e
-    call $338d
+    call Call_000_338d
     ld d, h
     ld e, l
     pop hl
@@ -11217,7 +11217,7 @@ jr_007_7a9a:
     ld [$c70b], a
     ld [hl], $16
     pop de
-    jp $1685
+    jp Call_000_1685
 
 
     ld h, d
@@ -11262,7 +11262,7 @@ jr_007_7a9a:
     push hl
     ld h, d
     ld l, e
-    call $338d
+    call Call_000_338d
     ld d, h
     ld e, l
     pop hl
@@ -11288,7 +11288,7 @@ jr_007_7a9a:
     ld [$c70b], a
     ld [hl], $16
     pop de
-    jp $1685
+    jp Call_000_1685
 
 
     ld h, d
@@ -11333,7 +11333,7 @@ jr_007_7a9a:
     push hl
     ld h, d
     ld l, e
-    call $338d
+    call Call_000_338d
     ld d, h
     ld e, l
     pop hl
@@ -11359,7 +11359,7 @@ jr_007_7a9a:
     ld [$c70b], a
     ld [hl], $16
     pop de
-    jp $1685
+    jp Call_000_1685
 
 
     ld h, d
@@ -11404,7 +11404,7 @@ jr_007_7a9a:
     push hl
     ld h, d
     ld l, e
-    call $338d
+    call Call_000_338d
     ld d, h
     ld e, l
     pop hl
@@ -11430,7 +11430,7 @@ jr_007_7a9a:
     ld [$c70b], a
     ld [hl], $16
     pop de
-    jp $1685
+    jp Call_000_1685
 
 
     push de
@@ -11480,7 +11480,7 @@ jr_007_7a9a:
     ld a, [de]
     ld [hl], a
     pop hl
-    call $338d
+    call Call_000_338d
     ld de, $c7f7
     push de
     ld a, l
@@ -11500,7 +11500,7 @@ jr_007_7a9a:
     xor a
     ld [de], a
     pop de
-    jp $1685
+    jp Call_000_1685
 
 
 Jump_007_7d45:
@@ -11517,9 +11517,9 @@ Jump_007_7d45:
     ld [hl+], a
     ld [hl], $01
     pop hl
-    call $338d
+    call Call_000_338d
     push hl
-    call $1635
+    call Call_000_1635
     pop de
     ld a, e
     ld [hl+], a
@@ -11544,9 +11544,9 @@ Jump_007_7d45:
     ld h, d
     ld l, e
     call Call_007_7dcd
-    call $338d
+    call Call_000_338d
     push hl
-    call $1635
+    call Call_000_1635
     pop de
     ld a, e
     ld [hl+], a
@@ -11570,9 +11570,9 @@ Jump_007_7d45:
     ld h, d
     ld l, e
     call Call_007_7dcd
-    call $338d
+    call Call_000_338d
     push hl
-    call $1635
+    call Call_000_1635
     pop de
     ld a, e
     ld [hl+], a
@@ -11652,7 +11652,7 @@ Call_007_7dff:
     ld [hl-], a
     ld [hl], a
     pop hl
-    call $338d
+    call Call_000_338d
     ld de, $c7fd
     push de
     ld a, l
@@ -11667,7 +11667,7 @@ Call_007_7dff:
     ld a, $02
     ld [de], a
     pop de
-    jp $1685
+    jp Call_000_1685
 
 
     ld h, d
@@ -11742,7 +11742,7 @@ Call_007_7dff:
     push hl
     ld h, d
     ld l, e
-    call $338d
+    call Call_000_338d
     ld d, h
     ld e, l
     pop hl
@@ -11764,7 +11764,7 @@ Call_007_7dff:
     ld [hl+], a
     ld [hl], $f4
     pop de
-    jp $1685
+    jp Call_000_1685
 
 
     nop

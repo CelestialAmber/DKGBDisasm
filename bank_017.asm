@@ -11350,7 +11350,7 @@ jr_017_729b:
 Call_017_732b:
     call $1cfa
     call $0fd4
-    call $162c
+    call Call_000_162c
     call Call_000_1e2f
     ld hl, $c70f
     set 0, [hl]
@@ -11765,7 +11765,7 @@ jr_017_75a6:
     call Call_017_75d7
     call Call_017_75d7
     ld de, $d77d
-    jp $1685
+    jp Call_000_1685
 
 
 Call_017_75bf:
@@ -11847,7 +11847,7 @@ Call_017_7605:
     call Call_017_75bf
     call Call_017_75bf
     ld de, $d76d
-    jp $1685
+    jp Call_000_1685
 
 
     xor a
@@ -13047,7 +13047,7 @@ Call_017_7bbe:
 
     call Call_017_7db6
     push hl
-    call $1685
+    call Call_000_1685
     pop hl
     jp Jump_017_76e7
 

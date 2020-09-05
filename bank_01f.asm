@@ -1070,7 +1070,7 @@ jr_01f_45d1:
     ld bc, $9800
     add hl, bc
     push hl
-    call $1635
+    call Call_000_1635
     pop de
     ld [hl], e
     inc hl
@@ -8100,7 +8100,7 @@ jr_01f_6e11:
     ld de, $c1c4
     ld c, $04
     call $1057
-    call $1635
+    call Call_000_1635
     ld a, $69
     ld [hl+], a
     ld a, $9a
@@ -8166,7 +8166,7 @@ Jump_01f_6ec5:
     ld de, $c1c4
     ld c, $0c
     call $1057
-    call $1635
+    call Call_000_1635
     ld a, $a7
     ld [hl+], a
     ld a, $9a
@@ -8179,7 +8179,7 @@ Jump_01f_6ec5:
     ld [hl+], a
     ld a, $c1
     ld [hl], a
-    call $1635
+    call Call_000_1635
     ld a, $c7
     ld [hl+], a
     ld a, $9a
@@ -8327,7 +8327,7 @@ jr_01f_6f89:
     call $1057
     ld a, $07
     ld [$c10c], a
-    call $1635
+    call Call_000_1635
     ld a, $48
     ld [hl+], a
     ld a, $9a
@@ -8340,7 +8340,7 @@ jr_01f_6f89:
     ld [hl+], a
     ld a, $c1
     ld [hl], a
-    call $1635
+    call Call_000_1635
     ld a, $66
     ld [hl+], a
     ld a, $9a
@@ -8353,7 +8353,7 @@ jr_01f_6f89:
     ld [hl+], a
     ld a, $c1
     ld [hl], a
-    call $1635
+    call Call_000_1635
     ld a, $6d
     ld [hl+], a
     ld a, $9a
@@ -8380,7 +8380,7 @@ jr_01f_701e:
     call $1057
 
 Jump_01f_7033:
-    call $1635
+    call Call_000_1635
     ld a, $48
     ld [hl+], a
     ld a, $9a
@@ -8393,7 +8393,7 @@ Jump_01f_7033:
     ld [hl+], a
     ld a, $c1
     ld [hl], a
-    call $1635
+    call Call_000_1635
     ld a, $a7
     ld [hl+], a
     ld a, $9a
@@ -8406,7 +8406,7 @@ Jump_01f_7033:
     ld [hl+], a
     ld a, $c1
     ld [hl], a
-    call $1635
+    call Call_000_1635
     ld a, $66
     ld [hl+], a
     ld a, $9a
@@ -8419,7 +8419,7 @@ Jump_01f_7033:
     ld [hl+], a
     ld a, $c1
     ld [hl], a
-    call $1635
+    call Call_000_1635
     ld a, $6d
     ld [hl+], a
     ld a, $9a
@@ -8777,7 +8777,7 @@ jr_01f_727d:
     ld de, $c1c4
     ld c, $04
     call $1057
-    call $1635
+    call Call_000_1635
     ld a, $69
     ld [hl+], a
     ld a, $9a
@@ -8961,7 +8961,7 @@ jr_01f_737c:
 Call_01f_738a:
 Jump_01f_738a:
 jr_01f_738a:
-    call $1635
+    call Call_000_1635
     ld a, $69
     ld [hl+], a
     ld a, $9a
