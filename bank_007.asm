@@ -4,15 +4,14 @@
 
 SECTION "ROM Bank $007", ROMX[$4000], BANK[$7]
 
+
     call Call_007_67a5
     ldh a, [$91]
     rla
     jp c, Jump_007_41c3
-
     ldh a, [hJoypad]
     and $30
     jp z, Jump_007_41c3
-
     jp Jump_007_407f
 
 

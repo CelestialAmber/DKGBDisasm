@@ -5125,7 +5125,7 @@ LoadGraphicsDataHeader:
     ld b, a
     or c ;is the 6th byte 0 and the lowest 7 bits of the 7th byte 0? (data starts with the 2 byte length header)
     jr z, .hasLengthHeader ;yes
-    call Decompress1 ;the file doesn't start with the 2 bytes for uncompressed length, so skip the first part of the function
+    call DecompressNoHeader ;the file doesn't start with the 2 bytes for uncompressed length, so skip the first part of the function
     jr .done
 .hasLengthHeader
     call Decompress
@@ -6481,7 +6481,7 @@ jr_000_2496:
     and $c0
     or b
     jr z, jr_000_24b8
-    call Decompress1
+    call DecompressNoHeader
     ld hl, $c809
     ld a, [hl+]
     ld e, a
@@ -6520,7 +6520,9 @@ Call_000_24bf:
 
 
 LoadStage:
-    ld a, $05 ;switch to level data bank
+    ;switch to level data bank (this potentially gets changed later 
+    ;depending on the level to either bank 6 or 12)
+    ld a, $05
     rst $10
     call Call_000_20a3
     call Call_000_2093
@@ -6542,20 +6544,20 @@ LoadStage:
     ld a, [hl+]
     ld h, [hl]
     ld l, a
-    call Call_000_25fa
-    ld a, [hl+]
+    call SwitchLevelRombank
+    ld a, [hl+] ;load the tilemap size
     ld [$c705], a
-    ld a, [hl+]
+    ld a, [hl+] ;load the music id
     ld [$da45], a
-    ld a, [hl+]
+    ld a, [hl+] ;load the tileset id
     ld [$da4b], a
-    ld a, [hl+]
+    ld a, [hl+] ;load the level time amount
     ld [$c711], a
     ld a, [hl+]
     ld [$c712], a
-    ld a, [hl+]
+    ld a, [hl+] ;load the switch data flag
     or a
-    jr z, jr_000_2528
+    jr z, .noSwitchData
     dec hl
     ld de, $d89c
     ld c, $11
@@ -6563,23 +6565,23 @@ LoadStage:
     ld b, $90
     ld de, $d8ad
     call Call_000_25dd
-jr_000_2528:
-    ld a, [hl+]
+.noSwitchData:
+    ld a, [hl+] ;load the flag byte for whether the level has additional sprite data or not
     or a
-    jr z, jr_000_2535
+    jr z, .noAdditionalSpriteData
     dec hl
     ld b, $40
     ld de, $d84c
     call Call_000_25dd
-jr_000_2535:
+.noAdditionalSpriteData:
     ld de, $d44d
     ld bc, $0240
-    ld a, [$c705]
+    ld a, [$c705] ;if the tilemap size value isn't 0, then set the size to 0x380
     or a
-    jr z, jr_000_2544
+    jr z, .skip
     ld bc, $0380
-jr_000_2544:
-    call Decompress1
+.skip:
+    call DecompressNoHeader ;decompress the tilemap
     ld c, $1b
 jr_000_2549:
     ld a, [hl+]
@@ -6608,7 +6610,7 @@ Decompress:
     ld c, a
     ld a, [hl+]
     ld b, a
-Decompress1:
+DecompressNoHeader:
     push hl
     ld hl, $c809
     ld a, c
@@ -6698,9 +6700,6 @@ CopyTileByte:
     pop hl
     ret
 
-;the function doesn't use anything past here
-
-
 
 Call_000_25dd:
 .start
@@ -6727,14 +6726,18 @@ Call_000_25dd:
     jr nz, .loop
     jr .start ;go back to the start
 
-Call_000_25fa:
+
+;Switch to the correct rombank for the level to load. Levels 1-45 are in
+;bank 5, levels 46-80 are in bank 6, and the rest are in bank 12.
+;e: level id (starts at 0)
+SwitchLevelRombank:
     ld a, e
-    cp $2d
+    cp $2d ;If the level id is less than 45, the level data is in bank 3
     ret c
     ld a, $06
     rst $10
     ld a, e
-    cp $50
+    cp $50 ;If the level id is less than 80, the level data is in bank 4
     ret c
     ld a, $12
     rst $10
@@ -7122,14 +7125,14 @@ Call_000_2874:
     ret
 
 
-Call_287c
+Call_287c:
     ld a, [$c70f]
 jr_000_287f:
     and $04
     cp $04
     ret
 
-Call_2884
+Call_2884:
     ld a, $18
     rst $10
     ld a, [hl+]
@@ -9637,7 +9640,7 @@ jr_000_376a:
     ld hl, SGBBorderGraphics1
     ld de, $8800 ;vram offset to copy graphics to
     ld bc, $1000 ;uncompressed size
-    call Decompress1
+    call DecompressNoHeader
     ld a, $81
     ldh [rLCDC], a
     ld a, $27
@@ -9648,7 +9651,7 @@ jr_000_376a:
     ld hl, SGBBorderGraphics2
     ld de, $8800
     ld bc, $06e0
-    call Decompress1
+    call DecompressNoHeader
     ld a, $81
     ldh [rLCDC], a
     ld a, $2a
@@ -9659,7 +9662,7 @@ jr_000_376a:
     ld hl, Bank1E_Graphics_6125 ;this doesn't seem like graphics
     ld de, $8800
     ld bc, $0860
-    call Decompress1
+    call DecompressNoHeader
     ld a, $81
     ldh [rLCDC], a
     ld a, $28
@@ -9670,7 +9673,7 @@ jr_000_376a:
     ld hl, SGBBorderPaletteData
     ld de, $8800
     ld bc, $1000
-    call Decompress1
+    call DecompressNoHeader
     ld a, $81
     ldh [rLCDC], a
     ld a, $10
@@ -9681,7 +9684,7 @@ jr_000_376a:
     ld hl, UnknownData_1E_4C72
     ld de, $8800
     ld bc, $0fd2
-    call Decompress1
+    call DecompressNoHeader
     ld a, $81
     ldh [rLCDC], a
     ld a, $11

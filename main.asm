@@ -6,13 +6,17 @@ INCLUDE "hardware.inc"
 INCLUDE "constants.asm"
 INCLUDE "macros.asm"
 INCLUDE "home.asm"
+
+
 INCLUDE "bank_000.asm"
 INCLUDE "bank_001.asm"
 INCLUDE "bank_002.asm"
 INCLUDE "bank_003.asm"
 INCLUDE "bank_004.asm"
-INCLUDE "bank_005.asm"
-INCLUDE "bank_006.asm"
+
+;Banks 5/6 (Level data)
+INCLUDE "data/levels.asm"
+
 INCLUDE "bank_007.asm"
 INCLUDE "bank_008.asm"
 INCLUDE "bank_009.asm"
@@ -24,7 +28,10 @@ INCLUDE "bank_00e.asm"
 INCLUDE "bank_00f.asm"
 INCLUDE "bank_010.asm"
 INCLUDE "bank_011.asm"
-INCLUDE "bank_012.asm"
+
+;Bank 12 (Level data)
+INCLUDE "data/level_data_3.asm"
+
 INCLUDE "bank_013.asm"
 INCLUDE "bank_014.asm"
 INCLUDE "bank_015.asm"

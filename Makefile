@@ -1,19 +1,31 @@
-.PHONY: all tools compare clean tidy
+ROM := donkeykong.gb
+OBJS := main.o wram.o
+
+
+
+### Build tools
+
+ifeq (,$(shell which sha1sum))
+SHA1 := shasum
+else
+SHA1 := sha1sum
+endif
+
+
+
+### Build targets
 
 .SUFFIXES:
 .SECONDEXPANSION:
 .PRECIOUS:
 .SECONDARY:
-
-ROM := donkeykong.gb
-OBJS := main.o wram.o
-MD5 := md5sum -c
+.PHONY: all tools compare clean tidy
 
 all: $(ROM)
 
 compare: $(ROM)
-	@$(MD5) rom.md5
-	#python tools/unnamed.py -r . donkeykong.sym
+	@$(SHA1) -c rom.sha1
+	tools/unnamed.py -r . donkeykong.sym
 
 tidy:
 	rm -f $(ROM) $(OBJS) $(ROM:.gb=.sym) $(ROM:.gb=.map)
@@ -25,6 +37,8 @@ clean: tidy
 tools:
 	$(MAKE) -C tools/
 
+
+
 ifeq (,$(filter clean tools,$(MAKECMDGOALS)))
 $(info $(shell $(MAKE) -C tools))
 endif
@@ -32,7 +46,7 @@ endif
 
 %.o: dep = $(shell tools/scan_includes $(@D)/$*.asm)
 %.o: %.asm $$(dep)
-	rgbasm -h -o $@ -p 0x00 $<
+	rgbasm -h -o $@ $<
 
 $(ROM): $(OBJS)
 	rgblink -n $(ROM:.gb=.sym) -m $(ROM:.gb=.map) -o $@ $(OBJS)

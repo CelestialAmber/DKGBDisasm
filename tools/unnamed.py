@@ -25,13 +25,14 @@ def read_string(file):
 
 
 # Fix broken pipe when using `head`
-#from signal import signal, SIGPIPE, SIG_DFL
-#signal(SIGPIPE,SIG_DFL)
+from signal import signal, SIGPIPE, SIG_DFL
+signal(SIGPIPE,SIG_DFL)
 
 import argparse
 parser = argparse.ArgumentParser(description="Parse the symfile to find unnamed symbols")
 parser.add_argument('symfile', type=argparse.FileType('r'), help="the list of symbols")
 parser.add_argument('-r', '--rootdir', type=str, help="scan the output files to obtain a list of files with unnamed symbols (NOTE: will rebuild objects as necessary)")
+parser.add_argument('-l', '--list', type=int, default=0, help="output this many of each file's unnamed symbols (NOTE: requires -r)")
 args = parser.parse_args()
 
 # Get list of object files
@@ -81,26 +82,49 @@ for objfile in objects:
     elif magic == b'RGB9':
         obj_ver = 10 + unpack_file("<I", f)[0]
 
-    if obj_ver not in [6, 10, 11, 12, 13, 15]:
+    if obj_ver not in [6, 10, 11, 12, 13, 15, 16]:
         print("Error: File '%s' is of an unknown format." % objfile, file=stderr)
         exit(1)
 
-    num_symbols = unpack_file("<II", f)[0]
+    num_symbols = unpack_file("<I", f)[0]
+    unpack_file("<I", f) # skip num sections
+
+    if obj_ver in [16]:
+        node_filenames = []
+        num_nodes = unpack_file("<I", f)[0]
+        for x in range(num_nodes):
+            unpack_file("<II", f) # parent id, parent line no
+            node_type = unpack_file("<B", f)[0]
+            if node_type:
+                node_filenames.append(read_string(f))
+            else:
+                node_filenames.append("rept")
+                depth = unpack_file("<I", f)[0]
+                for i in range(depth):
+                    unpack_file("<I", f) # rept iterations
+        node_filenames.reverse()
+
     for x in range(num_symbols):
         sym_name = read_string(f)
         sym_type = symtype(unpack_file("<B", f)[0] & 0x7f)
         if sym_type == symtype.IMPORT:
             continue
-        sym_filename = read_string(f)
+        if obj_ver in [16]:
+            sym_fileno = unpack_file("<I", f)[0]
+            sym_filename = node_filenames[sym_fileno]
+        else:
+            sym_filename = read_string(f)
         unpack_file("<III", f)
         if sym_name not in symbols:
             continue
 
         if sym_filename not in files:
-            files[sym_filename] = 0
-        files[sym_filename] += 1
+            files[sym_filename] = []
+        files[sym_filename].append(sym_name)
 
 # Sort the files, the one with the most amount of symbols first
-files = sorted([(fname, files[fname]) for fname in files], key=lambda x: x[1], reverse=True)
+files = sorted(((f, files[f]) for f in files), key=lambda x: len(x[1]), reverse=True)
 for f in files:
-    print("%s: %d" % (f[0], f[1]))
+    filename, unnamed = f
+    sym_list = ', '.join(unnamed[:args.list])
+    print("%s: %d%s" % (filename, len(unnamed), ': ' + sym_list if sym_list else ''))

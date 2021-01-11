@@ -1,10 +1,4 @@
-; Disassembly of "donkeykong.gb"
-; This file was created with mgbdis v1.3 - Game Boy ROM disassembler by Matt Currie.
-; https://github.com/mattcurrie/mgbdis
-
-SECTION "ROM Bank $006", ROMX[$4000], BANK[$6]
-
-    db $03, $0b, $16, $96, $00, $00, $00, $7f, $ff, $ff, $ff, $56, $56, $56, $ff, $01
+db $03, $0b, $16, $96, $00, $00, $00, $7f, $ff, $ff, $ff, $56, $56, $56, $ff, $01
     db $0f, $3c, $01, $07, $20, $05, $d5, $d6, $d7, $d8, $04, $01, $19, $06, $df, $d5
     db $d6, $ff, $ff, $53, $20, $07, $d9, $d2, $33, $d3, $da, $04, $01, $20, $06, $d9
     db $d2, $40, $08, $3e, $05, $ff, $d5, $ce, $cf, $d8, $d5, $d8, $ff, $c4, $a1, $ff

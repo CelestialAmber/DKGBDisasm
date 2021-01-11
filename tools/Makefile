@@ -1,12 +1,9 @@
 .PHONY: all clean
 
 CC := gcc
-CFLAGS := -std=c99 -Wall -Wextra
+CFLAGS := -O3 -std=c99 -Wall -Wextra -pedantic
 
-tools := \
-	gfx \
-	scan_includes \
-	dkcompress
+tools := scan_includes gfx dkcompress
 
 all: $(tools)
 	@:
@@ -14,5 +11,6 @@ all: $(tools)
 clean:
 	rm -f $(tools)
 
+gfx: common.h
 %: %.c
 	$(CC) $(CFLAGS) -o $@ $<
