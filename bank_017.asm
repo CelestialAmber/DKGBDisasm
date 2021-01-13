@@ -1173,7 +1173,7 @@ Call_017_4545:
 
     jp nz, $0218
 
-    ldh a, [$c2]
+    ldh a, [$ffc2]
     jr nz, @+$04
 
     db $10
@@ -6340,7 +6340,7 @@ jr_017_5c06:
     rlca
     ld c, $16
     rst $38
-    ldh a, [$0a]
+    ldh a, [$ff0a]
     jr nz, jr_017_5c94
 
     ld l, [hl]
@@ -11892,7 +11892,7 @@ jr_017_765a:
 
 
 jr_017_7661:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 0, a
     ret z
 
@@ -11933,7 +11933,7 @@ jr_017_7691:
     cp $1a
     jr z, jr_017_76a2
 
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp $30
     jr c, jr_017_76a6
 

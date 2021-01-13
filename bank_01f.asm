@@ -610,7 +610,7 @@ Jump_01f_436d:
 
 
 jr_01f_4376:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr nc, jr_01f_4381
 
@@ -1307,7 +1307,7 @@ jr_01f_4761:
     rra
     ret c
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     rra
     ret c
 
@@ -5824,7 +5824,7 @@ jr_01f_611d:
     ret
 
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jp c, Jump_01f_61cf
 
@@ -6022,7 +6022,7 @@ jr_01f_6257:
 
 
 jr_01f_6275:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     ret c
 
@@ -7098,11 +7098,11 @@ jr_01f_6893:
     add sp, -$10
     add sp, -$60
     sbc b
-    ldh a, [$e8]
-    ldh a, [$e8]
+    ldh a, [$ffe8]
+    ldh a, [$ffe8]
     and b
     sbc b
-    ldh a, [$cd]
+    ldh a, [$ffcd]
     or e
     ld a, [hl+]
     ld hl, $dd92
@@ -7435,7 +7435,7 @@ jr_01f_6a7a:
     rra
     ret c
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     rra
     ret c
 
@@ -8257,7 +8257,7 @@ Jump_01f_6ec5:
     ld h, b
     ld h, c
     xor $ef
-    ldh a, [$f1]
+    ldh a, [$fff1]
     ld a, [c]
     di
     db $f4
@@ -9378,11 +9378,11 @@ jr_01f_75ba:
     ret
 
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     rra
     ret c
 
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 5, a
     jp nz, Jump_01f_76be
 
@@ -9390,7 +9390,7 @@ jr_01f_75ba:
     and a
     jp nz, Jump_01f_76be
 
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 2, a
     jp nz, Jump_01f_76be
 
@@ -10625,7 +10625,7 @@ jr_01f_7d17:
 
 
 Call_01f_7d19:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr nc, jr_01f_7d25
 

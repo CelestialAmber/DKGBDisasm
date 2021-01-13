@@ -1,45 +1,96 @@
-INCLUDE "data/levels/level1/level1.asm"
-INCLUDE "data/levels/level2/level2.asm"
-INCLUDE "data/levels/level3/level3.asm"
-INCLUDE "data/levels/level4/level4.asm"
-INCLUDE "data/levels/level5/level5.asm"
-INCLUDE "data/levels/level6/level6.asm"
-INCLUDE "data/levels/level7/level7.asm"
-INCLUDE "data/levels/level8/level8.asm"
-INCLUDE "data/levels/level9/level9.asm"
-INCLUDE "data/levels/level10/level10.asm"
-INCLUDE "data/levels/level11/level11.asm"
-INCLUDE "data/levels/level12/level12.asm"
-INCLUDE "data/levels/level13/level13.asm"
-INCLUDE "data/levels/level14/level14.asm"
-INCLUDE "data/levels/level15/level15.asm"
-INCLUDE "data/levels/level16/level16.asm"
-INCLUDE "data/levels/level17/level17.asm"
-INCLUDE "data/levels/level18/level18.asm"
-INCLUDE "data/levels/level19/level19.asm"
-INCLUDE "data/levels/level20/level20.asm"
-INCLUDE "data/levels/level21/level21.asm"
-INCLUDE "data/levels/level22/level22.asm"
-INCLUDE "data/levels/level23/level23.asm"
-INCLUDE "data/levels/level24/level24.asm"
-INCLUDE "data/levels/level25/level25.asm"
-INCLUDE "data/levels/level26/level26.asm"
-INCLUDE "data/levels/level27/level27.asm"
-INCLUDE "data/levels/level28/level28.asm"
-INCLUDE "data/levels/level29/level29.asm"
-INCLUDE "data/levels/level30/level30.asm"
-INCLUDE "data/levels/level31/level31.asm"
-INCLUDE "data/levels/level32/level32.asm"
-INCLUDE "data/levels/level33/level33.asm"
-INCLUDE "data/levels/level34/level34.asm"
-INCLUDE "data/levels/level35/level35.asm"
-INCLUDE "data/levels/level36/level36.asm"
-INCLUDE "data/levels/level37/level37.asm"
-INCLUDE "data/levels/level38/level38.asm"
-INCLUDE "data/levels/level39/level39.asm"
-INCLUDE "data/levels/level40/level40.asm"
-INCLUDE "data/levels/level41/level41.asm"
-INCLUDE "data/levels/level42/level42.asm"
-INCLUDE "data/levels/level43/level43.asm"
-INCLUDE "data/levels/level44/level44.asm"
-INCLUDE "data/levels/level45/level45.asm"
+Level1Data:
+INCBIN "data/levels/level1.bin"
+Level2Data:
+INCBIN "data/levels/level2.bin"
+Level3Data:
+INCBIN "data/levels/level3.bin"
+Level4Data:
+INCBIN "data/levels/level4.bin"
+Level5Data:
+INCBIN "data/levels/level5.bin"
+Level6Data:
+INCBIN "data/levels/level6.bin"
+Level7Data:
+INCBIN "data/levels/level7.bin"
+Level8Data:
+INCBIN "data/levels/level8.bin"
+Level9Data:
+INCBIN "data/levels/level9.bin"
+Level10Data:
+INCBIN "data/levels/level10.bin"
+Level11Data:
+INCBIN "data/levels/level11.bin"
+Level12Data:
+INCBIN "data/levels/level12.bin"
+Level13Data:
+INCBIN "data/levels/level13.bin"
+Level14Data:
+INCBIN "data/levels/level14.bin"
+Level15Data:
+INCBIN "data/levels/level15.bin"
+Level16Data:
+INCBIN "data/levels/level16.bin"
+Level17Data:
+INCBIN "data/levels/level17.bin"
+Level18Data:
+INCBIN "data/levels/level18.bin"
+Level19Data:
+INCBIN "data/levels/level19.bin"
+Level20Data:
+INCBIN "data/levels/level20.bin"
+Level21Data:
+INCBIN "data/levels/level21.bin"
+Level22Data:
+INCBIN "data/levels/level22.bin"
+Level23Data:
+INCBIN "data/levels/level23.bin"
+Level24Data:
+INCBIN "data/levels/level24.bin"
+Level25Data:
+INCBIN "data/levels/level25.bin"
+Level26Data:
+INCBIN "data/levels/level26.bin"
+Level27Data:
+INCBIN "data/levels/level27.bin"
+Level28Data:
+INCBIN "data/levels/level28.bin"
+Level29Data:
+INCBIN "data/levels/level29.bin"
+Level30Data:
+INCBIN "data/levels/level30.bin"
+Level31Data:
+INCBIN "data/levels/level31.bin"
+Level32Data:
+INCBIN "data/levels/level32.bin"
+Level33Data:
+INCBIN "data/levels/level33.bin"
+Level34Data:
+INCBIN "data/levels/level34.bin"
+Level35Data:
+INCBIN "data/levels/level35.bin"
+Level36Data:
+INCBIN "data/levels/level36.bin"
+Level37Data:
+INCBIN "data/levels/level37.bin"
+Level38Data:
+INCBIN "data/levels/level38.bin"
+Level39Data:
+INCBIN "data/levels/level39.bin"
+Level40Data:
+INCBIN "data/levels/level40.bin"
+Level41Data:
+INCBIN "data/levels/level41.bin"
+Level42Data:
+INCBIN "data/levels/level42.bin"
+Level43Data:
+INCBIN "data/levels/level43.bin"
+Level44Data:
+INCBIN "data/levels/level44.bin"
+Level45Data:
+INCBIN "data/levels/level45.bin"
+
+;7c57
+;empty space
+REPT $3a9
+    db $FF
+ENDR

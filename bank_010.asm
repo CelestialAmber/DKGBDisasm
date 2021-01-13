@@ -41,7 +41,7 @@ jr_010_402d:
     ld [$dd47], a
 Jump_010_4037:
 jr_010_4037:
-    ldh a, [$92]
+    ldh a, [$ff92]
     rla
     ret c
     ld hl, $c206
@@ -53,7 +53,7 @@ jr_010_4037:
 
 
 Jump_010_4044:
-    ldh a, [$90]
+    ldh a, [$ff90]
     cp $11
     jp z, Jump_010_4003
     ld a, [$c0a4]
@@ -80,7 +80,7 @@ jr_010_4072:
     ld a, [de]
     cp $09
     jr c, jr_010_409f
-    ldh a, [$92]
+    ldh a, [$ff92]
     rra
     jp nc, Jump_010_4003
     ld hl, $c129
@@ -614,7 +614,7 @@ jr_010_4365:
     jp Jump_010_4144
 
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     bit 2, a
     ret nz
 
@@ -675,7 +675,7 @@ jr_010_43b9:
 
 
 Call_010_43d7:
-    ldh a, [$92]
+    ldh a, [$ff92]
     bit 3, a
     ret nz
     ld a, [$c1bf]
@@ -1060,7 +1060,7 @@ Jump_010_45ca:
 
 
 Call_010_45e5:
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 5, a
     ret nz
 
@@ -1073,7 +1073,7 @@ Call_010_45e5:
     or e
     jr nz, jr_010_4626
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 6, a
     ret nz
 
@@ -1488,7 +1488,7 @@ jr_010_488b:
 
 
 Call_010_4890:
-    ldh a, [$94]
+    ldh a, [$ff94]
     bit 6, a
     ret z
     ld a, [$c117]
@@ -1558,7 +1558,7 @@ jr_010_48d1:
 
 
 Call_010_48f4:
-    ldh a, [$91]
+    ldh a, [$ff91]
     rra
     ret c
     ld a, [$dd21]
@@ -1933,12 +1933,12 @@ Call_10_4abc:
     cp $02
     jr nz, jr_010_4ad5
     call Call_010_4dce
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 1, a
     ret nz
     jp Jump_010_4c39
 jr_010_4ad5:
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 1, a
     ret nz
     ld a, [$dd18]
@@ -2209,7 +2209,7 @@ jr_010_4c8f:
     rla
     rla
     jr c, jr_010_4cb8
-    ldh a, [$94]
+    ldh a, [$ff94]
     bit 6, a
     jr nz, jr_010_4cc4
     ld hl, $c12c
@@ -2230,7 +2230,7 @@ jr_010_4cb8:
     cp $04
     jp nc, Jump_010_4d67
 jr_010_4cc4:
-    ldh a, [$92]
+    ldh a, [$ff92]
     bit 6, a
     ret nz
     ld hl, $dd3b
@@ -2391,7 +2391,7 @@ db $00,$01,$01,$00,$01,$01,$01,$00,$00,$00,$00,$00,$00
 
 
 Call_010_4dce:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rra
     ret c
     ld a, [$dd1d]
@@ -2482,7 +2482,7 @@ jr_010_4e41:
     ret
 
 Call_10_4e55:
-    ldh a, [$91]
+    ldh a, [$ff91]
     and $02
     ret nz
     ld b, $02
@@ -2595,7 +2595,7 @@ Call_10_5194:
     ret c
 Jump_010_51a5:
 jr_010_51a5:
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 5, a
     ret nz
     ld hl, $c117
@@ -3745,7 +3745,7 @@ jr_010_58b2:
     jp Call_10_5315
 
 Call_10_58df:
-    ldh a, [$91]
+    ldh a, [$ff91]
     rra
     ret c
     ld a, $03

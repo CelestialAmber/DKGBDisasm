@@ -4,7 +4,7 @@
 
 SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
 
-    ldh a, [$90]
+    ldh a, [$ff90]
     rst $08
     dec c
     ld b, b
@@ -198,7 +198,7 @@ jr_001_40ce:
     ld [$c835], a
 
 jr_001_4137:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 0, a
     ret z
 
@@ -306,7 +306,7 @@ jr_001_4192:
     call Call_001_426c
     call Call_001_422d
     call $12e2
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp $41
     jr nc, jr_001_420e
 
@@ -351,7 +351,7 @@ jr_001_420e:
 
 
 Call_001_422d:
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp $21
     jr c, jr_001_4254
 
@@ -406,7 +406,7 @@ jr_001_4254:
 
 
 Call_001_426c:
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp $29
     ret nc
 
@@ -723,7 +723,7 @@ Call_001_43a6:
     or a
     jr z, jr_001_4416
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 0, a
     jr nz, jr_001_4434
 
@@ -834,7 +834,7 @@ Call_001_446d:
     ld b, $a0
 
 jr_001_449f:
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp b
     ret nz
 
@@ -1157,7 +1157,7 @@ jr_001_463d:
 
 
 jr_001_4681:
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp [hl]
     ret nz
 
@@ -1214,7 +1214,7 @@ jr_001_469d:
 
 
 jr_001_46ce:
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp [hl]
     ret nz
 
@@ -1281,7 +1281,7 @@ jr_001_46ea:
 
 
 jr_001_472a:
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp [hl]
     ret nz
 
@@ -1335,7 +1335,7 @@ jr_001_4742:
 
     call Call_000_10c6
     ld hl, $c207
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $39
     ret z
 
@@ -1410,7 +1410,7 @@ Jump_001_47cf:
     xor a
     ldh [$ff95], a
     call IncrementFF90
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp $04
     jp z, IncrementFF90
 
@@ -1937,7 +1937,7 @@ jr_001_4ade:
     ld [hl], c
 jr_001_4ae8:
     call Call_000_10c6
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 3, a
     jr nz, jr_001_4af8
     bit 2, a
@@ -1962,7 +1962,7 @@ jr_001_4af8:
     ret
 
 Call_01_4b14:
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp $5a
     ret c
     ld a, SceneFileSelect
@@ -2157,7 +2157,7 @@ Call_001_4c12:
 
     call Call_000_10c6
     ld hl, $c809
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     ld b, a
     and $c4
     jr z, jr_001_4c4c
@@ -2379,7 +2379,7 @@ jr_001_4d58:
 
     call Call_000_10c6
     ld hl, $c809
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     ld b, a
     and $c4
     jr z, jr_001_4d8e
@@ -2553,7 +2553,7 @@ jr_001_4e3a:
 
 
     call Call_000_10c6
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp $2b
     ret nz
 
@@ -2763,7 +2763,7 @@ jr_001_4f76:
 
     call Call_000_10c6
     call Call_001_5080
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp $b5
     ret nz
     xor a
@@ -2776,7 +2776,7 @@ jr_001_4f76:
     call Call_001_508c
     ldh a, [rDIV]
     call Call_1d18
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 0, a
     ret z
 
@@ -2800,7 +2800,7 @@ jr_001_4f76:
     call Call_000_10c6
     call Call_001_508c
     ld hl, $c22f
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp [hl]
     ret nz
 
@@ -2920,7 +2920,7 @@ Call_001_508c:
 
 Call_001_50a0:
 Jump_001_50a0:
-    ldh a, [$95]
+    ldh a, [$ff95]
     ld b, a
     and $08
     xor $08
@@ -2952,7 +2952,7 @@ jr_001_50b5:
 
 
 Call_001_50c3:
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp $32
     ret nz
 
@@ -3051,7 +3051,7 @@ jr_001_512e:
     cp $03
     jr z, jr_001_5158
 
-    ldh a, [$90]
+    ldh a, [$ff90]
     cp $01
     ld a, $30
     jr nz, jr_001_5154
@@ -3069,7 +3069,7 @@ jr_001_5158:
     ld a, [hl]
     or a
     jr z, jr_001_5176
-    ldh a, [$90]
+    ldh a, [$ff90]
     cp $01
     ld a, $38
     jr nz, jr_001_516a
@@ -3087,7 +3087,7 @@ jr_001_516f:
 jr_001_5176:
     bit 0, b
     jr nz, jr_001_519f
-    ldh a, [$90]
+    ldh a, [$ff90]
     cp $01
     ret nz
     bit 7, b
@@ -3167,7 +3167,7 @@ jr_001_51f6:
     ld a, [hl]
     add $07
     ld [hl], a
-    ldh a, [$8f]
+    ldh a, [$ff8f]
     cp $0b
     jr c, jr_001_521e
     ld a, $35
@@ -3533,7 +3533,7 @@ Jump_001_53e3:
 
     call Call_000_10c6
     ld hl, $c247
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     ld b, a
     bit 4, b
     jr z, jr_001_541c
@@ -4434,7 +4434,7 @@ jr_001_58b9:
     jp Call_000_3872
 
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $cf
     ret z
 
@@ -5037,7 +5037,7 @@ Jump_001_5c96:
     jr jr_001_5cb7
 
 Jump_001_5caa:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $0f
     ret z
 

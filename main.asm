@@ -15,7 +15,13 @@ INCLUDE "bank_003.asm"
 INCLUDE "bank_004.asm"
 
 ;Banks 5/6 (Level data)
+SECTION "ROM Bank $005", ROMX[$4000], BANK[$05]
 INCLUDE "data/levels.asm"
+INCLUDE "data/level_data_1.asm"
+
+SECTION "ROM Bank $006", ROMX[$4000], BANK[$06]
+INCLUDE "data/level_data_2.asm"
+
 
 INCLUDE "bank_007.asm"
 INCLUDE "bank_008.asm"
@@ -30,7 +36,9 @@ INCLUDE "bank_010.asm"
 INCLUDE "bank_011.asm"
 
 ;Bank 12 (Level data)
+SECTION "ROM Bank $012", ROMX[$4000], BANK[$12]
 INCLUDE "data/level_data_3.asm"
+
 
 INCLUDE "bank_013.asm"
 INCLUDE "bank_014.asm"

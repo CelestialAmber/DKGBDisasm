@@ -2759,7 +2759,7 @@ jr_00c_4cf6:
     ret
 
 Call_0c_4d05:
-    ldh a, [$90]
+    ldh a, [$ff90]
     cp $03
     ret c
     cp $0b
@@ -2920,7 +2920,7 @@ jr_00c_4da9:
     ret nz
 
     nop
-    ldh a, [$a0]
+    ldh a, [$ffa0]
     pop bc
 
 jr_00c_4db7:
@@ -3840,7 +3840,7 @@ jr_00c_5605:
     ret
 
 
-    ldh a, [$95]
+    ldh a, [$ff95]
     call Call_00c_5793
     cp $b5
     call z, IncrementFF90
@@ -3874,14 +3874,14 @@ jr_00c_5605:
     ld [$c818], a
     call Call_00c_5753
     call Call_000_10c6
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 0, a
     ret z
 
     ld a, $05
     ld [$c82d], a
     ld [$c835], a
-    ldh a, [$90]
+    ldh a, [$ff90]
     sub $02
     swap a
     ld h, $00
@@ -3900,7 +3900,7 @@ jr_00c_5605:
     xor a
     ld [$c200], a
     call Call_000_10c6
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp $6e
     ret nz
 
@@ -4066,7 +4066,7 @@ Call_00c_5765:
     and $03
     jr nz, jr_00c_578e
 
-    ldh a, [$90]
+    ldh a, [$ff90]
     cp $05
     jr nz, jr_00c_5791
 
@@ -4093,7 +4093,7 @@ jr_00c_5791:
 
 
 Call_00c_5793:
-    ldh a, [$95]
+    ldh a, [$ff95]
     push af
     and $08
     xor $08
@@ -4107,7 +4107,7 @@ Call_00c_579f:
     ld [$c240], a
     ld [$c2a0], a
     ld [$c300], a
-    ldh a, [$95]
+    ldh a, [$ff95]
     and $08
     xor $08
     ld [$c200], a

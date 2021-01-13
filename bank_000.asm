@@ -248,7 +248,7 @@ Jump_000_02c4:
 
 
 Call_000_02e9:
-    ldh a, [$8f]
+    ldh a, [$ff8f]
     rst $08
 
 ;0x2ec
@@ -526,7 +526,7 @@ jr_000_04cc:
 
     ld hl, $ff40
     res 1, [hl]
-    ldh a, [$95]
+    ldh a, [$ff95]
     and $08
     jr z, jr_000_04e4
 
@@ -836,7 +836,7 @@ jr_000_06ac:
 
 
 jr_000_06ba:
-    ldh a, [$90]
+    ldh a, [$ff90]
     rst $08
 
     add hl, de
@@ -1013,7 +1013,7 @@ jr_000_07d7:
     ld d, $00
     ld e, a
     add hl, de
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp [hl]
     ret nz
 jr_000_07f5:
@@ -1091,7 +1091,7 @@ Call_000_085d:
     rst $10
     call Call_10_4abc
     call Call_000_17ee
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $0c
     ret z
     ld b, a
@@ -1127,7 +1127,7 @@ Call_000_08aa:
 
 
 jr_000_08b9:
-    ldh a, [$90]
+    ldh a, [$ff90]
     ld [$c70b], a
     jp Jump_000_1d0b
 
@@ -1166,7 +1166,7 @@ jr_000_08b9:
     call Call_000_12e2
     call Call_000_17ee
     call Call_000_0f7e
-    ldh a, [$90]
+    ldh a, [$ff90]
     cp $0c
     ret z
     ld hl, wIsOnSGB
@@ -1260,7 +1260,7 @@ jr_000_0942:
 
 jr_000_09ab:
     call Call_000_17ee
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp $5a
     ret nz
 
@@ -1328,7 +1328,7 @@ jr_000_0a04:
     or a
     ret nz
 
-    ldh a, [$95]
+    ldh a, [$ff95]
     cp $3c
     ret c
 
@@ -1581,7 +1581,7 @@ jr_000_0b70:
     ld [de], a
     call IncrementFF90
     call Call_000_10be
-    ldh a, [$95]
+    ldh a, [$ff95]
     and $03
     ret nz
     ld hl, $c711
@@ -1627,7 +1627,7 @@ jr_000_0bb9:
 
 
     call Call_000_10be
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     or a
     ret z
     ld a, $08
@@ -1685,10 +1685,10 @@ jr_000_0c0a:
 
 
 Jump_000_0c18:
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 0, a
     ret nz
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 5, a
     ret nz
     ld hl, $c710
@@ -2731,7 +2731,7 @@ jr_000_118c:
     cp $a0
     jr nz, jr_000_11a6
 
-    ldh a, [$95]
+    ldh a, [$ff95]
     rrca
     jr nc, jr_000_11ca
 
@@ -2961,7 +2961,7 @@ jr_000_129d:
     cp $a0
     jr nz, jr_000_12b7
 
-    ldh a, [$95]
+    ldh a, [$ff95]
     rrca
     jr nc, jr_000_12db
 
@@ -3161,7 +3161,7 @@ jr_000_138b:
     cp $a0
     jr nz, jr_000_13a5
 
-    ldh a, [$95]
+    ldh a, [$ff95]
     rrca
     jr nc, jr_000_13c9
 
@@ -5249,7 +5249,7 @@ Jump_000_1e38:
 
     ld hl, $c819
     ld c, $14
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     or a
     jr nz, jr_000_1e65
 
@@ -6803,7 +6803,7 @@ Call_000_2633:
 jr_000_2662:
     ld a, $01
     rst $10
-    ldh a, [$90]
+    ldh a, [$ff90]
     rst $08
 
 ;function table used by the above function
@@ -7055,13 +7055,13 @@ Jump_000_27f5:
     call Call_000_2874
     ld a, $1d
     call Call_000_1d6b
-    ldh a, [$90]
+    ldh a, [$ff90]
     cp $0d
     jr nz, jr_000_280f
     ld a, $2d
     ldh [$ff8f], a
 jr_000_280f:
-    ldh a, [$90]
+    ldh a, [$ff90]
     cp $02
     jr nc, jr_000_282f
     ld a, [wIsOnSGB]
@@ -7144,7 +7144,7 @@ Call_2884:
 Call_288e:
     ld a, $01
     rst $10
-    ldh a, [$90]
+    ldh a, [$ff90]
     rst $08
 
 ;function table
@@ -7195,7 +7195,7 @@ Call_000_289c:
 
     ld a, $17
     rst $10
-    ldh a, [$90]
+    ldh a, [$ff90]
     rst $08
 
     rra
@@ -7543,7 +7543,7 @@ jr_000_2a99:
     jr jr_000_2a99
 
 ;2a9b
-    ld hl, $ff8c
+    ld hl, hCurrentBank
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
@@ -7551,7 +7551,7 @@ jr_000_2a99:
     jp $5a5e
 
 ;2aa7
-    ld hl, $ff8c
+    ld hl, hCurrentBank
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
@@ -7559,7 +7559,7 @@ jr_000_2a99:
     jp $5ab4
 
 ;2ab3
-    ld hl, $ff8c
+    ld hl, hCurrentBank
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
@@ -7567,7 +7567,7 @@ jr_000_2a99:
     jp $5905
 
 ;2abf
-    ld hl, $ff8c
+    ld hl, hCurrentBank
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
@@ -7575,7 +7575,7 @@ jr_000_2a99:
     jp $5962
 
 ;2acb
-    ld hl, $ff8c
+    ld hl, hCurrentBank
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
@@ -7583,7 +7583,7 @@ jr_000_2a99:
     jp $59cb
 
 ;2ad7
-    ld hl, $ff8c
+    ld hl, hCurrentBank
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
@@ -7591,7 +7591,7 @@ jr_000_2a99:
     jp $5a32
 
 ;2ae3
-    ld hl, $ff8c
+    ld hl, hCurrentBank
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
@@ -7602,7 +7602,7 @@ jr_000_2a99:
     jp $5d07
 
 ;2af4
-    ld hl, $ff8c
+    ld hl, hCurrentBank
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
@@ -7617,7 +7617,7 @@ jr_000_2a99:
     jp $7b66
 
 ;2b0a
-    ld hl, $ff8c
+    ld hl, hCurrentBank
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
@@ -7625,7 +7625,7 @@ jr_000_2a99:
     jp $4a04
 
 ;2b16
-    ld hl, $ff8c
+    ld hl, hCurrentBank
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $0a
@@ -7633,7 +7633,7 @@ jr_000_2a99:
     jp $7810
 
 Call_2b22:
-    ld hl, $ff8c
+    ld hl, hCurrentBank
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $07
@@ -9248,7 +9248,7 @@ Call_000_342c:
 
     ld a, $01
     rst $10
-    ldh a, [$90]
+    ldh a, [$ff90]
     rst $08
     ld h, h
     inc [hl]
@@ -9315,7 +9315,7 @@ Call_000_34b0:
 
     ld a, $01
     rst $10
-    ldh a, [$90]
+    ldh a, [$ff90]
     rst $08
 
     sub $34
@@ -9410,7 +9410,7 @@ Call_000_3537:
 
     ld a, $01
     rst $10
-    ldh a, [$90]
+    ldh a, [$ff90]
     rst $08
 
     rla
@@ -9432,7 +9432,7 @@ Call_000_3537:
 Call_357b:
     ld a, $01
     rst $10
-    ldh a, [$90]
+    ldh a, [$ff90]
     rst $08
 ;TODO: find this address
     swap l

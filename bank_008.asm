@@ -261,7 +261,7 @@ jr_008_4028:
     cp $0a
     jr z, jr_008_41b5
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     ret nc
 
@@ -1935,7 +1935,7 @@ jr_008_4a89:
     pop hl
 
 jr_008_4a9b:
-    ldh a, [$8d]
+    ldh a, [$ff8d]
     jp Bankswitch0fce
 
 
@@ -6494,7 +6494,7 @@ jr_008_5be4:
     ld [hl], e
     inc hl
     ld [hl], d
-    ldh a, [$8d]
+    ldh a, [$ff8d]
     jp Bankswitch0fce
 
 
@@ -6887,7 +6887,7 @@ jr_008_5e0a:
 
 Jump_008_5e16:
 jr_008_5e16:
-    ldh a, [$8d]
+    ldh a, [$ff8d]
     jp Bankswitch0fce
 
 
@@ -6912,7 +6912,7 @@ jr_008_5e2c:
     ld [hl], e
     inc hl
     ld [hl], d
-    ldh a, [$8d]
+    ldh a, [$ff8d]
     jp Bankswitch0fce
 
 
@@ -7023,7 +7023,7 @@ jr_008_5ebd:
     xor a
     ld [hl+], a
     ld [hl], a
-    ldh a, [$8d]
+    ldh a, [$ff8d]
     jp Bankswitch0fce
 
 
@@ -7058,7 +7058,7 @@ jr_008_5ec8:
     sub $40
     ld [hl+], a
     ld [hl], d
-    ldh a, [$8d]
+    ldh a, [$ff8d]
     jp Bankswitch0fce
 
 
@@ -7173,7 +7173,7 @@ jr_008_5ec8:
     ld h, e
     ld b, [hl]
     ld h, [hl]
-    ldh a, [$63]
+    ldh a, [$ff63]
     jp hl
 
 
@@ -7462,7 +7462,7 @@ jr_008_60cf:
     ld h, e
     ld b, [hl]
     ld h, [hl]
-    ldh a, [$63]
+    ldh a, [$ff63]
     call $2ab3
     ld hl, $dd96
     ld a, [hl+]
@@ -7715,7 +7715,7 @@ jr_008_6250:
     ld h, e
     db $10
     ld [hl], e
-    ldh a, [$63]
+    ldh a, [$ff63]
 
     call $2ab3
     ld a, [$dd92]
@@ -8834,7 +8834,7 @@ jr_008_68ad:
 
 
 jr_008_68b3:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr nc, jr_008_68be
 
@@ -11893,7 +11893,7 @@ jr_008_76d8:
     add sp, $7c
     db $ed
     ld a, h
-    ldh a, [$7c]
+    ldh a, [$ff7c]
     ld c, b
     ld a, d
     ld c, e

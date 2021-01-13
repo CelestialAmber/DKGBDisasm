@@ -375,7 +375,7 @@ SECTION "ROM Bank $009", ROMX[$4000], BANK[$9]
     ld h, b
     xor e
     ld h, b
-    ldh a, [$60]
+    ldh a, [$ff60]
     add hl, sp
     ld h, c
     ld [de], a
@@ -2630,14 +2630,14 @@ jr_009_4ade:
     jp $32f5
 
 
-    ldh a, [$f0]
+    ldh a, [$fff0]
     sub [hl]
     sub [hl]
 
     call Call_009_63f3
     inc hl
     inc hl
-    ldh a, [$95]
+    ldh a, [$ff95]
     bit 1, a
     jr z, jr_009_4b5f
 
@@ -9742,7 +9742,7 @@ jr_009_6f61:
     ret
 
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr nc, jr_009_6f71
 

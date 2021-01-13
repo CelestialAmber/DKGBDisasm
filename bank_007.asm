@@ -6,7 +6,7 @@ SECTION "ROM Bank $007", ROMX[$4000], BANK[$7]
 
 
     call Call_007_67a5
-    ldh a, [$91]
+    ldh a, [$ff91]
     rla
     jp c, Jump_007_41c3
     ldh a, [hJoypad]
@@ -20,7 +20,7 @@ SECTION "ROM Bank $007", ROMX[$4000], BANK[$7]
 
 Jump_007_4016:
     call Call_007_68b1
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 4, a
     jr nz, jr_007_4022
 
@@ -127,7 +127,7 @@ jr_007_409f:
     ld [$c201], a
     ld a, $01
     ld [$c812], a
-    ldh a, [$93]
+    ldh a, [$ff93]
     set 0, a
     ldh [$ff93], a
     ld a, [$dd1a]
@@ -157,7 +157,7 @@ jr_007_40d8:
 
 
 jr_007_40e6:
-    ldh a, [$93]
+    ldh a, [$ff93]
     res 0, a
     ldh [$ff93], a
     xor a
@@ -646,7 +646,7 @@ jr_007_4395:
     cp $03
     jr z, jr_007_43c0
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     bit 3, a
     jp z, Jump_007_4016
 
@@ -704,7 +704,7 @@ jr_007_43f8:
     cp [hl]
     jp c, Jump_007_4493
 
-    ldh a, [$92]
+    ldh a, [$ff92]
     bit 5, a
     jp nz, Jump_007_448f
 
@@ -752,7 +752,7 @@ jr_007_4448:
     jr jr_007_448f
 
 jr_007_445c:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr nc, jr_007_448a
 
@@ -797,7 +797,7 @@ jr_007_448f:
     inc [hl]
 
 Jump_007_4493:
-    ldh a, [$92]
+    ldh a, [$ff92]
     bit 4, a
     jp nz, Jump_007_4016
 
@@ -851,7 +851,7 @@ jr_007_44c0:
     jp Jump_007_4016
 
 
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 5, a
     jr z, jr_007_44ec
 
@@ -933,7 +933,7 @@ jr_007_44ec:
 
 jr_007_4540:
     ld d, $00
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr nc, jr_007_45bd
 
@@ -987,7 +987,7 @@ jr_007_4540:
 
 jr_007_4595:
     ld d, $04
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr nc, jr_007_45bd
 
@@ -1014,7 +1014,7 @@ jr_007_45b4:
 jr_007_45bd:
     ld a, d
     ld [$dd1c], a
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 5, a
     jr z, jr_007_45ce
 
@@ -1031,7 +1031,7 @@ jr_007_45ce:
     jp Jump_007_4016
 
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 2, a
     jr nz, jr_007_461e
 
@@ -1043,7 +1043,7 @@ jr_007_45ce:
     ld hl, $733e
 
 jr_007_45e9:
-    ldh a, [$94]
+    ldh a, [$ff94]
     and $08
     rrca
     rrca
@@ -1065,7 +1065,7 @@ jr_007_45e9:
     jp Jump_007_4016
 
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 2, a
     jp z, Jump_007_4016
 
@@ -1083,7 +1083,7 @@ jr_007_45e9:
 Jump_007_461e:
 jr_007_461e:
     ld b, $00
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr nc, jr_007_4627
 
@@ -1116,7 +1116,7 @@ jr_007_464c:
     call Call_007_6555
 
 jr_007_4653:
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 5, a
     jp nz, Jump_007_4016
 
@@ -1127,7 +1127,7 @@ jr_007_4653:
     jp Jump_007_4016
 
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 2, a
     jp z, Jump_007_4016
 
@@ -1397,16 +1397,16 @@ jr_007_4745:
     ld b, a
     call Call_007_6f3e
     call Call_007_6ea7
-    ldh a, [$8d]
+    ldh a, [$ff8d]
     jp Bankswitch0fce
 
 
 Call_007_4803:
-    ldh a, [$91]
+    ldh a, [$ff91]
     rra
     ret c
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     call c, Call_007_6576
     ld a, [$dd18]
@@ -1446,7 +1446,7 @@ Call_007_4803:
     rst $18
     ld h, h
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     bit 2, a
     jr z, jr_007_4851
 
@@ -1464,12 +1464,12 @@ Call_007_4803:
 
 
 jr_007_4851:
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 5, a
     ret nz
 
     call Call_007_66ce
-    ldh a, [$94]
+    ldh a, [$ff94]
     bit 6, a
     ret nz
 
@@ -1496,7 +1496,7 @@ jr_007_4851:
 
 Jump_007_487d:
 jr_007_487d:
-    ldh a, [$94]
+    ldh a, [$ff94]
     bit 4, a
     jr z, jr_007_4889
 
@@ -1506,15 +1506,15 @@ jr_007_487d:
 
 
 jr_007_4889:
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 3, a
     jp nz, Jump_007_48b5
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     rra
     jp c, Jump_007_48b5
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 1, a
     jp nz, Jump_007_492c
 
@@ -1537,7 +1537,7 @@ Jump_007_48a4:
 
 
 Jump_007_48b5:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     ret c
 
@@ -1549,7 +1549,7 @@ Jump_007_48b5:
     and a
     ret nz
 
-    ldh a, [$92]
+    ldh a, [$ff92]
     bit 2, a
     ret nz
 
@@ -1565,7 +1565,7 @@ Jump_007_48b5:
     inc [hl]
 
 jr_007_48dd:
-    ldh a, [$93]
+    ldh a, [$ff93]
     rra
     jr nc, jr_007_4902
 
@@ -1621,7 +1621,7 @@ Jump_007_492c:
     ret nz
 
 jr_007_4938:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     ret c
 
@@ -2025,7 +2025,7 @@ Jump_007_4b0a:
 
 
 Jump_007_4b5d:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     ret c
 
@@ -2363,7 +2363,7 @@ jr_007_4d45:
     cp $0a
     jr nz, jr_007_4d62
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr c, jr_007_4d62
 
@@ -2387,7 +2387,7 @@ Jump_007_4d6d:
     cp $0c
     jr nz, jr_007_4d98
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jp c, Jump_007_487d
 
@@ -2597,7 +2597,7 @@ Call_007_4e5a:
     and a
     jr nz, jr_007_4ebf
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     rra
     jr c, jr_007_4ea4
 
@@ -2661,7 +2661,7 @@ jr_007_4ec4:
     and $c0
     jr z, jr_007_4eea
 
-    ldh a, [$93]
+    ldh a, [$ff93]
     rla
     jp nc, Jump_007_509c
 
@@ -2691,7 +2691,7 @@ jr_007_4eff:
 
 
 jr_007_4f07:
-    ldh a, [$93]
+    ldh a, [$ff93]
     rla
     jp c, Jump_007_4fdb
 
@@ -2933,7 +2933,7 @@ jr_007_5046:
     jr jr_007_504e
 
 jr_007_5048:
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 3, a
     jr nz, jr_007_5055
 
@@ -3022,7 +3022,7 @@ Jump_007_509c:
     and a
     jr z, jr_007_5111
 
-    ldh a, [$92]
+    ldh a, [$ff92]
     bit 1, a
     jr nz, jr_007_50d7
 
@@ -3161,7 +3161,7 @@ Jump_007_5178:
     cp $06
     jr z, jr_007_5190
 
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 5, a
     jr z, jr_007_5190
 
@@ -3173,11 +3173,11 @@ Jump_007_5178:
 
 
 jr_007_5190:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr c, jr_007_519a
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     rra
     jr nc, jr_007_51d3
 
@@ -4313,7 +4313,7 @@ jr_007_579c:
     and a
     jr nz, jr_007_580f
 
-    ldh a, [$92]
+    ldh a, [$ff92]
     bit 2, a
     jr nz, jr_007_580f
 
@@ -4321,7 +4321,7 @@ jr_007_579c:
     bit 3, [hl]
     jr nz, jr_007_57eb
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     rra
     jr nc, jr_007_580f
 
@@ -4349,11 +4349,11 @@ jr_007_5800:
 
 
 jr_007_580f:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr c, jr_007_583e
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 1, a
     ret z
 
@@ -4413,7 +4413,7 @@ jr_007_584d:
     dec [hl]
     ret nz
 
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 5, a
     jr z, jr_007_588b
 
@@ -4480,7 +4480,7 @@ jr_007_58b9:
     ret
 
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jp c, Jump_007_5953
 
@@ -4690,7 +4690,7 @@ jr_007_59e9:
     jp Jump_007_7790
 
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr nc, jr_007_5a0b
 
@@ -4724,7 +4724,7 @@ jr_007_5a0b:
     cp $40
     jr nz, jr_007_5a7d
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 6, a
     jr z, jr_007_5a7d
 
@@ -4786,7 +4786,7 @@ jr_007_5a54:
 
 
 jr_007_5a7d:
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     rra
     jp c, Jump_007_5bca
 
@@ -5074,7 +5074,7 @@ jr_007_5bf1:
     ret
 
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 0, a
     jp nz, Jump_007_5c9f
 
@@ -5136,7 +5136,7 @@ jr_007_5c42:
     ret
 
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     rra
     jp c, Jump_007_5c9f
 
@@ -5384,7 +5384,7 @@ jr_007_5d90:
     bit 3, [hl]
     jr nz, jr_007_5da4
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     rra
     jp nc, Jump_007_5e44
 
@@ -5412,7 +5412,7 @@ jr_007_5db7:
     bit 7, [hl]
     jp nz, Jump_007_5e44
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr c, jr_007_5e44
 
@@ -5600,7 +5600,7 @@ jr_007_5ee0:
     and a
     jr z, jr_007_5f28
 
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 1, a
     jr nz, jr_007_5f28
 
@@ -5656,7 +5656,7 @@ jr_007_5f28:
     ld e, a
     ld a, e
     ld e, a
-    ldh a, [$5f]
+    ldh a, [$ff5f]
     ld sp, $6360
     ld h, b
     adc h
@@ -5669,7 +5669,7 @@ jr_007_5f28:
     ld h, c
 
     ld hl, $c20d
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 2, a
     jr z, jr_007_5f54
 
@@ -5702,11 +5702,11 @@ jr_007_5f63:
     ret
 
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr c, jr_007_5fbb
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     rra
     jr nc, jr_007_5fbb
 
@@ -5775,7 +5775,7 @@ jr_007_5fc8:
 
 
     ld hl, $c20d
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 2, a
     jr z, jr_007_600a
 
@@ -5785,7 +5785,7 @@ jr_007_5fc8:
     set 0, [hl]
     ld a, $16
     ld [$dd21], a
-    ldh a, [$92]
+    ldh a, [$ff92]
     res 5, a
     ldh [$ff92], a
 
@@ -5816,7 +5816,7 @@ jr_007_6019:
     ret
 
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     rra
     jr nc, jr_007_6056
 
@@ -5905,7 +5905,7 @@ jr_007_60a5:
     jp Jump_007_61ab
 
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr c, jr_007_6121
 
@@ -5913,7 +5913,7 @@ jr_007_60a5:
     and a
     jr nz, jr_007_6121
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     rra
     jr nc, jr_007_6121
 
@@ -6029,7 +6029,7 @@ jr_007_615a:
 
 
     ld hl, $c20d
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 2, a
     jr z, jr_007_6192
 
@@ -6039,10 +6039,10 @@ jr_007_615a:
     set 0, [hl]
     ld a, $16
     ld [$dd21], a
-    ldh a, [$92]
+    ldh a, [$ff92]
     res 5, a
     ldh [$ff92], a
-    ldh a, [$93]
+    ldh a, [$ff93]
     res 1, a
     ldh [$ff93], a
 
@@ -6056,7 +6056,7 @@ jr_007_6192:
     jr nz, jr_007_61a7
 
     set 1, [hl]
-    ldh a, [$91]
+    ldh a, [$ff91]
     set 7, a
     ldh [$ff91], a
 
@@ -6095,10 +6095,10 @@ jr_007_61c7:
     ld a, [hl]
     and $6f
     ld [hl], a
-    ldh a, [$92]
+    ldh a, [$ff92]
     set 5, a
     ldh [$ff92], a
-    ldh a, [$93]
+    ldh a, [$ff93]
     res 1, a
     ldh [$ff93], a
     ret
@@ -6228,11 +6228,11 @@ jr_007_627d:
     ret
 
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr c, jr_007_628a
 
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     bit 1, a
     jr z, jr_007_62a6
 
@@ -6285,7 +6285,7 @@ jr_007_62c9:
     or [hl]
     jp z, Jump_007_63f8
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     bit 5, a
     jr nz, jr_007_630a
 
@@ -6456,7 +6456,7 @@ Jump_007_63c1:
 
 Jump_007_63c8:
     ld hl, $74ab
-    ldh a, [$94]
+    ldh a, [$ff94]
     bit 5, a
     jr z, jr_007_63d4
 
@@ -6603,7 +6603,7 @@ jr_007_643e:
     ret
 
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 2, a
     ret z
 
@@ -6744,7 +6744,7 @@ jr_007_6542:
     ret
 
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 2, a
     ret z
 
@@ -6881,7 +6881,7 @@ jr_007_65fd:
     ld a, $0e
     add l
     ld l, a
-    ldh a, [$8b]
+    ldh a, [$ff8b]
     and $f0
     jr z, jr_007_6619
 
@@ -7117,7 +7117,7 @@ Call_007_6736:
     jr jr_007_674d
 
 jr_007_6745:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr nc, jr_007_674d
 
@@ -7414,7 +7414,7 @@ Call_007_68b1:
     ld b, $00
     ld hl, $68c8
     add hl, bc
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 5, a
     ret nz
 
@@ -7550,7 +7550,7 @@ Call_007_6964:
     ld [hl], a
     ld [$dd1f], a
     ld [$c21b], a
-    ldh a, [$92]
+    ldh a, [$ff92]
     bit 5, a
     ret nz
 
@@ -7853,7 +7853,7 @@ Call_007_6b0e:
     ret nz
 
 jr_007_6b3d:
-    ldh a, [$90]
+    ldh a, [$ff90]
     cp $10
     ret z
 
@@ -7880,11 +7880,11 @@ jr_007_6b3d:
     and $c0
     ret nz
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     ret c
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 4, a
     ret nz
 
@@ -7943,11 +7943,11 @@ jr_007_6b7f:
     and $c0
     ret nz
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     ret c
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 4, a
     ret nz
 
@@ -8200,11 +8200,11 @@ jr_007_6cf4:
     and $c0
     ret nz
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     ret c
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 4, a
     ret nz
 
@@ -8229,11 +8229,11 @@ jr_007_6cf4:
     and $c0
     ret nz
 
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     ret c
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     bit 4, a
     ret nz
 
@@ -8698,7 +8698,7 @@ jr_007_6f5c:
     jr c, jr_007_6fdf
 
 jr_007_6fab:
-    ldh a, [$90]
+    ldh a, [$ff90]
     cp $13
     jr z, jr_007_6fb7
 
@@ -9268,7 +9268,7 @@ jr_007_7244:
     add hl, de
     dec de
     nop
-    ldh a, [$fc]
+    ldh a, [$fffc]
     rst $30
     rst $38
     nop
@@ -9327,7 +9327,7 @@ jr_007_7244:
     add hl, de
     dec de
     nop
-    ldh a, [$fc]
+    ldh a, [$fffc]
     rst $30
     rst $38
     nop

@@ -2925,11 +2925,11 @@ jr_00a_4ebd:
     and a
     jp nz, Jump_00a_503b
 
-    ldh a, [$91]
+    ldh a, [$ff91]
     rra
     jp c, Jump_00a_503b
 
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 2, a
     jp nz, Jump_00a_503b
 
@@ -8721,7 +8721,7 @@ jr_00a_702f:
     jp Jump_00a_4a19
 
 
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 5, a
     ret nz
 
@@ -9135,10 +9135,10 @@ jr_00a_7282:
 
 
     and b
-    ldh a, [$f0]
+    ldh a, [$fff0]
     and b
     and b
-    ldh a, [$a0]
+    ldh a, [$ffa0]
 
     ld a, [$c104]
     and $7f
@@ -9959,7 +9959,7 @@ Jump_00a_7700:
     jp Jump_00a_7c51
 
 
-    ldh a, [$93]
+    ldh a, [$ff93]
     bit 5, a
     jp nz, $2a3f
 
@@ -10154,7 +10154,7 @@ jr_00a_783b:
 
 jr_00a_783f:
     ld hl, $7877
-    ldh a, [$94]
+    ldh a, [$ff94]
     bit 5, a
     jr z, jr_00a_784b
 
@@ -10173,7 +10173,7 @@ jr_00a_784b:
     ld a, [$c207]
     add $04
     ld c, a
-    ldh a, [$8d]
+    ldh a, [$ff8d]
     push af
     call $2b00
     ld a, [$c1f1]
@@ -10439,7 +10439,7 @@ Call_00a_7997:
 
 
 Call_00a_79e4:
-    ldh a, [$94]
+    ldh a, [$ff94]
     rla
     jr nc, jr_00a_79f0
 
@@ -10602,11 +10602,11 @@ jr_00a_7aa2:
     add sp, -$10
     add sp, -$60
     sbc b
-    ldh a, [$e8]
-    ldh a, [$e8]
+    ldh a, [$ffe8]
+    ldh a, [$ffe8]
     and b
     sbc b
-    ldh a, [$af]
+    ldh a, [$ffaf]
     ld [$c0f7], a
     ld [$c103], a
     ld hl, $c108
@@ -10859,7 +10859,7 @@ jr_00a_7b5b:
     inc de
     ld a, [de]
     ld [bc], a
-    ldh a, [$8d]
+    ldh a, [$ff8d]
     jp Bankswitch0fce
 
 

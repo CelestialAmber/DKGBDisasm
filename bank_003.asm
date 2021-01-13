@@ -1996,7 +1996,7 @@ Jump_003_4941:
     add h
     rlca
     add c
-    ldh a, [$84]
+    ldh a, [$ff84]
     inc b
     add c
     rst $38
@@ -2004,7 +2004,7 @@ Jump_003_4941:
     nop
     ld bc, $0584
     add c
-    ldh a, [$84]
+    ldh a, [$ff84]
     inc b
     add c
     rst $38
@@ -2018,7 +2018,7 @@ Jump_003_4941:
     add c
     ld bc, $0101
     add c
-    ldh a, [$84]
+    ldh a, [$ff84]
     inc b
     add d
     rst $38
@@ -5487,7 +5487,7 @@ Call_003_595d:
     jp nz, $c45a
 
     ld e, d
-    ldh a, [$5a]
+    ldh a, [$ff5a]
     ld l, $5b
     add b
     ld e, e
@@ -10188,7 +10188,7 @@ jr_003_71e0:
     ld d, l
     jp z, $ff51
 
-    ldh a, [$72]
+    ldh a, [$ff72]
     db $ed
     jr nz, @+$7b
 
