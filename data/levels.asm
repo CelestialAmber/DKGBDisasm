@@ -1,6 +1,26 @@
 SECTION "ROM Bank $05", ROMX[$4000], BANK[$05]
 
 
+;Level data format:
+;0x00: tilemap size (0: 0x240 bytes for tilemap else 0x380 bytes)
+;0x01: music id
+;0x02: tileset id
+;0x03-0x04: time
+;0x05: switch data flag (0: no switch data, 1: switch data)
+;switch data (0xA1 bytes total):
+;the data starts with 16 raw bytes
+;at the start of each loop, a byte is first read, except the first time, where it uses the flag byte instead
+;then, another byte is read for how many bytes to copy after
+;if the value is more than 0x7f, it gets anded with 0x7f
+;the next byte tells whether level has additional sprite data or not (0: no data)
+;additional sprite data is stored in the same way as for switch data (0x40 bytes total)
+;compressed tilemap (no header, uses the size determined by the 1st byte)
+;sprite data (27 sprites max)
+;format: 0x00: sprite id, 0x01: ram position
+;levelPos = ram position - 0xDA75;
+;it keeps going until it hits a 00 byte
+;palette data (format (offsets): 0x00: id, 0x01: value)
+
 ;the level data is split between 3 banks (banks 5, 6, 12)
 LevelDataTable::
 dw Level1Data
@@ -115,27 +135,6 @@ dw $60DF
 REPT 151
     dw $61B2
 ENDR
-
-
-;Level data format:
-;0x00: tilemap size (0: 0x240 bytes for tilemap else 0x380 bytes)
-;0x01: music id
-;0x02: tileset id
-;0x03-0x04: time
-;0x05: switch data flag (0: no switch data, 1: switch data)
-;switch data (0xA1 bytes total):
-;the data starts with 16 raw bytes
-;at the start of each loop, a byte is first read, except the first time
-;then, another byte is read for how many bytes to copy after
-;if the value is more than 0x7f, it gets anded with 0x7f
-;the next byte tells whether level has additional sprite data or not (0: no data)
-;additional sprite data is stored in the same way as for switch data (0x40 bytes total)
-;compressed tilemap (no header, uses the size determined by the 1st byte)
-;sprite data (27 sprites max)
-;format: 0x00: sprite id, 0x01: ram position
-;levelPos = ram position - 0xDA75;
-;it keeps going until it hits a 00 byte
-;palette data (format (offsets): 0x00: id, 0x01: value)
 
 INCLUDE "data/level_data_1.asm"
 

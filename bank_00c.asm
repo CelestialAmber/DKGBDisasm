@@ -2500,6 +2500,7 @@ jr_00c_4bbd:
     ret
 
 
+Call_00c_4bcd:
     ld a, [$c864]
     or a
     jr nz, jr_00c_4bd9
@@ -2521,11 +2522,10 @@ jr_00c_4bd9:
     ld [$c707], a
     ret
 
-
+Call_00c_4bf1:
     ld a, [$c864]
     or a
     jr nz, jr_00c_4bfd
-
     call $1517
     jp $11d1
 

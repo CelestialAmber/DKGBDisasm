@@ -1068,7 +1068,7 @@ jr_000_0833:
     call IncrementFF90
 jr_000_0851:
     call Call_000_085d
-    jp Jump_000_150b
+    jp Call_000_150b
 
 
 Call_000_0857:
@@ -1083,13 +1083,13 @@ Call_000_085d:
     call Call_000_0ef2
     ld a, $10
     rst $10
-    call $5194
+    call Call_10_5194
     ld a, $08
     rst $10
-    call $4000
+    call Call_10_4000
     ld a, $10
     rst $10
-    call $4abc
+    call Call_10_4abc
     call Call_000_17ee
     ldh a, [$8b]
     and $0c
@@ -1156,13 +1156,13 @@ jr_000_08b9:
     call Call_000_1c7a
     ld a, $10
     rst $10
-    call $59d8
+    call Call_10_59d8
     ld a, $08
     rst $10
     call $4000
     ld a, $10
     rst $10
-    call $4e55
+    call Call_10_4e55
     call Call_000_12e2
     call Call_000_17ee
     call Call_000_0f7e
@@ -1218,13 +1218,13 @@ jr_000_0942:
     call Call_000_29f0
     ld a, $10
     rst $10
-    call $59d8
+    call Call_10_59d8
     ld a, $08
     rst $10
     call $4000
     ld a, $10
     rst $10
-    call $4e55
+    call Call_10_4e55
     call Call_000_10c6
     call Call_000_17ee
     jp Jump_000_0f7e
@@ -1272,7 +1272,7 @@ jr_000_09ab:
     call Call_000_17ee
     ld a, $10
     rst $10
-    call $6143
+    call Call_10_6143
     call Call_000_0f7e
     jp Jump_000_10be
 
@@ -1473,7 +1473,7 @@ jr_000_0a97:
     ld a, $10
     rst $10
     ld a, b
-    call $6465
+    call Call_10_6465
     call IncrementFF90
     call Call_000_3223
     jr jr_000_0aee
@@ -1486,7 +1486,7 @@ jr_000_0aee:
     rst $10
     call Call_000_0dc3
     ld a, b
-    call $6b4c
+    call Call_10_6b4c
     jp Jump_000_10be
 
 
@@ -1741,7 +1741,7 @@ jr_000_0c6a:
     ldh [$ff90], a
     ld a, $10
     rst $10
-    call $5354
+    call Call_10_5354
     ld a, $01
     rst $10
     ld hl, $ff8f
@@ -2166,7 +2166,7 @@ Call_000_0ef2:
     call $4000
     ld a, $10
     rst $10
-    jp $4000
+    jp Call_10_4000
 
 
 Call_000_0efe:
@@ -3469,16 +3469,15 @@ jr_000_1504:
 
 
 Call_000_150b:
-Jump_000_150b:
     ld a, $0c
     rst $10
-    jp $4bcd
+    jp Call_00c_4bcd
 
 
 Jump_000_1511:
     ld a, $0c
     rst $10
-    jp $4bf1
+    jp Call_00c_4bf1
 
 
 Call_000_1517:
@@ -7176,7 +7175,7 @@ Call_000_289c:
     ld a, $10
     rst $10
     xor a
-    call $6179
+    call Call_10_6179
     ld a, $01
     rst $10
     call Call_000_20b2
@@ -7190,7 +7189,7 @@ Call_000_289c:
     ld a, $10
     rst $10
     xor a
-    call $6af9
+    call Call_10_6af9
     jp Jump_000_10be
 
 
@@ -8806,26 +8805,22 @@ Call_000_31e8:
     ld a, c
     cp $03
     ret nz
-
     ldh a, [hCurrentBank]
     push af
     ld a, [wIsOnSGB]
     bit 4, a
     jr z, jr_000_31ff
-
     ld a, b
     cp $01
     jr nz, jr_000_31ff
-
     inc b
-
 jr_000_31ff:
     ld a, b
     push af
     ld a, $10
     rst $10
     ld a, b
-    call $6179
+    call Call_10_6179
     ld a, $11
     rst $10
     pop af
@@ -8850,7 +8845,6 @@ Call_000_3223:
     ld a, [hl]
     cp $4c
     jp nc, Jump_000_1761
-
     inc [hl]
     add a
     ld h, $00
@@ -8881,7 +8875,6 @@ Call_000_3223:
     inc hl
     or a
     jr z, jr_000_3271
-
     ld a, [hl+]
     ld e, a
     ld d, [hl]
@@ -8894,13 +8887,10 @@ Call_000_3223:
     ld a, $09
     ld [hl+], a
     ld [hl], $c8
-
 jr_000_326e:
     pop af
     rst $10
     ret
-
-
 jr_000_3271:
     call Call_000_1761
     pop hl
@@ -8908,7 +8898,6 @@ jr_000_3271:
 
 Call_000_3277:
     ld de, $4030
-
 jr_000_327a:
     ld hl, $c809
     ld a, e
@@ -8918,7 +8907,6 @@ jr_000_327a:
     ld a, [hl]
     cp $b0
     ret nc
-
     inc [hl]
     ld h, $00
     ld l, a
@@ -8939,13 +8927,10 @@ jr_000_327a:
     ld a, b
     or a
     jr nz, jr_000_32ae
-
     ld a, [$ddb4]
     cp $30
     jr z, jr_000_32da
-
     ld a, b
-
 jr_000_32ae:
     add a
     add a
@@ -8962,7 +8947,6 @@ jr_000_32ae:
     inc hl
     or a
     jr z, jr_000_32da
-
     ld a, [hl+]
     ld e, a
     ld d, [hl]
@@ -8975,13 +8959,10 @@ jr_000_32ae:
     ld a, $09
     ld [hl+], a
     ld [hl], $c8
-
 jr_000_32d7:
     pop af
     rst $10
     ret
-
-
 jr_000_32da:
     pop hl
     ld a, $b0
@@ -8991,7 +8972,6 @@ jr_000_32da:
 Call_000_32e2:
     ld de, $4050
     jr jr_000_327a
-
     ld b, a
     ldh a, [hCurrentBank]
     push af
@@ -9003,7 +8983,7 @@ Call_000_32e2:
     rst $10
     ret
 
-
+Call_32f5:
     ldh a, [hCurrentBank]
     push af
     ld a, $0a
@@ -9013,7 +8993,7 @@ Call_000_32e2:
     rst $10
     ret
 
-
+Call_3301:
     ld b, a
     ldh a, [hCurrentBank]
     push af
@@ -9025,7 +9005,7 @@ Call_000_32e2:
     rst $10
     ret
 
-
+Call_330f:
     ld b, a
     ldh a, [hCurrentBank]
     push af
@@ -9037,7 +9017,7 @@ Call_000_32e2:
     rst $10
     ret
 
-
+Call_331d:
     ld hl, $dd05
     ld de, $fff0
     ld c, $20

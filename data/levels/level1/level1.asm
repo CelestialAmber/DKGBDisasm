@@ -1,7 +1,7 @@
 ;offset 4200
 Level1Data:
     levelheader 0,5,0,100
-db $00 ;switch data flag byte
+db $00 ;switch data flag byte (no switch data)
 db $83, $6E, $B7, $DA, $3D, $FD, $FF, $01, $01, $07
 db $FF, $07, $7D, $7D, $7D, $61, $FF, $01, $0F, $01, $04, $20, $0F, $01, $06, $CE
 db $CF, $20, $0F, $F6, $01, $09, $D1, $D2, $20, $02, $02, $0B, $55, $55, $FC, $1D
