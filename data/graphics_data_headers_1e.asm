@@ -442,7 +442,3 @@ GraphicsDataHeaders_7ccb::
     db 2
     gfxheader BANK(CreditsGraphics),CreditsGraphics,$8000,2,$800
     gfxheader BANK(CreditsGraphics),CreditsGraphics,$8f10,2,$800
-
-    REPT $326
-    db $FF
-    ENDR

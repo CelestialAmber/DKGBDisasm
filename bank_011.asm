@@ -23,9 +23,3 @@ db $01,$00,$30,$5E,$01,$00,$D0,$55,$00,$00,$10,$51,$00,$00,$10,$51
 
 ;offset 44070
 INCBIN "gfx/bank11graphics.2bpp"
-
-;offset 469f0, the rest of the bank is filled with ff
-REPT $1610
-db $FF
-ENDR
-    

@@ -68,7 +68,3 @@ Level79Data:
 INCBIN "data/levels/level79.bin"
 Level80Data:
 INCBIN "data/levels/level80.bin"
-
-REPT 3227
-db $FF
-ENDR

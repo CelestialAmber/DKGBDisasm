@@ -88,9 +88,3 @@ Level44Data:
 INCBIN "data/levels/level44.bin"
 Level45Data:
 INCBIN "data/levels/level45.bin"
-
-;7c57
-;empty space
-REPT $3a9
-    db $FF
-ENDR

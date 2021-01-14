@@ -49,7 +49,7 @@ endif
 	rgbasm -h -o $@ $<
 
 $(ROM): $(OBJS)
-	rgblink -n $(ROM:.gb=.sym) -m $(ROM:.gb=.map) -o $@ $(OBJS)
+	rgblink -n $(ROM:.gb=.sym) -m $(ROM:.gb=.map) -p 0xFF -o $@ $(OBJS)
 	rgbfix -sv -k 01 -l 0x33 -m 0x03 -p 0xFF -r 02 -t "DONKEY KONG" $@
 
 gfx/font.2bpp: tools/gfx += --trim-whitespace

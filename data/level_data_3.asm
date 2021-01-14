@@ -51,7 +51,3 @@ INCBIN "data/levels/level105.bin"
 ;test level which all unused level table slots point to
 Level106Data:
 INCBIN "data/levels/level106.bin"
-
-REPT 7673
-db $FF
-ENDR

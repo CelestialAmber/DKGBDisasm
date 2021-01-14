@@ -4493,23 +4493,4 @@ INCBIN "data/bank_0c_5ddd.bin"
 SGBPaulineHelpScreamSFX::
 INCBIN "audio/sfx/sgb_pauline_help_scream.brr"
 
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    rst $38
-    nop
-    nop
-    nop
-    inc b
-    REPT 4094
-    db $FF
-    ENDR
+db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$00,$00,$00,$04

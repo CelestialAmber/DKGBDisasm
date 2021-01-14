@@ -9861,7 +9861,3 @@ jr_000_3900:
     dec c
     jr nz, jr_000_3900
     ret
-
-REPT 1780
-db $FF
-ENDR

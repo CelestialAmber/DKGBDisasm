@@ -42,8 +42,4 @@ CreditsGraphics::
 ;uses special tile format
 ;the other mario/dk sprites also use the same palette?
 MarioCircusDemoSprites::
-    INCBIN "gfx/bank1a/mario_circus_demo_sprites.bin"   
-
-REPT 4003
-    db $FF
-ENDR
+    INCBIN "gfx/bank1a/mario_circus_demo_sprites.bin"
