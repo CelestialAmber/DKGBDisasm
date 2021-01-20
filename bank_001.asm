@@ -1865,7 +1865,7 @@ jr_001_4a5a:
 
 Call_01_4a75:
     ld a, $07
-    call Call_000_3872
+    call SendSGBPacketFromTable
     ld a, $2a
     ld [$c836], a
 Call_01_4a7f:
@@ -1882,7 +1882,7 @@ Call_01_4a7f:
     ld a, $e4
     ldh [rBGP], a
     ld a, $22
-    call Call_000_3872
+    call SendSGBPacketFromTable
     call Call_001_4c12
     jp IncrementFF90
 
@@ -2758,7 +2758,7 @@ jr_001_4f76:
     call $0fe6
     pop af
     add $24
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 
     call Call_000_10c6
@@ -3184,7 +3184,7 @@ jr_001_520a:
     sub $04
     ld [hl], a
     ld a, $0c
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 
 jr_001_521e:
@@ -3195,7 +3195,7 @@ jr_001_521e:
     add $04
     ld [hl], a
     ld a, $0d
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 
     ld hl, $c818
@@ -3596,7 +3596,7 @@ jr_001_5456:
     ld [hl], a
     ld [$c280], a
     ld a, $0c
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 
 jr_001_5474:
@@ -4406,7 +4406,7 @@ jr_001_58b9:
 
     call $1cfa
     ld a, $01
-    call Call_000_3872
+    call SendSGBPacketFromTable
     call $0fd9
     call Call_000_162c
     ld a, $0e
@@ -4421,17 +4421,17 @@ jr_001_58b9:
     ld a, $0d
     call Call_000_1e38
     ld a, $5a
-    call Call_000_3872
+    call SendSGBPacketFromTable
     ld a, [$c818]
     add $50
-    call Call_000_3872
+    call SendSGBPacketFromTable
     xor a
     ldh [$ff8f], a
     call Call_000_1e27
     call IncrementFF90
     call $0fe6
     ld a, $0b
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 
     ldh a, [$ff8b]
@@ -4798,7 +4798,7 @@ Jump_001_5b3a:
     ld b, $35
     call Call_001_5b47
     ld a, $2c
-    call Call_000_3872
+    call SendSGBPacketFromTable
     jp Jump_001_5c96
 
 
@@ -4842,7 +4842,7 @@ jr_001_5b67:
 jr_001_5b72:
     ld [hl], $01
     ld a, $0e
-    call Call_000_3872
+    call SendSGBPacketFromTable
     ld a, [$c837]
     cp $03
     jr z, jr_001_5b9b
@@ -5019,7 +5019,7 @@ Jump_001_5c86:
     ld b, $15
     call Call_001_5b47
     ld a, $0f
-    call Call_000_3872
+    call SendSGBPacketFromTable
     ldh a, [hCurrentScene]
     cp $1e
     jr z, jr_001_5cb7
@@ -5030,10 +5030,10 @@ Jump_001_5c96:
     and $03
     add $64
     push af
-    call Call_000_3872
+    call SendSGBPacketFromTable
     pop af
     sub $04
-    call Call_000_3872
+    call SendSGBPacketFromTable
     jr jr_001_5cb7
 
 Jump_001_5caa:

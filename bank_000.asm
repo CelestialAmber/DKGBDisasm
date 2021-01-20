@@ -102,7 +102,7 @@ CheckIfResetCombinationPressed:
     ret z ;return if so
 Reset:    ;reset the game
     ld a, $5f
-    call Call_000_3872
+    call SendSGBPacketFromTable
     call Call_000_0fd9
     ld a, $03
     call Call_000_1e38
@@ -119,7 +119,7 @@ Reset:    ;reset the game
     ldh [hFF90], a
     ld a, SceneIntroTitle
     ldh [hCurrentScene], a
-    jp Jump_000_0fe6
+    jp Call_000_0fe6
 
 
 Call_000_0221:
@@ -987,7 +987,7 @@ jr_000_079d:
     ldh [$ff8f], a
     call Call_000_0fe6
     ld a, $30
-    call Call_000_3872
+    call SendSGBPacketFromTable
     jr jr_000_07d7
 jr_000_07ce:
     call Call_000_0fe6
@@ -2276,7 +2276,7 @@ Bankswitch0fce:
 
 Call_000_0fd4:
     ld a, $07
-    call Call_000_3872
+    call SendSGBPacketFromTable
 
 Call_000_0fd9:
     di
@@ -2288,7 +2288,6 @@ Call_000_0fd9:
     jr jr_000_0ff9
 
 Call_000_0fe6:
-Jump_000_0fe6:
     ld a, [$c0a3]
     ldh [rIE], a
     ld a, [$c0a2]
@@ -2298,14 +2297,13 @@ Jump_000_0fe6:
 
     call Call_000_0fe6
     ld a, $0b
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 
 jr_000_0ff9:
     ldh a, [rLY]
     cp $91
     jr c, jr_000_0ff9
-
     ldh a, [rLCDC]
     and $7f
     ldh [rLCDC], a
@@ -6999,7 +6997,7 @@ jr_000_2860:
     add $03
 jr_000_286f:
     add $12
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 
 Call_000_2874:
@@ -7070,7 +7068,7 @@ Call_289c:
     call IncrementFF90
     call Call_000_0fe6
     ld a, $2f
-    call Call_000_3872
+    call SendSGBPacketFromTable
 Call_28e6:
     ld a, $10
     rst $10
@@ -9044,9 +9042,9 @@ InitIntroTitleScreen:
     bit 7, a
     ret z
     ld a, $04
-    call Call_000_3872
+    call SendSGBPacketFromTable
     ld a, $21
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 ;this leads to the intro tile graphics loading function (1d90)
 Call_000_342c:
@@ -9106,7 +9104,7 @@ Call_3464:
     call Call_000_10c6
     call Call_000_0fe6
     ld a, $08
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 
 Call_000_349a:
@@ -9196,7 +9194,7 @@ jr_000_351a:
     call Call_000_10c6
     call Call_000_0fe6
     ld a, $06
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 
 Call_000_3537:
@@ -9327,7 +9325,7 @@ Call_35cb:
     call Call_000_10c6
     call Call_000_0fe6
     ld a, $0c
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 Call_360b:
     call Call_000_0fd4
@@ -9348,7 +9346,7 @@ Call_360b:
     call Call_000_10c6
     call Call_000_0fe6
     ld a, $0c
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 
 Call_3638::

@@ -25,6 +25,7 @@ ATTR_TRN EQU $15 ; Set Attribute from ATF
 ATTR_SET EQU $16 ; Set Data to ATF
 MASK_EN  EQU $17 ; Game Boy Window Mask
 OBJ_TRN  EQU $18 ; Super NES OBJ Mode
+PAL_PRI  EQU $19 ; Palette Priority
 
 ATTR_BLK_CTRL_INSIDE  EQU 1
 ATTR_BLK_CTRL_LINE    EQU 2

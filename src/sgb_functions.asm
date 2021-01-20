@@ -1,11 +1,10 @@
 ;function for checking whether the game is running on Super Gameboy or not
-;offset 3718
 CheckIfOnSGB:
     ldh a, [rIE]
     set 0, a
     ei ;enable interrupts
     ld a, $0a
-    call Call_000_386f
+    call SendSGBPacketFromTableSkipSGBCheck
     ldh a, [rP1]
     cp $ff
     jr nz, .onSGB
@@ -14,7 +13,7 @@ CheckIfOnSGB:
     cp $ff
     jr nz, .onSGB
     ld a, $09
-    call Call_000_386f
+    call SendSGBPacketFromTableSkipSGBCheck
     ld hl, wIsOnSGB
     res 7, [hl] ;set the bit 7 of wIsOnSGB to 0 if not running on sgb, otherwise set it to 1
     ld a, $cc ;if the game is not running on sgb, set da40(HUD text type) to cc, otherwise set it to 9c
@@ -27,11 +26,11 @@ CheckIfOnSGB:
     ld a, $9c 
     ld [wHUDTextType], a
     ld a, $2d
-    call Call_000_3838
+    call SendSGBPacketFromTableDelay
     ld a, $1f
-    call Call_000_3838
+    call SendSGBPacketFromTableDelay
     di
-    call Call_000_384b
+    call InitRegistersSGBPacket
     ld a, $e4
     ldh [rBGP], a
     ld hl, $9800
@@ -58,10 +57,10 @@ jr_000_376a:
     ld a, $81
     ldh [rLCDC], a
     ld a, $27
-    call Call_000_3838
+    call SendSGBPacketFromTableDelay
     ei
     di
-    call Call_000_384b
+    call InitRegistersSGBPacket
     ld hl, SGBBorderGraphics2
     ld de, $8800
     ld bc, $06e0
@@ -69,10 +68,10 @@ jr_000_376a:
     ld a, $81
     ldh [rLCDC], a
     ld a, $2a
-    call Call_000_3838
+    call SendSGBPacketFromTableDelay
     ei
     di
-    call Call_000_384b
+    call InitRegistersSGBPacket
     ld hl, Bank1E_Graphics_6125 ;this doesn't seem like graphics
     ld de, $8800
     ld bc, $0860
@@ -80,10 +79,10 @@ jr_000_376a:
     ld a, $81
     ldh [rLCDC], a
     ld a, $28
-    call Call_000_3838
+    call SendSGBPacketFromTableDelay
     ei
     di
-    call Call_000_384b
+    call InitRegistersSGBPacket
     ld hl, SGBBorderPaletteData
     ld de, $8800
     ld bc, $1000
@@ -91,10 +90,10 @@ jr_000_376a:
     ld a, $81
     ldh [rLCDC], a
     ld a, $10
-    call Call_000_3838
+    call SendSGBPacketFromTableDelay
     ei
     di
-    call Call_000_384b
+    call InitRegistersSGBPacket
     ld hl, UnknownData_1E_4C72
     ld de, $8800
     ld bc, $0fd2
@@ -102,10 +101,10 @@ jr_000_376a:
     ld a, $81
     ldh [rLCDC], a
     ld a, $11
-    call Call_000_3838
+    call SendSGBPacketFromTableDelay
     ei
     di
-    call Call_000_384b
+    call InitRegistersSGBPacket
     ld a, $0c
     rst $10 ;switch to bank C
     ld hl, UnknownData_0c_5ddd
@@ -115,10 +114,10 @@ jr_000_376a:
     ld a, $81
     ldh [rLCDC], a
     ld a, $20
-    call Call_000_3838
+    call SendSGBPacketFromTableDelay
     ei
     di
-    call Call_000_384b
+    call InitRegistersSGBPacket
     ld hl, $6438 ;offset to the pauline help sfx in bank 0xC
     ld de, $8800
     ld bc, $0bca
@@ -126,39 +125,40 @@ jr_000_376a:
     ld a, $81
     ldh [rLCDC], a
     ld a, $20
-    call Call_000_3838
+    call SendSGBPacketFromTableDelay
     ei
     ld a, $05
-    call Call_000_3872
+    call SendSGBPacketFromTable
     ld a, $09
-    call Call_000_3872
+    call SendSGBPacketFromTable
     jp Jump_000_38fc
 
 
-Call_000_3838:
-    call Call_000_3872
-    ld b, $08
-    jr jr_000_3841
+SendSGBPacketFromTableDelay:
+    call SendSGBPacketFromTable
+    ld b, 8
+    jr DelayMainLoop
 
-Call_000_383f:
-    ld b, $04
-jr_000_3841:
-    ld de, $06d6
-    call Call_000_3866
+;Delays by ~70000 cycles (about 4 frames)
+Delay2:
+    ld b, 4
+DelayMainLoop:
+    ld de, 1750 ;Delay around 17500 cycles (1749*10 + 13 = 17503 cycles)
+    call DelayLoop
     dec b
-    jr nz, jr_000_3841
+    jr nz, DelayMainLoop
     ret
 
 
-Call_000_384b:
+InitRegistersSGBPacket:
     ldh a, [rIE]
     ld [$c0a3], a
     res 0, a
     ldh [rIE], a
-jr_000_3854:
+.loop:
     ldh a, [rLY]
     cp $91 ;wait for vblank
-    jr c, jr_000_3854
+    jr c, .loop
     ldh a, [rLCDC]
     and $7f ;and the lcdc register with 7f
     ldh [rLCDC], a
@@ -167,7 +167,8 @@ jr_000_3854:
     ret
 
 
-Call_000_3866:
+;Delays by 10*de + 3 cycles
+DelayLoop:
 .loop
     nop
     nop
@@ -178,22 +179,22 @@ Call_000_3866:
     jr nz, .loop
     ret
 
-Call_000_386f:
+SendSGBPacketFromTableSkipSGBCheck:
     ld b, a
-    jr jr_000_3879
+    jr SendSGBPacketFromTable.skipSGBCheck
 
 ;a: pointer table index
-Call_000_3872:
+SendSGBPacketFromTable:
     ld b, a
     ld a, [wIsOnSGB]
     bit 7, a
     ret z ;return if the game is not running on sgb
-jr_000_3879:
+.skipSGBCheck:
     ldh a, [hCurrentBank]
     push af
-    ld a, $1e
+    ld a, BANK(SGBPacketTable) ;load the bank with the table (bank 1e)
     rst $10
-    ld hl, Table_1e_4000
+    ld hl, SGBPacketTable
     ld a, b
     add a
     ld d, $00
@@ -203,7 +204,7 @@ jr_000_3879:
     ld h, [hl]
     ld l, a
     call SendSGBPacket
-    call Call_000_383f
+    call Delay2
     pop af
     rst $10
     ret
@@ -214,9 +215,9 @@ Call_000_3894:
     bit 7, a
     ret z ;return if the game is not running on sgb
     call SendSGBPacket
-    jp Call_000_383f
+    jp Delay2
 
-
+;value at hl: number of packets
 SendSGBPacket:
     ld a, [hl]
     and $07
@@ -231,34 +232,36 @@ SendSGBPacket:
     ;Set P14/P15 to 1
     ld [c], a
     ld b, $10
-.loop1:
+.nextByte:
     ld e, $08
     ld a, [hl+] ;Get the next byte
     ld d, a
-.loop2:
+.nextBit:
     bit 0, d
     ld a, $10 ;If the bit is 0, set P14/P15 to 0/1, otherwise set them to 1/0
     jr nz, .zeroBit
-    ld a, $20 ;Set P14/P15 to 1/0
+    ld a, $20 ;Set P14/P15 to 1/0 (bit is 1)
 .zeroBit:
     ld [c], a
-    ;Set P14/P15 to 1 (delay)
+    ;Set P14/P15 to 1 (must set between pulses)
     ld a, $30
     ld [c], a
     rr d ;go to the next bit
     dec e
-    jr nz, .loop2
+    jr nz, .nextBit
     dec b
-    jr nz, .loop1
+    jr nz, .nextByte
+    ;Send bit 1 as a stop bit (end of parameter data)
     ld a, $20
     ld [c], a
+    ;Set P14/P15 to 1
     ld a, $30
     ld [c], a
     pop bc
     dec b
-    ret z
+    ret z ;return if there are no more packets
     push bc
-    call Call_000_383f
+    call Delay2 ;wait for 70000 cycles
     jr .loop
 
 CheckInputSGB:
@@ -290,7 +293,7 @@ Jump_000_38fc:
 jr_000_3900:
     push af
     push bc
-    call Call_000_3872
+    call SendSGBPacketFromTable
     pop bc
     pop af
     inc a

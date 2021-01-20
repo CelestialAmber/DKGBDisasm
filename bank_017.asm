@@ -994,7 +994,7 @@ jr_017_7445:
     inc [hl]
     ld a, [$ca66]
     add $32
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 
 Call_017_7455:
@@ -1321,9 +1321,9 @@ Call_17_762f:
     bit 7, a
     jr z, jr_017_7655
     ld a, $4e
-    call Call_000_3872
+    call SendSGBPacketFromTable
     ld a, $4f
-    call Call_000_3872
+    call SendSGBPacketFromTable
     jr jr_017_765a
 jr_017_7655:
     ld a, $2f

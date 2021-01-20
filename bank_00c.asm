@@ -3756,7 +3756,7 @@ jr_00c_55ad:
     call IncrementFF90
     call $0fe6
     ld a, $29
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 
 Call_00c_55b8:
@@ -4177,7 +4177,7 @@ jr_00c_57ff:
     call Call_00c_58ed
     call $0fe6
     ld a, $2b
-    jp Call_000_3872
+    jp SendSGBPacketFromTable
 
 ;this sets something in the palette data for the credits graphics, depending if running on sgb or not
 ;called after loading the credits picture   
@@ -4332,7 +4332,7 @@ jr_00c_58e1:
     pop de
     pop de
     ld a, $4d
-    call Call_000_3872
+    call SendSGBPacketFromTable
     jp IncrementFF90
 
 

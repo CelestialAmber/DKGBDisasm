@@ -4,7 +4,8 @@
 
 SECTION "ROM Bank $01e", ROMX[$4000], BANK[$1e]
 
-INCLUDE "data/bank_1e_table_data.asm"
+
+INCLUDE "data/sgb_packets.asm"
 
 ;46f0
 ;sgb border palette data

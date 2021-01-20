@@ -38,6 +38,29 @@ ENDM
 dwb: MACRO
 ENDM
 
+
+
+assert_valid_rgb: MACRO
+rept _NARG
+	assert 0 <= (\1) && (\1) <= 31, "RGB channel must be 0-31"
+	shift
+endr
+ENDM
+
+RGB: MACRO
+rept _NARG / 3
+	assert_valid_rgb \1, \2, \3
+	dw palred (\1) + palgreen (\2) + palblue (\3)
+	shift 3
+endr
+ENDM
+
+palred   EQUS "(1 << 0) *"
+palgreen EQUS "(1 << 5) *"
+palblue  EQUS "(1 << 10) *"
+
+
+
 ;Graphics data header macro
 ;Format:
 ;1:bank number
