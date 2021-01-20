@@ -9,6 +9,8 @@ INCLUDE "home.asm"
 
 
 INCLUDE "bank_000.asm"
+INCLUDE "src/sgb_functions.asm"
+
 INCLUDE "bank_001.asm"
 INCLUDE "bank_002.asm"
 INCLUDE "bank_003.asm"

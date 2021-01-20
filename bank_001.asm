@@ -4,7 +4,7 @@
 
 SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
 
-    ldh a, [$ff90]
+    ldh a, [hFF90]
     rst $08
     dec c
     ld b, b
@@ -63,7 +63,7 @@ jr_001_403f:
     pop hl
     push hl
     ld c, $20
-    call $1057
+    call CopyData
     pop hl
 
 jr_001_4050:
@@ -245,7 +245,7 @@ jr_001_4154:
     ld [hl], a
     pop de
     ld c, $20
-    call $1057
+    call CopyData
     pop hl
     pop de
     ld [hl], $01
@@ -271,7 +271,7 @@ jr_001_4192:
     ld a, SceneStage
     ldh [hCurrentScene], a
     ld a, SceneStageMapScreen
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld hl, $c707
     ld de, $c709
     ld a, [de]
@@ -510,7 +510,7 @@ jr_001_42ea:
     ld [$c82d], a
     ld [$c835], a
     ld a, $04
-    ldh [$ff90], a
+    ldh [hFF90], a
     jp $2627
 
 
@@ -791,7 +791,7 @@ jr_001_445a:
     ldh [$ff95], a
     ld [$c70f], a
     ld a, $12
-    ldh [$ff90], a
+    ldh [hFF90], a
     jp $0da3
 
 
@@ -810,7 +810,7 @@ Call_001_446d:
     ld de, $c8d1
     push de
     ld c, $06
-    call $1057
+    call CopyData
     pop de
     jp Call_000_1685
 
@@ -840,7 +840,7 @@ jr_001_449f:
 
 jr_001_44a3:
     xor a
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, [wIsOnSGB]
     bit 5, a
     ld a, $10
@@ -859,11 +859,11 @@ jr_001_44b1:
     push hl
     ld de, $c7f3
     ld c, $04
-    call $1057
+    call CopyData
     pop hl
     ld de, $c7f9
     ld c, $04
-    call $1057
+    call CopyData
     ld de, $c809
     call Call_001_455b
     ld a, l
@@ -986,7 +986,7 @@ jr_001_4573:
     ld hl, $48cf
     ld de, $c7f3
     ld c, $04
-    call $1057
+    call CopyData
     call IncrementFF90
     call $0dc3
     ld de, $4932
@@ -1447,11 +1447,11 @@ Jump_001_47cf:
     ld hl, $48d3
     ld de, $c7ff
     ld c, $04
-    call $1057
+    call CopyData
     ld hl, $48d7
     ld de, $c805
     ld c, $04
-    call $1057
+    call CopyData
     call IncrementFF90
     call $0dc3
     ld de, $4935
@@ -1630,7 +1630,7 @@ jr_001_4902:
     ld e, a
     ld c, $06
     push hl
-    call $1057
+    call CopyData
     pop hl
     xor a
     ld [hl+], a
@@ -1669,7 +1669,7 @@ jr_001_492e:
     ld bc, $000e
     add hl, bc
     ld c, $06
-    call $1057
+    call CopyData
     pop bc
     pop hl
 
@@ -1759,7 +1759,7 @@ Call_01_49bf:
     ld de, $c7f1
     ld c, $08
     push de
-    call $1057
+    call CopyData
     pop de
     call Call_000_1685
     ld hl, $c20b
@@ -1818,7 +1818,7 @@ Call_001_4a1e:
     ld [$c80a], a
     ldh [$ff95], a
     ld a, $04
-    ldh [$ff90], a
+    ldh [hFF90], a
     pop af
     ret
 
@@ -1834,7 +1834,7 @@ Call_01_4a2e:
     push de
     ld hl, $60ce
     ld c, $10
-    call $1057
+    call CopyData
     ld hl, $c80a
     ld a, [hl]
     inc [hl]
@@ -1900,7 +1900,7 @@ Call_01_4aa4:
     ld hl, wIsOnSGB
     set 5, [hl]
     xor a
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, SceneStage
     ldh [hCurrentScene], a
     ld hl, $48f3
@@ -1968,7 +1968,7 @@ Call_01_4b14:
     ld a, SceneFileSelect
     ldh [hCurrentScene], a
     xor a
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 Call_01_4b21:
@@ -1978,7 +1978,7 @@ Call_01_4b21:
 
 Call_01_4b2a:
     ld a, $06
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -2227,7 +2227,7 @@ jr_001_4c80:
     ld [$c82d], a
     ld [$c835], a
     call Call_001_4cb3
-    ld hl, $ff90
+    ld hl, hFF90
     inc [hl]
     inc [hl]
     inc [hl]
@@ -2247,7 +2247,7 @@ jr_001_4c9b:
     ld a, SceneStage
     ldh [hCurrentScene], a
     xor a
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -2319,7 +2319,7 @@ jr_001_4cfb:
     ld hl, $bfbe
     ld de, $bfdc
     ld c, $1e
-    call $1057
+    call CopyData
     jp Call_000_1eb2
 
 
@@ -2446,7 +2446,7 @@ jr_001_4da6:
     call Call_001_4cb3
     xor a
     ldh [$ff95], a
-    ld hl, $ff90
+    ld hl, hFF90
     inc [hl]
     inc [hl]
     jr jr_001_4d9e
@@ -2467,7 +2467,7 @@ Jump_001_4dc0:
     ld a, [$c860]
     ld [$c818], a
     xor a
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, SceneRecordMenu
     ldh [hCurrentScene], a
     ret
@@ -2497,7 +2497,7 @@ jr_001_4dee:
     call $10a1
     call $0e4d
     ld a, [$c70b]
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld hl, hCurrentScene
     dec [hl]
     call Call_001_4ec2
@@ -2548,7 +2548,7 @@ jr_001_4e3a:
 
 
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -2704,7 +2704,7 @@ Call_001_4f09:
     ld hl, $9800
     ld bc, $0400
     ld a, $bc
-    call FillMemory1
+    call FillMemory16
     ld a, $20
     call $1d6b
     call Call_001_50e0
@@ -2858,7 +2858,7 @@ jr_001_4f76:
     ld [hl+], a
     xor a
     ld [hl], a
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -3025,7 +3025,7 @@ jr_001_5114:
     cp $2e
     jr nz, jr_001_512e
 
-    ld hl, $ff90
+    ld hl, hFF90
     ld a, [hl]
     cp $01
     jr nz, jr_001_512e
@@ -3051,7 +3051,7 @@ jr_001_512e:
     cp $03
     jr z, jr_001_5158
 
-    ldh a, [$ff90]
+    ldh a, [hFF90]
     cp $01
     ld a, $30
     jr nz, jr_001_5154
@@ -3069,7 +3069,7 @@ jr_001_5158:
     ld a, [hl]
     or a
     jr z, jr_001_5176
-    ldh a, [$ff90]
+    ldh a, [hFF90]
     cp $01
     ld a, $38
     jr nz, jr_001_516a
@@ -3087,13 +3087,13 @@ jr_001_516f:
 jr_001_5176:
     bit 0, b
     jr nz, jr_001_519f
-    ldh a, [$ff90]
+    ldh a, [hFF90]
     cp $01
     ret nz
     bit 7, b
     jr z, jr_001_518f
     ld a, $16
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, $07
     ld [$c82f], a
     ld [$c835], a
@@ -3101,7 +3101,7 @@ jr_001_518f:
     bit 6, b
     ret z
     ld a, $13
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, $07
     ld [$c82f], a
     ld [$c835], a
@@ -3139,7 +3139,7 @@ jr_001_519f:
     add $18
     ld [$c267], a
     push hl
-    ld hl, $ff90
+    ld hl, hFF90
     ld a, $04
     add [hl]
     ld [hl], a
@@ -3147,7 +3147,7 @@ jr_001_519f:
     cp $0d
     jr nz, jr_001_51eb
     ld a, $0d
-    ldh [$ff90], a
+    ldh [hFF90], a
     xor a
     ld [$c28b], a
     ret
@@ -3163,7 +3163,7 @@ jr_001_51eb:
 
 
 jr_001_51f6:
-    ld hl, $ff90
+    ld hl, hFF90
     ld a, [hl]
     add $07
     ld [hl], a
@@ -3173,7 +3173,7 @@ jr_001_51f6:
     ld a, $35
     ld [de], a
     ld a, $1e
-    ldh [$ff90], a
+    ldh [hFF90], a
 jr_001_520a:
     xor a
     ld [$c28b], a
@@ -3216,7 +3216,7 @@ jr_001_523b:
     ld de, $c86d
     ld c, $0e
     push de
-    call $1057
+    call CopyData
     pop de
     jp Call_000_1685
 
@@ -3236,7 +3236,7 @@ jr_001_523b:
     push af
     ld [hl], $ff
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     pop af
 
 jr_001_5269:
@@ -3337,7 +3337,7 @@ jr_001_52d9:
     ld hl, $c202
     res 0, [hl]
     res 1, [hl]
-    ld hl, $ff90
+    ld hl, hFF90
     dec [hl]
     ld a, $06
     ld [$c831], a
@@ -3459,7 +3459,7 @@ jr_001_5340:
     ret nz
 
     xor a
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, SceneStage
     ldh [hCurrentScene], a
     call Call_001_4d16
@@ -3518,14 +3518,14 @@ Jump_001_53e3:
     add $05
     ld [hl], a
     ld a, $12
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld [$c240], a
     ret
 
 
     call Call_000_10c6
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, $a7
     ldh [rWX], a
     ret
@@ -3566,14 +3566,14 @@ jr_001_542a:
     jr z, jr_001_5474
 
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld hl, $c817
     ld a, [hl]
     or a
     jr z, jr_001_5456
 
     ld a, $24
-    ldh [$ff90], a
+    ldh [hFF90], a
     xor a
     ld [hl+], a
     ld [hl], a
@@ -3612,7 +3612,7 @@ jr_001_5474:
     call $1fb3
     call Call_000_1fdf
     xor a
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -3626,7 +3626,7 @@ jr_001_5491:
     sub $04
     ld [hl], a
     ld a, $20
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld [$c280], a
     call Call_000_1ea9
     xor a
@@ -3683,7 +3683,7 @@ jr_001_54e5:
     ld hl, $bfbe
     ld de, $bfdc
     ld c, $1e
-    call $1057
+    call CopyData
     jp Call_000_1eb2
 
 
@@ -3805,7 +3805,7 @@ jr_001_5586:
 Jump_001_5590:
 jr_001_5590:
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     jp Call_000_1eb2
 
 
@@ -3943,7 +3943,7 @@ jr_001_5644:
 Jump_001_564e:
 jr_001_564e:
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     jp Call_000_1eb2
 
 
@@ -3969,7 +3969,7 @@ Call_001_5655:
     ret nz
 
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -4004,7 +4004,7 @@ jr_001_569d:
 
 
     ld a, $1a
-    ldh [$ff90], a
+    ldh [hFF90], a
 
 jr_001_56a7:
     xor a
@@ -4015,7 +4015,7 @@ jr_001_56a7:
     ld a, $10
     ld [$c202], a
     ld a, $10
-    ldh [$ff90], a
+    ldh [hFF90], a
     jr jr_001_56a7
 
     ld hl, $c360
@@ -4112,7 +4112,7 @@ Call_001_571a:
     ld a, $a7
     ldh [rWX], a
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -4272,7 +4272,7 @@ Call_001_5815:
 
 Call_001_582b:
     ld c, $06
-    call $1057
+    call CopyData
     push hl
     ld hl, $001a
     add hl, de
@@ -4289,7 +4289,7 @@ Call_001_5839:
     ld hl, $a190
     ld bc, $0190
     xor a
-    call FillMemory1
+    call FillMemory16
     jp Call_000_1eb2
 
 
@@ -4364,7 +4364,7 @@ Call_001_5893:
     ld de, $c287
     push de
     ld c, $04
-    call $1057
+    call CopyData
     pop hl
     ld de, $c283
     ld a, [$c202]
@@ -4400,7 +4400,7 @@ jr_001_58b9:
     ld a, SceneStage
     ldh [hCurrentScene], a
     xor a
-    ldh [$ff90], a
+    ldh [hFF90], a
     jp $0da3
 
 
@@ -4479,13 +4479,13 @@ jr_001_5950:
     ret z
 
     xor a
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
     ld hl, $c80f
     ld a, [hl+]
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, [hl]
     ldh [hCurrentScene], a
     ld hl, $c0a2
@@ -4685,7 +4685,7 @@ jr_001_5a77:
     ld hl, $5fa4
     ld de, $d76d
     ld c, $a6
-    call $1057
+    call CopyData
     ld h, d
     ld l, e
     xor a
@@ -4868,7 +4868,7 @@ jr_001_5b9b:
     xor a
     ld [$c838], a
     ld a, [$c70b]
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, $11
     call Call_001_5c5c
     ld a, $12
@@ -4879,7 +4879,7 @@ jr_001_5bae:
     ld hl, $5f3a
     ld de, $d76d
     ld c, $6a
-    call $1057
+    call CopyData
     ld h, d
     ld l, e
     xor a
@@ -5590,105 +5590,4 @@ db $C7, $99, $C9, $9B, $CB, $8E, $CD, $CE, $CF, $D0, $D1, $D2, $D3, $D4, $D5, $D
 db $D7, $D8, $D9, $DA, $DB, $DC, $DD, $DE, $DF, $E0, $E1, $E2, $E3, $E4, $E5, $E6
 db $E7, $E8, $E9, $EA, $EB, $EC, $ED, $EE, $EF, $F0, $F1, $F2, $F3, $F4, $F5, $F6
 db $F7, $F8, $F9, $FA, $FB, $FC, $7F, $60, $66, $62, $FE, $FF, $25, $BF, $5B, $9C
-db $74, $3D, $3E, $3F, $46, $7E, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-db $FF, $FF, $FF, $FF, $FF, $FF, $FF
+db $74, $3D, $3E, $3F, $46, $7E

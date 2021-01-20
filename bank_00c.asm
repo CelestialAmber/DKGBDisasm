@@ -1762,7 +1762,7 @@ jr_00c_484b:
     ld h, $00
     ld l, c
     ld b, $05
-    call $105e
+    call Call_105e
     inc hl
     ld a, l
     pop hl
@@ -2359,11 +2359,11 @@ jr_00c_4aff:
     ld a, [hl+]
     ld d, a
     ld c, $04
-    call $1057
+    call CopyData
     dec b
     jr nz, jr_00c_4aff
     ld a, [$c851]
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 Call_0c_4b11:
@@ -2759,7 +2759,7 @@ jr_00c_4cf6:
     ret
 
 Call_0c_4d05:
-    ldh a, [$ff90]
+    ldh a, [hFF90]
     cp $03
     ret c
     cp $0b
@@ -3881,7 +3881,7 @@ jr_00c_5605:
     ld a, $05
     ld [$c82d], a
     ld [$c835], a
-    ldh a, [$ff90]
+    ldh a, [hFF90]
     sub $02
     swap a
     ld h, $00
@@ -3911,7 +3911,7 @@ jr_00c_5605:
     ld [hl+], a
     xor a
     ld [hl], a
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
     call Call_00c_5753
@@ -4066,7 +4066,7 @@ Call_00c_5765:
     and $03
     jr nz, jr_00c_578e
 
-    ldh a, [$ff90]
+    ldh a, [hFF90]
     cp $05
     jr nz, jr_00c_5791
 

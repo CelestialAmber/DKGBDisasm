@@ -5061,7 +5061,7 @@ jr_008_5427:
     inc b
     rlca
     inc bc
-    ld bc, HeaderLogo
+    ld bc, $104
     inc bc
     ld [bc], a
     inc b
@@ -5079,7 +5079,7 @@ jr_008_5427:
     ld b, $04
     ld [bc], a
     inc b
-    ld bc, HeaderLogo
+    ld bc, $104
     inc b
     inc bc
     inc b
@@ -5175,7 +5175,7 @@ jr_008_5427:
     ld bc, $0203
     inc b
     inc b
-    ld bc, HeaderLogo
+    ld bc, $104
     inc b
     dec b
     inc b
@@ -5215,7 +5215,7 @@ jr_008_5427:
     ld [bc], a
     ld bc, $0403
     ld b, $03
-    ld bc, HeaderLogo
+    ld bc, $104
     inc bc
     ld [bc], a
     ld b, $05
@@ -8459,7 +8459,7 @@ jr_008_669e:
     ld h, d
     ld l, $00
     ld b, e
-    call $105e
+    call Call_105e
     ld hl, $c0fc
     ld [hl], d
     inc hl
@@ -8486,7 +8486,7 @@ jr_008_66c2:
     ld h, e
     ld l, $00
     ld b, d
-    call $105e
+    call Call_105e
     pop bc
     ld a, b
     and a
@@ -8917,7 +8917,7 @@ jr_008_690e:
     dec [hl]
     ret nz
 
-    call $1080
+    call Call_1080
     ld a, b
     ld [$c1f1], a
     ld a, $01
@@ -9234,7 +9234,7 @@ jr_008_6aa0:
 
     ld a, $0f
     ld [hl], a
-    call $1080
+    call Call_1080
     ld [hl], $01
     inc hl
     ld a, [$c0f8]
@@ -9997,7 +9997,7 @@ jr_008_6efd:
     ld a, $0b
     ld [hl], a
     ld a, $0d
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld hl, $c103
     res 2, [hl]
     xor a
@@ -11277,7 +11277,7 @@ jr_008_75d2:
     xor a
     ld [hl], a
     ld a, [$c70b]
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 

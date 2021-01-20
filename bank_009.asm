@@ -8163,7 +8163,7 @@ jr_009_66ee:
     jp Jump_009_696b
 
 
-    ld hl, HeaderLogo
+    ld hl, $104
     add hl, de
     ld a, [hl]
     and $c0

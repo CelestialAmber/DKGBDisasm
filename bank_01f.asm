@@ -688,7 +688,7 @@ jr_01f_43db:
     ld l, $00
     ld a, [$c1f1]
     ld b, a
-    call $105e
+    call Call_105e
     srl h
     rr l
     srl h
@@ -1480,8 +1480,8 @@ jr_01f_485d:
 jr_01f_4875:
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c1f1], a
     ld a, [$c0fa]
@@ -1991,7 +1991,7 @@ jr_01f_4b2c:
     ld a, $0b
     ld [hl], a
     ld a, $0d
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld hl, $c100
     xor a
     ld [hl+], a
@@ -2087,8 +2087,8 @@ jr_01f_4bd2:
     ld hl, $4c9b
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c1f1], a
     ld bc, $9008
@@ -2110,8 +2110,8 @@ jr_01f_4c12:
     ld hl, $4ca9
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c1f1], a
     ld bc, $90d8
@@ -2133,8 +2133,8 @@ jr_01f_4c3f:
     ld hl, $4cb7
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c1f1], a
     ld bc, $c008
@@ -2162,8 +2162,8 @@ Jump_01f_4c6b:
     ld hl, $4cc5
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c1f1], a
     ld bc, $c0d8
@@ -2300,8 +2300,8 @@ jr_01f_4cce:
     ld hl, $4d89
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c1f1], a
     ld bc, $8870
@@ -2317,8 +2317,8 @@ jr_01f_4d49:
     ld hl, $4d97
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c1f1], a
     ld bc, $8870
@@ -2665,8 +2665,8 @@ jr_01f_4f3a:
     ld hl, $4f9a
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c1f1], a
     ld a, [$c0fa]
@@ -3785,7 +3785,7 @@ jr_01f_5552:
     dec c
     jr nz, jr_01f_5535
 
-    ld de, $ff90
+    ld de, hFF90
     ld a, [de]
     ld [$c70b], a
     ld a, $10
@@ -5734,8 +5734,8 @@ Jump_01f_60bf:
 jr_01f_60cb:
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c1f1], a
     ld a, [$c0fa]
@@ -7648,8 +7648,8 @@ jr_01f_6b15:
     ld hl, $6bfd
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c111], a
     ld [$c1f1], a
@@ -7666,8 +7666,8 @@ jr_01f_6b15:
     ld hl, $6c0b
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c112], a
     ld [$c1f1], a
@@ -7986,8 +7986,8 @@ jr_01f_6da7:
 jr_01f_6db5:
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c1f1], a
     ld b, $00
@@ -8099,7 +8099,7 @@ jr_01f_6e11:
     ld [$c10c], a
     ld de, $c1c4
     ld c, $04
-    call $1057
+    call CopyData
     call Call_000_1635
     ld a, $69
     ld [hl+], a
@@ -8165,7 +8165,7 @@ Jump_01f_6ec5:
     ld hl, $6f27
     ld de, $c1c4
     ld c, $0c
-    call $1057
+    call CopyData
     call Call_000_1635
     ld a, $a7
     ld [hl+], a
@@ -8233,7 +8233,7 @@ Jump_01f_6ec5:
     ld hl, $6f5d
     ld de, $c1c4
     ld c, $1c
-    call $1057
+    call CopyData
     ld a, $07
     ld [$c10c], a
     ld a, $09
@@ -8320,11 +8320,11 @@ jr_01f_6f89:
     ld hl, $7088
     ld de, $c1d0
     ld c, $0c
-    call $1057
+    call CopyData
     ld hl, $70a0
     ld de, $c1e8
     ld c, $04
-    call $1057
+    call CopyData
     ld a, $07
     ld [$c10c], a
     call Call_000_1635
@@ -8377,7 +8377,7 @@ jr_01f_701e:
     ld hl, $7088
     ld de, $c1c4
     ld c, $1c
-    call $1057
+    call CopyData
 
 Jump_01f_7033:
     call Call_000_1635
@@ -8603,7 +8603,7 @@ jr_01f_7138:
     ld hl, $71dd
     ld de, $c1c4
     ld c, $1c
-    call $1057
+    call CopyData
     ld a, $08
     ld [$c10c], a
     xor a
@@ -8776,7 +8776,7 @@ jr_01f_727d:
     add hl, bc
     ld de, $c1c4
     ld c, $04
-    call $1057
+    call CopyData
     call Call_000_1635
     ld a, $69
     ld [hl+], a
@@ -8858,7 +8858,7 @@ jr_01f_72e5:
     ld hl, $73a2
     ld de, $c1c4
     ld c, $04
-    call $1057
+    call CopyData
     jp Jump_01f_738a
 
 
@@ -8880,7 +8880,7 @@ jr_01f_7304:
     ld hl, $739e
     ld de, $c1c4
     ld c, $04
-    call $1057
+    call CopyData
     jr jr_01f_738a
 
 jr_01f_7324:
@@ -8911,7 +8911,7 @@ jr_01f_7339:
     ld hl, $73a6
     ld de, $c1c4
     ld c, $04
-    call $1057
+    call CopyData
     call Call_01f_738a
     jr jr_01f_737c
 
@@ -8943,7 +8943,7 @@ jr_01f_7366:
     ld hl, $73aa
     ld de, $c1c4
     ld c, $04
-    call $1057
+    call CopyData
     call Call_01f_738a
 
 jr_01f_737c:
@@ -9517,7 +9517,7 @@ jr_01f_76be:
     ld hl, $76fb
     ld de, $dd59
     ld c, $10
-    call $1057
+    call CopyData
     ld a, [$dd59]
     ld [$dd69], a
     ld a, [$c10e]
@@ -9688,7 +9688,7 @@ jr_01f_7795:
     ld [$c21a], a
     ld [$dd1a], a
     ld a, $0d
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld hl, $ff91
     ld a, [hl]
     or $c3

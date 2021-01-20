@@ -58,7 +58,7 @@ jr_007_402d:
     ld a, $03
     ld [$c831], a
     ld [$c835], a
-    ld hl, $ff90
+    ld hl, hFF90
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $11
@@ -1147,7 +1147,7 @@ jr_007_4653:
     xor a
     ld [$c213], a
     ld a, $0c
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, $33
     ld [$c836], a
     ret
@@ -1896,7 +1896,7 @@ jr_007_4a4d:
     ld [hl], a
     ld de, $c7f7
     call Call_000_1685
-    call $1080
+    call Call_1080
     inc [hl]
     inc hl
     ld a, $ce
@@ -3364,7 +3364,7 @@ jr_007_5279:
     ld hl, $737b
     ld de, $dd59
     ld c, $10
-    call $1057
+    call CopyData
     ret
 
 
@@ -3695,7 +3695,7 @@ jr_007_543b:
     ld hl, $737b
     ld de, $dd59
     ld c, $10
-    call $1057
+    call CopyData
     ret
 
 
@@ -6409,8 +6409,8 @@ jr_007_6335:
     ld hl, $6443
     ld de, $c1ab
     ld c, $14
-    call $1057
-    call $1080
+    call CopyData
+    call Call_1080
     ld a, b
     ld [$c1f1], a
     pop bc
@@ -6654,7 +6654,7 @@ Call_007_64be:
     ld hl, $737b
     ld de, $dd59
     ld c, $10
-    call $1057
+    call CopyData
     ret
 
 
@@ -7016,7 +7016,7 @@ jr_007_6688:
     ld h, [hl]
     ld l, a
     inc hl
-    ld de, $ff90
+    ld de, hFF90
     ld a, [de]
     ld [$c70b], a
     ld a, $10
@@ -7853,7 +7853,7 @@ Call_007_6b0e:
     ret nz
 
 jr_007_6b3d:
-    ldh a, [$ff90]
+    ldh a, [hFF90]
     cp $10
     ret z
 
@@ -8166,7 +8166,7 @@ jr_007_6cf4:
     ld a, $03
     ld [$c831], a
     ld [$c835], a
-    ld hl, $ff90
+    ld hl, hFF90
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $11
@@ -8698,7 +8698,7 @@ jr_007_6f5c:
     jr c, jr_007_6fdf
 
 jr_007_6fab:
-    ldh a, [$ff90]
+    ldh a, [hFF90]
     cp $13
     jr z, jr_007_6fb7
 
@@ -8716,7 +8716,7 @@ jr_007_6fb7:
     ld a, [de]
     ld [hl], a
     ld a, [$c70b]
-    ldh [$ff90], a
+    ldh [hFF90], a
     xor a
     ld [$c838], a
     ld hl, $ff91
@@ -9007,11 +9007,11 @@ Call_07_7158:
     ld hl, $dd17
     ld bc, $009c
     xor a
-    call FillMemory1
+    call FillMemory16
     ld hl, $c117
     ld bc, $005b
     xor a
-    call FillMemory1
+    call FillMemory16
     ld hl, $ff91
     xor a
     ld c, $04
@@ -9019,7 +9019,7 @@ Call_07_7158:
     ld hl, $737b
     ld de, $dd59
     ld c, $10
-    call $1057
+    call CopyData
     ld a, [$dd59]
     ld [$dd69], a
     ld hl, $74d5
@@ -11140,7 +11140,7 @@ jr_007_7a9a:
     ld [hl+], a
     ld [hl+], a
     ld [hl], $a5
-    ld hl, $ff90
+    ld hl, hFF90
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $16
@@ -11211,7 +11211,7 @@ jr_007_7a9a:
     ld [hl+], a
     ld [hl+], a
     ld [hl], $a6
-    ld hl, $ff90
+    ld hl, hFF90
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $16
@@ -11282,7 +11282,7 @@ jr_007_7a9a:
     ld [hl+], a
     ld [hl+], a
     ld [hl], $a7
-    ld hl, $ff90
+    ld hl, hFF90
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $16
@@ -11353,7 +11353,7 @@ jr_007_7a9a:
     ld [hl+], a
     ld [hl+], a
     ld [hl], $eb
-    ld hl, $ff90
+    ld hl, hFF90
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $16
@@ -11424,7 +11424,7 @@ jr_007_7a9a:
     ld [hl+], a
     ld [hl+], a
     ld [hl], $ec
-    ld hl, $ff90
+    ld hl, hFF90
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $16

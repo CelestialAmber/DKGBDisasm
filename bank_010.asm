@@ -53,7 +53,7 @@ jr_010_4037:
 
 
 Jump_010_4044:
-    ldh a, [$ff90]
+    ldh a, [hFF90]
     cp $11
     jp z, Jump_010_4003
     ld a, [$c0a4]
@@ -203,7 +203,7 @@ jr_010_411e:
     dec c
     jr nz, jr_010_410b
     ld a, $19
-    ldh [$ff90], a
+    ldh [hFF90], a
     pop de
     ld a, [de]
     ld c, a
@@ -610,7 +610,7 @@ jr_010_4365:
     inc hl
     set 7, [hl]
     ld a, $19
-    ldh [$ff90], a
+    ldh [hFF90], a
     jp Jump_010_4144
 
 
@@ -623,7 +623,7 @@ jr_010_4365:
     jp nz, Jump_010_4003
 
     ld a, $19
-    ldh [$ff90], a
+    ldh [hFF90], a
     jp Jump_010_4144
 
 
@@ -645,7 +645,7 @@ jr_010_4365:
     ld [hl+], a
     ld [hl], a
     ld a, $19
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld hl, $c205
     ld de, $0019
     ld c, $20
@@ -667,7 +667,7 @@ jr_010_43b9:
 
 
     ld a, $19
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, [$dd1a]
     and a
     jp nz, Jump_010_4003
@@ -1692,7 +1692,7 @@ Call_010_499c:
     ret z
 
     push hl
-    call $1080
+    call Call_1080
     pop de
     dec de
     ld a, b
@@ -2912,7 +2912,7 @@ jr_010_5367:
     or $03
     ld [hl], a
     ld a, $0c
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 jr_010_5397:
     ld a, $34
@@ -2933,7 +2933,7 @@ jr_010_5397:
     ld a, $01
     ld [$c213], a
     ld a, $0c
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld hl, $ff91
     set 0, [hl]
     ret
@@ -3019,7 +3019,7 @@ jr_010_5442:
     xor a
     ld [$c21a], a
     ld a, $0c
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, $80
     ld [$c836], a
     ld a, $03
@@ -3144,7 +3144,7 @@ jr_010_54f7:
     ld a, $80
     ld [$c836], a
     ld a, $0d
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld hl, $ff91
     set 0, [hl]
     ret
@@ -3185,7 +3185,7 @@ jr_010_5542:
     xor a
     ld [$c21a], a
     ld a, $0c
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, $80
     ld [$c836], a
     ld a, $48
@@ -3285,7 +3285,7 @@ jr_010_55e1:
     xor a
     ld [$c21a], a
     ld a, $0d
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, $80
     ld [$c836], a
     ld a, $34
@@ -3840,7 +3840,7 @@ jr_010_593e:
     ld [hl], a
     ld [$c21a], a
     ld a, $0d
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld hl, $ff91
     ld a, [hl]
     or $03
@@ -3941,7 +3941,7 @@ jr_010_5a00:
     ret
 jr_010_5a08:
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -4026,7 +4026,7 @@ jr_010_5a75:
     ld hl, $613b
     ld de, $dd72
     ld c, $08
-    call $1057
+    call CopyData
     ld a, $01
     ld [$dd7a], a
     ret
@@ -4090,7 +4090,7 @@ Call_10_5ad2:
     dec [hl]
     ret nz
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -4115,7 +4115,7 @@ Call_10_5adc:
     ret
 jr_010_5afe:
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -4250,7 +4250,7 @@ Call_10_5bbf:
     dec [hl]
     ret nz
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -4325,7 +4325,7 @@ jr_010_5c25:
     ld [hl+], a
     ld [hl], a
     ld a, $0c
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 Call_10_5c38:
@@ -4444,7 +4444,7 @@ Jump_010_5cdc:
     ld a, $04
     ld [$c202], a
     ld a, $0c
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 Call_10_5cf0:
@@ -4452,7 +4452,7 @@ Call_10_5cf0:
     dec [hl]
     ret nz
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 Call_10_5cfa:
@@ -4465,7 +4465,7 @@ Call_10_5cfa:
     ld a, $04
     ld [$c202], a
     ld a, $0c
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld a, $33
     ld [$c836], a
     ret
@@ -4589,7 +4589,7 @@ Call_10_5dbd:
     dec [hl]
     ret nz
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -4756,14 +4756,14 @@ Call_10_5ec7:
     dec [hl]
     ret nz
     ld a, $0c
-    ldh [$ff90], a
+    ldh [hFF90], a
     ld hl, $c21a
     inc [hl]
     ret
 
 Call_10_5ed5:
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -4803,7 +4803,7 @@ Call_10_5ef8:
     ld hl, $c202
     inc [hl]
     ld a, $0c
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -4829,7 +4829,7 @@ Call_10_5f29:
     dec [hl]
     ret nz
     ld a, $01
-    ldh [$ff90], a
+    ldh [hFF90], a
     ret
 
 
@@ -5396,7 +5396,7 @@ Call_10_6179:
     ld hl, $7348
     ld de, $c117
     ld c, $20
-    call $1057
+    call CopyData
     ret
 
 
@@ -7973,7 +7973,7 @@ jr_010_6f21:
     jp Jump_010_72a4
 
 
-    ld hl, $ff90
+    ld hl, hFF90
     inc [hl]
     ld l, c
     ld h, b
@@ -8541,7 +8541,7 @@ jr_010_7221:
 
 jr_010_723b:
     ld hl, $7248
-    call $38a0
+    call SendSGBPacket
 
 jr_010_7241:
     pop de

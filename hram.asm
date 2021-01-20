@@ -11,3 +11,4 @@ hJoypad equ $FF8A
 hCurrentBank equ $FF8C
 ;stores the current game scene/state(cutscene, in stage, title screen/intro cutscene, others)
 hCurrentScene equ $FF8E
+hFF90 equ $FF90
