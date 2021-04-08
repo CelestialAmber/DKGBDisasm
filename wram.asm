@@ -1,5 +1,15 @@
 SECTION "WRAM Bank 0", WRAM0
-ds $81d
+ds $809
+
+;c809
+wUncompressedLength::
+ds 2
+
+;c80b
+wDecompressDestinationAddress::
+ds 2
+
+ds $10
 
 ;c81d
 wTimerHundredsDigit::
@@ -30,6 +40,7 @@ ds 1
 
 SECTION "WRAM Bank 1", WRAMX
 ds $a40
+
 ;da40
 ;set to 9c if running on super gameboy, otherwise cc
 ;this changes the hud text in-game to have a shadow if on sgb, otherwise it isn't modified

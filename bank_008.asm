@@ -9997,7 +9997,7 @@ jr_008_6efd:
     ld a, $0b
     ld [hl], a
     ld a, $0d
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld hl, $c103
     res 2, [hl]
     xor a
@@ -11277,7 +11277,7 @@ jr_008_75d2:
     xor a
     ld [hl], a
     ld a, [$c70b]
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 

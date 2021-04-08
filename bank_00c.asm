@@ -2363,7 +2363,7 @@ jr_00c_4aff:
     dec b
     jr nz, jr_00c_4aff
     ld a, [$c851]
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 Call_0c_4b11:
@@ -2759,7 +2759,7 @@ jr_00c_4cf6:
     ret
 
 Call_0c_4d05:
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     cp $03
     ret c
     cp $0b
@@ -3753,7 +3753,7 @@ jr_00c_5523:
     ld [$c809], a
 
 jr_00c_55ad:
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     call $0fe6
     ld a, $29
     jp SendSGBPacketFromTable
@@ -3843,7 +3843,7 @@ jr_00c_5605:
     ldh a, [$ff95]
     call Call_00c_5793
     cp $b5
-    call z, IncrementFF90
+    call z, IncrementFunctionTableIndex
     call Call_00c_5753
     jp Call_000_10c6
 
@@ -3857,7 +3857,7 @@ jr_00c_5605:
     ld hl, $c80a
     ld a, [hl]
     or a
-    jp z, IncrementFF90
+    jp z, IncrementFunctionTableIndex
 
     dec [hl]
     xor a
@@ -3881,7 +3881,7 @@ jr_00c_5605:
     ld a, $05
     ld [$c82d], a
     ld [$c835], a
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     sub $02
     swap a
     ld h, $00
@@ -3894,7 +3894,7 @@ jr_00c_5605:
     ld de, $c22f
     add hl, de
     ld [hl], h
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     xor a
@@ -3911,7 +3911,7 @@ jr_00c_5605:
     ld [hl+], a
     xor a
     ld [hl], a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
     call Call_00c_5753
@@ -3919,7 +3919,7 @@ jr_00c_5605:
     call Call_00c_5793
     cp $1e
     ret nz
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     xor a
     ld [$c80a], a
     ld [$c80b], a
@@ -4066,7 +4066,7 @@ Call_00c_5765:
     and $03
     jr nz, jr_00c_578e
 
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     cp $05
     jr nz, jr_00c_5791
 
@@ -4158,7 +4158,7 @@ jr_00c_57c5:
     inc a
 jr_00c_57ff:
     call Call_000_1e38
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ld hl, $c809
     xor a
     ld [hl+], a
@@ -4193,7 +4193,7 @@ Call_0c_5827:
     ld a, [hl]
     inc [hl]
     cp $07
-    jp z, IncrementFF90
+    jp z, IncrementFunctionTableIndex
 .jr_0c_583d 
     ld d, $00
     ld e, a
@@ -4333,7 +4333,7 @@ jr_00c_58e1:
     pop de
     ld a, $4d
     call SendSGBPacketFromTable
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
 Call_00c_58ed:

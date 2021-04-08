@@ -1991,7 +1991,7 @@ jr_01f_4b2c:
     ld a, $0b
     ld [hl], a
     ld a, $0d
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld hl, $c100
     xor a
     ld [hl+], a
@@ -3785,7 +3785,7 @@ jr_01f_5552:
     dec c
     jr nz, jr_01f_5535
 
-    ld de, hFF90
+    ld de, hFunctionTableIndex
     ld a, [de]
     ld [$c70b], a
     ld a, $10
@@ -9688,7 +9688,7 @@ jr_01f_7795:
     ld [$c21a], a
     ld [$dd1a], a
     ld a, $0d
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld hl, $ff91
     ld a, [hl]
     or $c3

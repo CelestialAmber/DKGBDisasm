@@ -5271,7 +5271,7 @@ jr_00a_5c7f:
     ld a, $0b
     ld [hl], a
     ld a, $0d
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld hl, $c103
     res 2, [hl]
     xor a

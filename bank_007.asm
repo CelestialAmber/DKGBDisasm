@@ -58,7 +58,7 @@ jr_007_402d:
     ld a, $03
     ld [$c831], a
     ld [$c835], a
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $11
@@ -1147,7 +1147,7 @@ jr_007_4653:
     xor a
     ld [$c213], a
     ld a, $0c
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, $33
     ld [$c836], a
     ret
@@ -7016,7 +7016,7 @@ jr_007_6688:
     ld h, [hl]
     ld l, a
     inc hl
-    ld de, hFF90
+    ld de, hFunctionTableIndex
     ld a, [de]
     ld [$c70b], a
     ld a, $10
@@ -7853,7 +7853,7 @@ Call_007_6b0e:
     ret nz
 
 jr_007_6b3d:
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     cp $10
     ret z
 
@@ -8166,7 +8166,7 @@ jr_007_6cf4:
     ld a, $03
     ld [$c831], a
     ld [$c835], a
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $11
@@ -8698,7 +8698,7 @@ jr_007_6f5c:
     jr c, jr_007_6fdf
 
 jr_007_6fab:
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     cp $13
     jr z, jr_007_6fb7
 
@@ -8716,7 +8716,7 @@ jr_007_6fb7:
     ld a, [de]
     ld [hl], a
     ld a, [$c70b]
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     xor a
     ld [$c838], a
     ld hl, $ff91
@@ -11140,7 +11140,7 @@ jr_007_7a9a:
     ld [hl+], a
     ld [hl+], a
     ld [hl], $a5
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $16
@@ -11211,7 +11211,7 @@ jr_007_7a9a:
     ld [hl+], a
     ld [hl+], a
     ld [hl], $a6
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $16
@@ -11282,7 +11282,7 @@ jr_007_7a9a:
     ld [hl+], a
     ld [hl+], a
     ld [hl], $a7
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $16
@@ -11353,7 +11353,7 @@ jr_007_7a9a:
     ld [hl+], a
     ld [hl+], a
     ld [hl], $eb
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $16
@@ -11424,7 +11424,7 @@ jr_007_7a9a:
     ld [hl+], a
     ld [hl+], a
     ld [hl], $ec
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     ld a, [hl]
     ld [$c70b], a
     ld [hl], $16

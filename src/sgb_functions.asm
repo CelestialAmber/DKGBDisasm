@@ -37,16 +37,16 @@ CheckIfOnSGB:
     ld de, $000c
     ld a, $80
     ld b, $0d
-jr_000_3768:
+.loop1:
     ld c, $14
-jr_000_376a:
+.loop2:
     ld [hl+], a
     inc a
     dec c
-    jr nz, jr_000_376a
+    jr nz, .loop2
     add hl, de
     dec b
-    jr nz, jr_000_3768
+    jr nz, .loop1
     ld a, $1e ;switch to bank 1e, which contains alot of the sgb exclusive graphics
     rst $10
     ;load the sgb border graphics
@@ -131,7 +131,7 @@ jr_000_376a:
     call SendSGBPacketFromTable
     ld a, $09
     call SendSGBPacketFromTable
-    jp Jump_000_38fc
+    jp SendSGBSoundDataPackets
 
 
 SendSGBPacketFromTableDelay:
@@ -210,14 +210,14 @@ SendSGBPacketFromTable:
     ret
 
 
-Call_000_3894:
+SendSGBPacketCheckSGB:
     ld a, [wIsOnSGB]
     bit 7, a
     ret z ;return if the game is not running on sgb
     call SendSGBPacket
     jp Delay2
 
-;value at hl: number of packets
+;hl: offset to packet data
 SendSGBPacket:
     ld a, [hl]
     and $07
@@ -287,10 +287,11 @@ CheckInputSGB:
     ldh [rP1], a
     ret
 
-Jump_000_38fc:
+;Sends the 8 last sound data packets in the table.
+SendSGBSoundDataPackets:
     ld c, $08
-    ld a, $68
-jr_000_3900:
+    ld a, $68 ;Set a to the index of the first sound data packet
+.loop:
     push af
     push bc
     call SendSGBPacketFromTable
@@ -298,5 +299,5 @@ jr_000_3900:
     pop af
     inc a
     dec c
-    jr nz, jr_000_3900
+    jr nz, .loop
     ret

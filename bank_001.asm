@@ -4,7 +4,7 @@
 
 SECTION "ROM Bank $001", ROMX[$4000], BANK[$1]
 
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     rst $08
     dec c
     ld b, b
@@ -84,7 +84,7 @@ jr_001_4050:
     inc de
     ld a, [hl]
     ld [de], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ld a, $48
     ld [$da3d], a
     ld [$da3e], a
@@ -181,7 +181,7 @@ jr_001_40ce:
     call Call_001_43a6
     xor a
     ld [$c22b], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     call $0a38
@@ -271,7 +271,7 @@ jr_001_4192:
     ld a, SceneStage
     ldh [hCurrentScene], a
     ld a, SceneStageMapScreen
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld hl, $c707
     ld de, $c709
     ld a, [de]
@@ -347,7 +347,7 @@ jr_001_420e:
     ld a, $4c
     ld [$c82e], a
     ld [$c835], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
 Call_001_422d:
@@ -510,7 +510,7 @@ jr_001_42ea:
     ld [$c82d], a
     ld [$c835], a
     ld a, $04
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     jp $2627
 
 
@@ -791,7 +791,7 @@ jr_001_445a:
     ldh [$ff95], a
     ld [$c70f], a
     ld a, $12
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     jp $0da3
 
 
@@ -840,7 +840,7 @@ jr_001_449f:
 
 jr_001_44a3:
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, [wIsOnSGB]
     bit 5, a
     ld a, $10
@@ -898,7 +898,7 @@ jr_001_44f7:
     jr jr_001_4509
 
 jr_001_4506:
-    call IncrementFF90
+    call IncrementFunctionTableIndex
 
 jr_001_4509:
     pop hl
@@ -987,7 +987,7 @@ jr_001_4573:
     ld de, $c7f3
     ld c, $04
     call CopyData
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     call $0dc3
     ld de, $4932
     ld h, $00
@@ -1030,7 +1030,7 @@ jr_001_4573:
     ld a, $13
     ld [$c82f], a
     ld [$c835], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
 jr_001_45d9:
@@ -1144,7 +1144,7 @@ jr_001_463d:
     ld [hl], a
     ld a, $2d
     ldh [$ff8f], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ld hl, $c815
     ld a, [hl-]
     cp $1e
@@ -1153,7 +1153,7 @@ jr_001_463d:
     inc hl
     xor a
     ld [hl], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
 jr_001_4681:
@@ -1210,7 +1210,7 @@ jr_001_469d:
     ld [$c812], a
     ld b, $04
     call $3841
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
 jr_001_46ce:
@@ -1262,7 +1262,7 @@ jr_001_46ea:
     ld [$c835], a
     ld a, $2d
     ldh [$ff8f], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ld hl, $c815
     ld a, [hl-]
     cp $23
@@ -1277,7 +1277,7 @@ jr_001_46ea:
     ld hl, $ff40
     set 0, [hl]
     set 1, [hl]
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
 jr_001_472a:
@@ -1319,11 +1319,11 @@ jr_001_4742:
     ldh [$ff8f], a
     ld a, $a3
     ld [$c811], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ld hl, $c811
     ld a, [hl]
     cp $07
-    jp z, IncrementFF90
+    jp z, IncrementFunctionTableIndex
 
     ld a, [hl]
     sub $04
@@ -1354,7 +1354,7 @@ jr_001_4742:
 jr_001_4788:
     ld [$c82f], a
     ld [$c835], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
 jr_001_4791:
@@ -1409,10 +1409,10 @@ jr_001_47c9:
 Jump_001_47cf:
     xor a
     ldh [$ff95], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ldh a, [$ff95]
     cp $04
-    jp z, IncrementFF90
+    jp z, IncrementFunctionTableIndex
 
     ld hl, $4803
     ld d, $00
@@ -1452,7 +1452,7 @@ Jump_001_47cf:
     ld de, $c805
     ld c, $04
     call CopyData
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     call $0dc3
     ld de, $4935
     ld h, $00
@@ -1478,7 +1478,7 @@ Jump_001_47cf:
     ld hl, $c809
     ld a, [hl]
     or a
-    jp z, IncrementFF90
+    jp z, IncrementFunctionTableIndex
 
     dec [hl]
     ld a, $12
@@ -1611,14 +1611,15 @@ jr_001_48fb:
     ld c, a
     nop
 
+
+
+Call_001_48fd:
     ld hl, $c201
     ld c, $20
-
 jr_001_4902:
     ld a, [hl+]
     cp $a4
     jr nz, jr_001_4921
-
     push hl
     push bc
     inc hl
@@ -1641,15 +1642,14 @@ jr_001_4902:
     ld [hl], a
     pop bc
     pop hl
-
 jr_001_4921:
     ld de, $001f
     add hl, de
     dec c
     jr nz, jr_001_4902
-
     ret
 
+    
 
     ld hl, $c201
     ld c, $20
@@ -1746,7 +1746,7 @@ Call_01_4998:
     ld [$c200], a
     call Call_000_10c6
     call Call_001_4c12
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 Call_01_49bf:
     call Call_001_4a1e
@@ -1766,7 +1766,7 @@ Call_01_49bf:
     xor a
     ld [hl+], a
     ld [hl], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     adc b
@@ -1802,7 +1802,7 @@ Jump_001_4a10:
     inc [hl]
     ld a, [hl]
     cp $1b
-    call z, IncrementFF90
+    call z, IncrementFunctionTableIndex
     inc de
     inc de
     ld a, [de]
@@ -1818,7 +1818,7 @@ Call_001_4a1e:
     ld [$c80a], a
     ldh [$ff95], a
     ld a, $04
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     pop af
     ret
 
@@ -1826,7 +1826,7 @@ Call_01_4a2e:
     call Call_000_10c6
     ld a, [$c80a]
     cp $07
-    jp z, IncrementFF90
+    jp z, IncrementFunctionTableIndex
     ld a, [wIsOnSGB]
     bit 7, a
     jr z, jr_001_4a5a
@@ -1884,7 +1884,7 @@ Call_01_4a7f:
     ld a, $22
     call SendSGBPacketFromTable
     call Call_001_4c12
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 Call_01_4aa4:
     ld hl, $def7
@@ -1900,7 +1900,7 @@ Call_01_4aa4:
     ld hl, wIsOnSGB
     set 5, [hl]
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, SceneStage
     ldh [hCurrentScene], a
     ld hl, $48f3
@@ -1952,7 +1952,7 @@ jr_001_4af8:
     ld a, $60
     ld [$c82d], a
     ld [$c835], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ld hl, wIsOnSGB
     set 1, [hl]
     set 2, [hl]
@@ -1968,7 +1968,7 @@ Call_01_4b14:
     ld a, SceneFileSelect
     ldh [hCurrentScene], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 Call_01_4b21:
@@ -1978,7 +1978,7 @@ Call_01_4b21:
 
 Call_01_4b2a:
     ld a, $06
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 
@@ -2220,14 +2220,14 @@ jr_001_4c80:
     pop hl
     ld a, [hl]
     or a
-    jp z, IncrementFF90
+    jp z, IncrementFunctionTableIndex
     dec a
     jr nz, jr_001_4c9b
     ld a, $4a
     ld [$c82d], a
     ld [$c835], a
     call Call_001_4cb3
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     inc [hl]
     inc [hl]
     inc [hl]
@@ -2241,13 +2241,13 @@ jr_001_4c9b:
     ld [$c836], a
     xor a
     ld [$c340], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     ld a, SceneStage
     ldh [hCurrentScene], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 
@@ -2433,7 +2433,7 @@ jr_001_4d8e:
 jr_001_4d9e:
     ld a, $01
     ld [$c835], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
 jr_001_4da6:
@@ -2446,7 +2446,7 @@ jr_001_4da6:
     call Call_001_4cb3
     xor a
     ldh [$ff95], a
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     inc [hl]
     inc [hl]
     jr jr_001_4d9e
@@ -2467,7 +2467,7 @@ Jump_001_4dc0:
     ld a, [$c860]
     ld [$c818], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, SceneRecordMenu
     ldh [hCurrentScene], a
     ret
@@ -2497,7 +2497,7 @@ jr_001_4dee:
     call $10a1
     call $0e4d
     ld a, [$c70b]
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld hl, hCurrentScene
     dec [hl]
     call Call_001_4ec2
@@ -2544,11 +2544,11 @@ jr_001_4e3a:
     xor a
     ld [$c200], a
     call Call_000_10c6
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     ld a, $01
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 
@@ -2557,7 +2557,7 @@ jr_001_4e3a:
     cp $2b
     ret nz
 
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     ld a, $01
@@ -2752,7 +2752,7 @@ jr_001_4f76:
     jr nz, jr_001_4f69
     ld a, $21
     call $1d6b
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ld a, $35
     ld [$c836], a
     call $0fe6
@@ -2768,10 +2768,10 @@ jr_001_4f76:
     ret nz
     xor a
     ld [$c817], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     call Call_000_10c6
     call Call_001_508c
     ldh a, [rDIV]
@@ -2794,7 +2794,7 @@ jr_001_4f76:
     ld [$c22f], a
     xor a
     ldh [$ff95], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     call Call_000_10c6
@@ -2808,7 +2808,7 @@ jr_001_4f76:
     xor a
     ld [hl-], a
     ld [hl], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     call Call_000_10c6
@@ -2837,7 +2837,7 @@ jr_001_4f76:
     add hl, de
     ld a, [hl]
     ld [$c809], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     call Call_000_10c6
@@ -2858,7 +2858,7 @@ jr_001_4f76:
     ld [hl+], a
     xor a
     ld [hl], a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 
@@ -2889,7 +2889,7 @@ jr_001_5050:
 
     ld a, $37
     ld [$c836], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
 
 jr_001_507a:
     pop hl
@@ -2967,7 +2967,7 @@ Call_001_50c3:
     dec [hl]
     ret nz
 
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
 Call_001_50e0:
@@ -3025,7 +3025,7 @@ jr_001_5114:
     cp $2e
     jr nz, jr_001_512e
 
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     ld a, [hl]
     cp $01
     jr nz, jr_001_512e
@@ -3051,7 +3051,7 @@ jr_001_512e:
     cp $03
     jr z, jr_001_5158
 
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     cp $01
     ld a, $30
     jr nz, jr_001_5154
@@ -3069,7 +3069,7 @@ jr_001_5158:
     ld a, [hl]
     or a
     jr z, jr_001_5176
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     cp $01
     ld a, $38
     jr nz, jr_001_516a
@@ -3077,23 +3077,23 @@ jr_001_5158:
 jr_001_516a:
     ld [de], a
     dec [hl]
-    call IncrementFF90
+    call IncrementFunctionTableIndex
 jr_001_516f:
     xor a
     ld [$c20b], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
 jr_001_5176:
     bit 0, b
     jr nz, jr_001_519f
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     cp $01
     ret nz
     bit 7, b
     jr z, jr_001_518f
     ld a, $16
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, $07
     ld [$c82f], a
     ld [$c835], a
@@ -3101,7 +3101,7 @@ jr_001_518f:
     bit 6, b
     ret z
     ld a, $13
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, $07
     ld [$c82f], a
     ld [$c835], a
@@ -3139,7 +3139,7 @@ jr_001_519f:
     add $18
     ld [$c267], a
     push hl
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     ld a, $04
     add [hl]
     ld [hl], a
@@ -3147,7 +3147,7 @@ jr_001_519f:
     cp $0d
     jr nz, jr_001_51eb
     ld a, $0d
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     xor a
     ld [$c28b], a
     ret
@@ -3163,7 +3163,7 @@ jr_001_51eb:
 
 
 jr_001_51f6:
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     ld a, [hl]
     add $07
     ld [hl], a
@@ -3173,7 +3173,7 @@ jr_001_51f6:
     ld a, $35
     ld [de], a
     ld a, $1e
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
 jr_001_520a:
     xor a
     ld [$c28b], a
@@ -3205,7 +3205,7 @@ jr_001_521e:
     add a
     ld e, a
     cp $02
-    call z, IncrementFF90
+    call z, IncrementFunctionTableIndex
 
 jr_001_523b:
     ld hl, $5272
@@ -3236,7 +3236,7 @@ jr_001_523b:
     push af
     ld [hl], $ff
     ld a, $01
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     pop af
 
 jr_001_5269:
@@ -3337,7 +3337,7 @@ jr_001_52d9:
     ld hl, $c202
     res 0, [hl]
     res 1, [hl]
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     dec [hl]
     ld a, $06
     ld [$c831], a
@@ -3434,7 +3434,7 @@ jr_001_5340:
     ld a, $45
     ld [$c82e], a
     ld [$c835], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     call Call_000_10c6
@@ -3450,7 +3450,7 @@ jr_001_5340:
     ld [hl+], a
     ld [hl], a
     ld [$c20b], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     call Call_000_10c6
@@ -3459,7 +3459,7 @@ jr_001_5340:
     ret nz
 
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, SceneStage
     ldh [hCurrentScene], a
     call Call_001_4d16
@@ -3495,7 +3495,7 @@ jr_001_5340:
     jp Call_000_1eb2
 
 
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     call Call_000_10c6
@@ -3518,14 +3518,14 @@ Jump_001_53e3:
     add $05
     ld [hl], a
     ld a, $12
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld [$c240], a
     ret
 
 
     call Call_000_10c6
     ld a, $01
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, $a7
     ldh [rWX], a
     ret
@@ -3566,14 +3566,14 @@ jr_001_542a:
     jr z, jr_001_5474
 
     ld a, $01
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld hl, $c817
     ld a, [hl]
     or a
     jr z, jr_001_5456
 
     ld a, $24
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     xor a
     ld [hl+], a
     ld [hl], a
@@ -3612,7 +3612,7 @@ jr_001_5474:
     call $1fb3
     call Call_000_1fdf
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 
@@ -3626,7 +3626,7 @@ jr_001_5491:
     sub $04
     ld [hl], a
     ld a, $20
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld [$c280], a
     call Call_000_1ea9
     xor a
@@ -3798,14 +3798,14 @@ jr_001_554f:
 jr_001_5586:
     xor a
     ld [$c20b], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     jp Call_000_1eb2
 
 
 Jump_001_5590:
 jr_001_5590:
     ld a, $01
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     jp Call_000_1eb2
 
 
@@ -3872,7 +3872,7 @@ jr_001_5590:
     ld [hl], d
     xor a
     ld [$c20b], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
     call Call_000_1ea9
@@ -3936,14 +3936,14 @@ jr_001_5641:
 jr_001_5644:
     xor a
     ld [$c20b], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     jp Call_000_1eb2
 
 
 Jump_001_564e:
 jr_001_564e:
     ld a, $01
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     jp Call_000_1eb2
 
 
@@ -3969,7 +3969,7 @@ Call_001_5655:
     ret nz
 
     ld a, $01
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 
@@ -3977,7 +3977,7 @@ Call_001_5655:
     call Call_001_5888
     ld a, [$c28b]
     cp $21
-    jp z, IncrementFF90
+    jp z, IncrementFunctionTableIndex
 
     ld hl, $5e9c
     ld d, $00
@@ -4004,7 +4004,7 @@ jr_001_569d:
 
 
     ld a, $1a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
 
 jr_001_56a7:
     xor a
@@ -4015,7 +4015,7 @@ jr_001_56a7:
     ld a, $10
     ld [$c202], a
     ld a, $10
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     jr jr_001_56a7
 
     ld hl, $c360
@@ -4027,13 +4027,13 @@ jr_001_56a7:
     add $0a
     call $1de6
     call Call_001_571a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     call Call_000_10c6
     ld de, $0020
     ld hl, $c36b
     ld a, [hl]
     cp $30
-    jp z, IncrementFF90
+    jp z, IncrementFunctionTableIndex
 
     and $07
     jr nz, jr_001_56f9
@@ -4112,7 +4112,7 @@ Call_001_571a:
     ld a, $a7
     ldh [rWX], a
     ld a, $01
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 
@@ -4400,7 +4400,7 @@ jr_001_58b9:
     ld a, SceneStage
     ldh [hCurrentScene], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     jp $0da3
 
 
@@ -4428,7 +4428,7 @@ jr_001_58b9:
     xor a
     ldh [$ff8f], a
     call Call_000_1e27
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     call $0fe6
     ld a, $0b
     jp SendSGBPacketFromTable
@@ -4445,7 +4445,7 @@ jr_001_58b9:
     ld a, $05
     ld [$c82f], a
     ld [$c835], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 
 jr_001_5931:
@@ -4479,13 +4479,13 @@ jr_001_5950:
     ret z
 
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 
     ld hl, $c80f
     ld a, [hl+]
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, [hl]
     ldh [hCurrentScene], a
     ld hl, $c0a2
@@ -4868,7 +4868,7 @@ jr_001_5b9b:
     xor a
     ld [$c838], a
     ld a, [$c70b]
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, $11
     call Call_001_5c5c
     ld a, $12
@@ -4934,7 +4934,7 @@ jr_001_5bae:
     ld h, $00
     ld l, a
     ldh a, [hCurrentScene]
-    cp $1e
+    cp SceneCutscene
     jr z, jr_001_5c32
 
     ld de, $d78b
@@ -5021,7 +5021,7 @@ Jump_001_5c86:
     ld a, $0f
     call SendSGBPacketFromTable
     ldh a, [hCurrentScene]
-    cp $1e
+    cp SceneCutscene
     jr z, jr_001_5cb7
 
 Jump_001_5c96:

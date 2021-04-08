@@ -110,7 +110,7 @@ ENDM
 
 
 SGBPacketTable:
-    dw Packet_0
+    dw Packet_0 ;index 0
     dw Packet_1
     dw Packet_2
     dw Packet_3
@@ -120,7 +120,7 @@ SGBPacketTable:
     dw Packet_7
     dw Packet_8
     dw MltReq1Packet
-    dw MltReq2Packet
+    dw MltReq2Packet ;index 10
     dw Packet_11
     dw Packet_12
     dw Packet_13
@@ -130,7 +130,7 @@ SGBPacketTable:
     dw Packet_17
     dw Packet_18
     dw Packet_18
-    dw Packet_18
+    dw Packet_18 ;index 20
     dw Packet_18
     dw Packet_19
     dw Packet_20
@@ -140,7 +140,7 @@ SGBPacketTable:
     dw Packet_24
     dw Packet_25
     dw Packet_26
-    dw Packet_27
+    dw Packet_27 ;index 30
     dw Packet_28
     dw Packet_29
     dw Packet_30
@@ -150,7 +150,7 @@ SGBPacketTable:
     dw Packet_34
     dw Packet_32
     dw Packet_35
-    dw Packet_36
+    dw Packet_36 ;index 40
     dw Packet_37
     dw Packet_38
     dw Packet_39
@@ -160,7 +160,7 @@ SGBPacketTable:
     dw Packet_43
     dw Packet_44
     dw Packet_45
-    dw Packet_46
+    dw Packet_46 ;index 50
     dw Packet_47
     dw Packet_48
     dw Packet_50
@@ -170,7 +170,7 @@ SGBPacketTable:
     dw Packet_53
     dw Packet_54
     dw Packet_55
-    dw Packet_56
+    dw Packet_56 ;index 60
     dw Packet_57
     dw Packet_57
     dw Packet_58
@@ -180,7 +180,7 @@ SGBPacketTable:
     dw Packet_62
     dw Packet_63
     dw Packet_64
-    dw Packet_65
+    dw Packet_65 ;index 70
     dw Packet_66
     dw Packet_67
     dw Packet_68
@@ -190,7 +190,7 @@ SGBPacketTable:
     dw Packet_72
     dw Packet_73
     dw Packet_74
-    dw Packet_75
+    dw Packet_75 ;index 80
     dw Packet_77
     dw Packet_78
     dw Packet_77
@@ -200,7 +200,7 @@ SGBPacketTable:
     dw Packet_78
     dw Packet_79
     dw Packet_77
-    dw Packet_79
+    dw Packet_79 ;index 90
     dw Packet_70
     dw Packet_70
     dw Packet_70
@@ -210,7 +210,7 @@ SGBPacketTable:
     dw Packet_86
     dw Packet_87
     dw Packet_88
-    dw Packet_81
+    dw Packet_81 ;index 100
     dw Packet_82
     dw Packet_83
     dw Packet_84
@@ -220,7 +220,7 @@ SGBPacketTable:
     dw Packet_92
     dw Packet_93
     dw Packet_94
-    dw Packet_95
+    dw Packet_95 ;index 110
     dw Packet_96
 
 ;offset 40e0

@@ -918,7 +918,7 @@ Jump_017_73b1:
     jr c, jr_017_73ce
     cp $1a
     jr z, jr_017_73ce
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     jp jr_017_7429
 jr_017_73ce:
     call $0b11
@@ -933,7 +933,7 @@ jr_017_73ce:
     ld [hl], $14
     pop hl
     call $16ab
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ld a, [wLives]
     ld h, $00
     ld l, a
@@ -1154,10 +1154,10 @@ Call_17_7533:
     cp $1a
     jr z, jr_017_7543
     ld a, $06
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 jr_017_7543:
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ld hl, $c5c0
     ld a, $03
     ld [hl+], a
@@ -1194,7 +1194,7 @@ Call_17_756c:
     ld h, [hl]
     ld l, a
     call Call_017_7605
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 jr_017_758c:
     ld hl, $c811
     ld a, [hl+]
@@ -1304,7 +1304,7 @@ Call_17_7620:
     ld a, [$c5cb]
     cp $1e
     ret nz
-    call IncrementFF90
+    call IncrementFunctionTableIndex
 Call_17_762f:
     xor a
     ldh [$ff95], a
@@ -1331,7 +1331,7 @@ jr_017_7655:
 jr_017_765a:
     xor a
     ld [$c20b], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 jr_017_7661:
     ldh a, [$ff8b]
     bit 0, a
@@ -1343,7 +1343,7 @@ jr_017_766e:
     ld a, SceneStage
     ldh [hCurrentScene], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 Call_17_7676:
@@ -1382,8 +1382,8 @@ jr_017_76a6:
     or a
     jr z, jr_017_76c0
     bit 1, [hl]
-    call nz, IncrementFF90
-    jp IncrementFF90
+    call nz, IncrementFunctionTableIndex
+    jp IncrementFunctionTableIndex
 jr_017_76c0:
     ret
 

@@ -101,6 +101,7 @@ CheckIfResetCombinationPressed:
     cp SceneCredits ;is the player at the credits?
     ret z ;return if so
 Reset:    ;reset the game
+    ;Send Packet_80
     ld a, $5f
     call SendSGBPacketFromTable
     call Call_000_0fd9
@@ -116,7 +117,7 @@ Reset:    ;reset the game
     ld [$c0a3], a
     ldh [rIE], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, SceneIntroTitle
     ldh [hCurrentScene], a
     jp Call_000_0fe6
@@ -172,10 +173,11 @@ MainLoop:
     ei
     ld a, [$c701]
     or a
-    jr nz, jr_000_0284
+    jr nz, .skipOAMDMA
     call hOAMDMAFunction ;call oam dma function
-jr_000_0284:
+.skipOAMDMA:
     call Call_000_16e2
+    ;Switch to the bank in hCurrentBank
     ldh a, [hCurrentBank]
     ld [$2000], a
     ldh a, [rSTAT]
@@ -854,7 +856,7 @@ jr_000_06ac:
     res 5, [hl]
     jp Reset
 jr_000_06ba:
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     rst $08
 
 
@@ -908,14 +910,14 @@ dw Call_0bc7
 
 
 Call_0719:
-    call Call_000_09e2
+    call CheckForBonusGame
     call Call_000_0cd5
     call Call_000_1cfa
     ld hl, $c853
     xor a
     ld [hl+], a
     ld [hl], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ld a, $07
     rst $10
     call Call_07_7157
@@ -952,7 +954,7 @@ Call_0734:
     dec a
     ld [$ddb3], a
     ld a, $02
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, [$c85b]
     cp $03
     jr nz, jr_000_079a
@@ -992,7 +994,7 @@ jr_000_079d:
 jr_000_07ce:
     call Call_000_0fe6
     ld hl, $d88c
-    call Call_000_3894
+    call SendSGBPacketCheckSGB
 jr_000_07d7:
     ld a, $01
     rst $10
@@ -1011,7 +1013,7 @@ Call_07dd:
     cp [hl]
     ret nz
 jr_000_07f5:
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     xor a
     ld [$da46], a
     ld [$da4a], a
@@ -1030,7 +1032,7 @@ jr_000_07f5:
     cp $03
     jr nz, jr_000_0821
     ld a, $1b
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 jr_000_0821:
     cp $05
@@ -1043,22 +1045,22 @@ jr_000_082d:
     ld a, [$da45]
     ld [$c836], a
 jr_000_0833:
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     call Call_000_0857
     jp Jump_000_1511
 
 Call_083c:
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     call Call_000_085d
     call Call_000_150b
     jp Jump_000_0c18
 
 Call_0848:
     ld a, $03
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     jr jr_000_0851
 Call_084e:
-    call IncrementFF90
+    call IncrementFunctionTableIndex
 jr_000_0851:
     call Call_000_085d
     jp Call_000_150b
@@ -1111,14 +1113,14 @@ jr_000_0894:
 Call_000_08aa:
     xor a
     ld [$c809], a
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     ld a, [hl]
     ld [$c70b], a
     ld a, $29
     ld [hl], a
     ret
 jr_000_08b9:
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     ld [$c70b], a
     jp GotoNextScene
 
@@ -1134,7 +1136,7 @@ Call_08c1:
 Call_08d3:
     xor a
     ld [$ddb4], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
 Call_08da:
     call Call_000_1754
 Call_08dd:
@@ -1159,7 +1161,7 @@ Call_08ec:
     call Call_000_12e2
     call Call_000_17ee
     call Call_000_0f7e
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     cp $0c
     ret z
     ld hl, wIsOnSGB
@@ -1186,7 +1188,7 @@ Call_08ec:
     jr jr_000_0942
 jr_000_093f:
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
 jr_000_0942:
     ld hl, $c858
     ld a, $ff
@@ -1201,7 +1203,7 @@ jr_000_0942:
     ld a, SceneGameOverScreen ;go to the game over screen
     ldh [hCurrentScene], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 Call_095a:
@@ -1225,15 +1227,15 @@ Call_095a:
 Call_097e:
     ld a, $01
     rst $10
-    ld a, $18
+    ld a, ScenePlaceObject
     ldh [hCurrentScene], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
 .end
     ret
 
 Call_0989:
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     xor a
     ldh [$ff95], a
     ld a, $03
@@ -1247,7 +1249,7 @@ Call_0989:
     cp $04
     jr nz, jr_000_09ab
     ld a, $21
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 jr_000_09ab:
     call Call_000_17ee
@@ -1255,7 +1257,7 @@ jr_000_09ab:
     cp $5a
     ret nz
     ld a, $2a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 Call_09b8:
@@ -1268,7 +1270,7 @@ Call_09b8:
 
 Call_09c7:
     ld a, $2a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld hl, wIsOnSGB
     res 4, [hl]
     call Call_000_0efe
@@ -1278,11 +1280,12 @@ Call_09c7:
     cp $04
     ret nz
     ld a, $21
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 
 
-Call_000_09e2:
+
+CheckForBonusGame:
     ld a, [$c858]
     or a
     ret nz
@@ -1290,20 +1293,22 @@ Call_000_09e2:
     or a
     ret z
     pop af
+    ;Set FF90 to 0
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
+    ;Set the scene to the circle bonus game by default (0x15)
     ld hl, hCurrentScene
     ld a, SceneBonusGameCircle
     ld [hl], a
     ld a, [$c711]
-    bit 0, a
-    ret z
-    inc [hl]
+    bit 0, a ;Is the bonus game the slots minigame?
+    ret z ;no
+    inc [hl] ;Increment the scene value to the one for the slots bonus game (0x16)
     ret
 
 
 Call_09fe:
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     call Call_000_0a38
 jr_000_0a04:
     call Call_000_1c7a
@@ -1319,7 +1324,7 @@ jr_000_0a04:
     xor a
     ld [$c838], a
     ld a, [$c70b]
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, [$c837]
     cp $03
     ret z
@@ -1330,7 +1335,7 @@ jr_000_0a04:
     ret
 
 Call_0a32:
-    ld hl, hFF90
+    ld hl, hFunctionTableIndex
     dec [hl]
     jr jr_000_0a04
 Call_000_0a38:
@@ -1380,8 +1385,8 @@ jr_000_0a66:
 Call_0a73:
     ld a, $01
     rst $10
-    call $48fd
-    call IncrementFF90
+    call Call_001_48fd
+    call IncrementFunctionTableIndex
     jr Call_0a81
 Call_0a7e:
     call Call_000_17d4
@@ -1406,7 +1411,7 @@ jr_000_0a97:
 Call_0a9e:
     xor a
     ld [$ddb4], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
 Call_0aa5:
     call Call_000_1c7a
     call Call_000_1754
@@ -1418,13 +1423,13 @@ Call_0aad:
     ld a, [$da45]
     ld [$c836], a
     ld a, $03
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     jp Call_000_0da3
 
 Call_0ac0:
     xor a
     ld [$ddb4], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
 Call_0ac7:
     call Call_000_1c7a
     call Call_000_10be
@@ -1432,7 +1437,7 @@ Call_0ac7:
     ld a, [$ddb4]
     cp $20
     ret c
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 Call_0ad9:
     call Call_000_0dc3
@@ -1440,7 +1445,7 @@ Call_0ad9:
     rst $10
     ld a, b
     call Call_10_6465
-    call IncrementFF90
+    call IncrementFunctionTableIndex
 Call_0ae6:
     call Call_000_3223
     jr jr_000_0aee
@@ -1458,13 +1463,13 @@ jr_000_0aee:
 Call_0afe:
     xor a
     ld [$ddb4], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
 Call_0b05:
     call Call_000_32e2
     jr jr_000_0aee
 Call_0b0a:
     ld a, $2a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     jp Call_000_0da3
 
 
@@ -1498,7 +1503,7 @@ Call_0b2e:
     cp c
     jr nz, jr_000_0b3f
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ret
 jr_000_0b3f:
     ld a, $03
@@ -1508,7 +1513,7 @@ jr_000_0b3f:
     ld [$c835], a
     call Call_000_08aa
     ld a, $2b
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
 Call_0b53:
     call Call_0b11
     ld a, [$c860]
@@ -1533,7 +1538,7 @@ jr_000_0b70:
     inc de
     ld a, [hl]
     ld [de], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
 Call_0b7e:
     call Call_000_10be
     ldh a, [$ff95]
@@ -1545,7 +1550,7 @@ Call_0b7e:
     ld l, a
     or h
     push hl
-    call z, IncrementFF90
+    call z, IncrementFunctionTableIndex
     pop hl
     ld a, $06
     ld [$c82e], a
@@ -1596,7 +1601,7 @@ Call_0bc7:
     ld a, [hl]
     ld [de], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld [$c838], a
     ret
 
@@ -1694,7 +1699,7 @@ jr_000_0c6a:
     or [hl]
     jr nz, jr_000_0c8b
     ld a, $0c
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, $10
     rst $10
     call Call_10_5354
@@ -1793,13 +1798,16 @@ Call_000_0d03:
 jr_000_0d07:
     call LoadStage
     jr GoBackToLastScene
-Call_000_0d0c:
+
+
+GoToMapScreen:
     ld a, SceneStageMapScreen
     ldh [hCurrentScene], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     pop af
-Call_000_0d14:
+.end:
+    ;Removed debug code?
     ret
 
 Call_000_0d15:
@@ -1810,7 +1818,7 @@ Call_000_0d15:
     ld a, SceneDKArcadeIntro
     ldh [hCurrentScene], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     pop af
     ret
 jr_000_0d25:
@@ -1849,7 +1857,7 @@ Call_000_0d58:
     ld a, SceneCutscene
     ldh [hCurrentScene], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     pop af
     jp Call_000_0da3
 
@@ -1857,7 +1865,7 @@ Call_000_0d6a:
     ld a, SceneCredits
     ldh [hCurrentScene], a
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     pop af
     ret
 
@@ -1872,9 +1880,9 @@ Jump_000_0d73:
 FunctionTable_00_0d73:
 dw GoBackToLastScene
 dw Call_000_0d03
-dw Call_000_0d0c
+dw GoToMapScreen
 dw Call_000_0d15
-dw Call_000_0d14
+dw GoToMapScreen.end
 dw GoBackToLastScene
 dw Call_000_0d03
 dw GoBackToLastScene
@@ -1891,7 +1899,7 @@ dw GoBackToLastScene
 dw Call_000_0d03
 dw Call_000_0d55
 dw Call_000_0d58
-dw Call_000_0d0c
+dw GoToMapScreen
 dw Call_000_0d6a
 
 Call_000_0da3:
@@ -2346,49 +2354,7 @@ PollInput:
     ret
 
 
-;used for filling memory if the number of bytes to fill is more than 256 (1 byte)
-;fills bc bytes starting at address hl with the value in a
-FillMemory16:
-.loop
-    ld [hl+], a
-    ld d, a
-    dec bc
-    ld a, b
-    or c
-    ld a, d
-    jr nz, .loop
-    ret
-
-;fills c bytes starting at address hl with the value in a
-FillMemory:
-.loop
-    ld [hl+], a
-    dec c
-    jr nz, .loop
-    ret
-
-;hl = data to copy offset, de = destination offset, bc = number of bytes to copy
-CopyData16:
-.loop
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    dec bc
-    ld a, b
-    or c
-    jr nz, .loop
-    ret
-
-;hl = data to copy offset, de = destination offset, c = number of bytes to copy
-CopyData:
-.loop
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    dec c
-    jr nz, .loop
-    ret
-
+INCLUDE "src/home/copy_data.asm"
 
 
 Call_105e:
@@ -2421,7 +2387,6 @@ jr_000_1078:
     add l
     ld l, a
     ret nc
-
     inc h
     ret
 
@@ -2446,15 +2411,11 @@ Call_000_1094:
     ld hl, $9800
     ld bc, $0800
     jr jr_000_10a7
-
     ld hl, $9800
     jr jr_000_10a4
-
     ld hl, $9c00
-
 jr_000_10a4:
     ld bc, $0400
-
 jr_000_10a7:
     xor a
     jp FillMemory16
@@ -2478,7 +2439,6 @@ Jump_000_10be:
     ld a, $1d
     rst $10
     jr jr_000_10d0
-
 Call_000_10c6:
     ldh a, [hCurrentBank]
     push af
@@ -2486,12 +2446,10 @@ Call_000_10c6:
     rst $10
     xor a
     ld [$c701], a
-
 jr_000_10d0:
     ld de, $c000
     ld hl, $c200
     ld b, $20
-
 jr_000_10d8:
     ld a, [hl+]
     or a
@@ -2504,25 +2462,21 @@ jr_000_10d8:
     ld h, a
     dec b
     jr nz, jr_000_10d8
-
     xor a
     ld [$c701], a
     ld h, d
     ld l, e
     ld b, $a0
-
 jr_000_10f0:
     ld a, l
     cp b
     jr z, jr_000_10fb
-
     xor a
     ld [hl+], a
     ld [hl+], a
     ld [hl+], a
     ld [hl+], a
     jr jr_000_10f0
-
 jr_000_10fb:
     pop af
     rst $10
@@ -2541,7 +2495,6 @@ jr_000_10fe:
     ld h, a
     dec b
     jr nz, jr_000_10fe
-
     xor a
     ld [$c701], a
     pop af
@@ -2594,7 +2547,6 @@ Call_000_1115:
     ld [hl+], a
     ld [$c703], a
     ld [hl], e
-
 jr_000_1147:
     ld hl, $4000
     ld d, $00
@@ -2611,10 +2563,8 @@ jr_000_1147:
     ld a, [hl]
     cp $f0
     jr z, jr_000_1168
-
     cp $f1
     jr nz, jr_000_1173
-
     ld a, e
     pop de
     push de
@@ -2623,7 +2573,6 @@ jr_000_1147:
     add a
     ld b, a
     jr jr_000_1147
-
 jr_000_1168:
     ld a, e
     pop de
@@ -2635,7 +2584,6 @@ jr_000_1168:
     ld b, a
     ld [de], a
     jr jr_000_1147
-
 jr_000_1173:
     ld d, a
     push de
@@ -2652,21 +2600,17 @@ jr_000_1173:
     ld e, a
     ld a, [hl+]
     ld b, a
-
 jr_000_118c:
     ld a, b
     or a
     jr z, jr_000_11ca
-
     dec b
     ld a, e
     cp $a0
     jr nz, jr_000_11a6
-
     ldh a, [$ff95]
     rrca
     jr nc, jr_000_11ca
-
     push hl
     ld hl, sp+$06
     ld a, $03
@@ -2674,7 +2618,6 @@ jr_000_118c:
     ld [hl], $11
     pop hl
     ld e, $50
-
 jr_000_11a6:
     ld a, [$c707]
     ld c, a
@@ -2701,7 +2644,6 @@ jr_000_11a6:
     ld [de], a
     inc de
     jr jr_000_118c
-
 jr_000_11ca:
     ld a, e
     ld [$c701], a
@@ -2721,7 +2663,6 @@ jr_000_11ca:
     call Call_000_1115
     ld hl, $c5e0
     ld b, $1f
-
 jr_000_11e9:
     ld a, [hl+]
     or a
@@ -2734,31 +2675,25 @@ jr_000_11e9:
     ld h, a
     dec b
     jr nz, jr_000_11e9
-
     xor a
     ld [$c701], a
     ld h, d
     ld l, e
     ld b, $a0
-
 jr_000_1201:
     ld a, l
     cp b
     jr z, jr_000_120c
-
     xor a
     ld [hl+], a
     ld [hl+], a
     ld [hl+], a
     ld [hl+], a
     jr jr_000_1201
-
 jr_000_120c:
     pop af
     rst $10
     ret
-
-
 jr_000_120f:
     ld a, [hl+]
     or a
@@ -2771,7 +2706,6 @@ jr_000_120f:
     ld h, a
     dec b
     jr nz, jr_000_120f
-
     xor a
     ld [$c701], a
     pop af
@@ -2824,7 +2758,6 @@ Call_000_1226:
     ld [hl+], a
     ld [$c703], a
     ld [hl], e
-
 jr_000_1258:
     ld hl, $4000
     ld d, $00
@@ -2841,10 +2774,8 @@ jr_000_1258:
     ld a, [hl]
     cp $f0
     jr z, jr_000_1279
-
     cp $f1
     jr nz, jr_000_1284
-
     ld a, e
     pop de
     push de
@@ -2853,7 +2784,6 @@ jr_000_1258:
     add a
     ld b, a
     jr jr_000_1258
-
 jr_000_1279:
     ld a, e
     pop de
@@ -2865,7 +2795,6 @@ jr_000_1279:
     ld b, a
     ld [de], a
     jr jr_000_1258
-
 jr_000_1284:
     ld d, a
     push de
@@ -2882,21 +2811,17 @@ jr_000_1284:
     ld e, a
     ld a, [hl+]
     ld b, a
-
 jr_000_129d:
     ld a, b
     or a
     jr z, jr_000_12db
-
     dec b
     ld a, e
     cp $a0
     jr nz, jr_000_12b7
-
     ldh a, [$ff95]
     rrca
     jr nc, jr_000_12db
-
     push hl
     ld hl, sp+$06
     ld a, $14
@@ -2904,7 +2829,6 @@ jr_000_129d:
     ld [hl], $12
     pop hl
     ld e, $50
-
 jr_000_12b7:
     ld a, [$c707]
     ld c, a
@@ -2931,7 +2855,6 @@ jr_000_12b7:
     ld [de], a
     inc de
     jr jr_000_129d
-
 jr_000_12db:
     ld a, e
     ld [$c701], a
@@ -2950,7 +2873,6 @@ Call_000_12e2:
     ld de, $c000
     ld hl, $c200
     ld b, $20
-
 jr_000_12f4:
     ld a, [hl+]
     or a
@@ -2963,31 +2885,25 @@ jr_000_12f4:
     ld h, a
     dec b
     jr nz, jr_000_12f4
-
     xor a
     ld [$c701], a
     ld h, d
     ld l, e
     ld b, $a0
-
 jr_000_130c:
     ld a, l
     cp b
     jr z, jr_000_1317
-
     xor a
     ld [hl+], a
     ld [hl+], a
     ld [hl+], a
     ld [hl+], a
     jr jr_000_130c
-
 jr_000_1317:
     pop af
     rst $10
     ret
-
-
 jr_000_131a:
     ld a, [hl+]
     or a
@@ -3000,7 +2916,6 @@ jr_000_131a:
     ld h, a
     dec b
     jr nz, jr_000_131a
-
     xor a
     ld [$c701], a
     pop af
@@ -3024,7 +2939,6 @@ Call_000_1331:
     inc hl
     ld a, [hl]
     ld [$c703], a
-
 jr_000_1346:
     ld hl, $4000
     ld d, $00
@@ -3041,10 +2955,8 @@ jr_000_1346:
     ld a, [hl]
     cp $f0
     jr z, jr_000_1367
-
     cp $f1
     jr nz, jr_000_1372
-
     ld a, e
     pop de
     push de
@@ -3053,7 +2965,6 @@ jr_000_1346:
     add a
     ld b, a
     jr jr_000_1346
-
 jr_000_1367:
     ld a, e
     pop de
@@ -3065,7 +2976,6 @@ jr_000_1367:
     ld b, a
     ld [de], a
     jr jr_000_1346
-
 jr_000_1372:
     ld d, a
     push de
@@ -3082,21 +2992,17 @@ jr_000_1372:
     ld e, a
     ld a, [hl+]
     ld b, a
-
 jr_000_138b:
     ld a, b
     or a
     jr z, jr_000_13c9
-
     dec b
     ld a, e
     cp $a0
     jr nz, jr_000_13a5
-
     ldh a, [$ff95]
     rrca
     jr nc, jr_000_13c9
-
     push hl
     ld hl, sp+$06
     ld a, $1f
@@ -3104,7 +3010,6 @@ jr_000_138b:
     ld [hl], $13
     pop hl
     ld e, $50
-
 jr_000_13a5:
     ld a, [$c707]
     ld c, a
@@ -3131,7 +3036,6 @@ jr_000_13a5:
     ld [de], a
     inc de
     jr jr_000_138b
-
 jr_000_13c9:
     ld a, e
     ld [$c701], a
@@ -3151,10 +3055,8 @@ Call_13d0:
     inc [hl]
     bit 0, [hl]
     jr z, jr_000_13fc
-
     ld hl, $c5e0
     ld b, $20
-
 jr_000_13ea:
     ld a, [hl+]
     or a
@@ -3167,13 +3069,10 @@ jr_000_13ea:
     ld h, a
     dec b
     jr nz, jr_000_13ea
-
     jr jr_000_1411
-
 jr_000_13fc:
     ld hl, $c200
     ld b, $20
-
 jr_000_1401:
     ld a, [hl+]
     or a
@@ -3186,26 +3085,22 @@ jr_000_1401:
     ld h, a
     dec b
     jr nz, jr_000_1401
-
 jr_000_1411:
     xor a
     ld [$c701], a
     ld h, d
     ld l, e
     ld b, $a0
-
 jr_000_1419:
     ld a, l
     cp b
     jr z, jr_000_1424
-
     xor a
     ld [hl+], a
     ld [hl+], a
     ld [hl+], a
     ld [hl+], a
     jr jr_000_1419
-
 jr_000_1424:
     pop af
     rst $10
@@ -3259,7 +3154,6 @@ Call_000_1427:
     ld [hl+], a
     ld [$c703], a
     ld [hl], e
-
 jr_000_145e:
     ld hl, $4000
     ld d, $00
@@ -3276,10 +3170,8 @@ jr_000_145e:
     ld a, [hl]
     cp $f0
     jr z, jr_000_147f
-
     cp $f1
     jr nz, jr_000_148a
-
     ld a, e
     pop de
     push de
@@ -3288,7 +3180,6 @@ jr_000_145e:
     add a
     ld b, a
     jr jr_000_145e
-
 jr_000_147f:
     ld a, e
     pop de
@@ -3300,7 +3191,6 @@ jr_000_147f:
     ld b, a
     ld [de], a
     jr jr_000_145e
-
 jr_000_148a:
     ld d, a
     push de
@@ -3320,12 +3210,10 @@ jr_000_148a:
     ld a, [$c704]
     bit 7, a
     jr z, jr_000_14db
-
 jr_000_14aa:
     ld a, b
     or a
     jr z, jr_000_1504
-
     dec b
     ld a, [$c707]
     ld c, a
@@ -3359,12 +3247,10 @@ jr_000_14aa:
     ld [de], a
     inc de
     jr jr_000_14aa
-
 jr_000_14db:
     ld a, b
     or a
     jr z, jr_000_1504
-
     dec b
     ld a, [$c707]
     ld c, a
@@ -3391,7 +3277,6 @@ jr_000_14db:
     ld [de], a
     inc de
     jr jr_000_14db
-
 jr_000_1504:
     ld a, e
     ld [$c701], a
@@ -3416,22 +3301,16 @@ Call_000_1517:
     ld a, [$c705]
     or a
     ret z
-
     dec a
     jr z, jr_000_1586
-
     dec a
     jr z, jr_000_1558
-
     dec a
     jr z, jr_000_152a
-
     dec a
     ret z
-
     dec a
     jr z, jr_000_1558
-
 jr_000_152a:
     ld hl, $c207
     ld a, [hl+]
@@ -3450,30 +3329,23 @@ jr_000_152a:
     add $38
     sub b
     jr c, jr_000_1549
-
     ld c, a
     ld a, [de]
     sub c
     jr c, jr_000_1549
-
     ld [$c708], a
-
 jr_000_1549:
     ld a, [de]
     add $68
     sub b
     ret nc
-
     ld c, a
     ld a, [de]
     sub c
     cp $51
     ret nc
-
     ld [$c708], a
     ret
-
-
 jr_000_1558:
     ld hl, $c203
     ld a, [hl+]
@@ -3492,30 +3364,23 @@ jr_000_1558:
     add $38
     sub b
     jr c, jr_000_1577
-
     ld c, a
     ld a, [de]
     sub c
     jr c, jr_000_1577
-
     ld [$c707], a
-
 jr_000_1577:
     ld a, [de]
     add $68
     sub b
     ret nc
-
     ld c, a
     ld a, [de]
     sub c
     cp $51
     ret nc
-
     ld [$c707], a
     ret
-
-
 jr_000_1586:
     ld hl, $c203
     ld a, [hl+]
@@ -3534,28 +3399,22 @@ jr_000_1586:
     add $38
     sub b
     jr c, jr_000_15a5
-
     ld c, a
     ld a, [de]
     sub c
     jr c, jr_000_15a5
-
     ld [$c707], a
-
 jr_000_15a5:
     ld a, [de]
     add $68
     sub b
     jr nc, jr_000_15b5
-
     ld c, a
     ld a, [de]
     sub c
     cp $51
     jr nc, jr_000_15b5
-
     ld [$c707], a
-
 jr_000_15b5:
     ld hl, $c207
     ld a, [hl+]
@@ -3574,62 +3433,51 @@ jr_000_15b5:
     add $38
     sub b
     jr c, jr_000_15d2
-
     ld c, a
     ld a, [de]
     sub c
     jr c, jr_000_15d2
-
     ld [$c708], a
-
 jr_000_15d2:
     ld a, [de]
     add $68
     sub b
     ret nc
-
     ld c, a
     ld a, [de]
     sub c
     cp $51
     ret nc
-
     ld [$c708], a
     ret
+
 
 
     ld a, [$c705]
     or a
     ret z
-
     ld hl, $c223
     ld de, $ff42
     ld a, [de]
     add $38
     sub [hl]
     jr c, jr_000_15fa
-
     ld b, a
     ld a, [de]
     sub b
     jr c, jr_000_15fa
-
     ld [$c707], a
-
 jr_000_15fa:
     ld a, [de]
     add $68
     sub [hl]
     jr nc, jr_000_160a
-
     ld b, a
     ld a, [de]
     sub b
     cp $58
     jr nc, jr_000_160a
-
     ld [$c707], a
-
 jr_000_160a:
     inc hl
     inc hl
@@ -3640,26 +3488,21 @@ jr_000_160a:
     add $38
     sub [hl]
     jr c, jr_000_161d
-
     ld b, a
     ld a, [de]
     sub b
     jr c, jr_000_161d
-
     ld [$c708], a
-
 jr_000_161d:
     ld a, [de]
     add $68
     sub [hl]
     ret nc
-
     ld b, a
     ld a, [de]
     sub b
     cp $58
     ret nc
-
     ld [$c708], a
     ret
 
@@ -3696,12 +3539,10 @@ Call_000_164c:
     ldh a, [rSTAT]
     bit 1, a
     ret nz
-
     ld hl, $c72f
     ld a, [hl+]
     or a
     ret nz
-
     ld a, [hl+]
     add a
     ld d, $00
@@ -3715,17 +3556,14 @@ Call_000_164c:
     ld a, [hl-]
     or a
     ret z
-
     inc de
     ld a, [de]
     or a
     jr z, jr_000_1684
-
     inc de
     ld a, [de]
     or a
     jr z, jr_000_1684
-
     push hl
     call Call_000_16ab
     ld hl, $c730
@@ -3742,8 +3580,6 @@ Call_000_164c:
     ld [hl+], a
     ld [hl], a
     ret
-
-
 jr_000_1684:
     ret
 
@@ -3772,14 +3608,12 @@ Call_000_1685:
     inc de
     inc de
     ld b, $06
-
 jr_000_16a4:
     ld a, [de]
     dec de
     ld [hl-], a
     dec b
     jr nz, jr_000_16a4
-
     ret
 
 
@@ -3801,18 +3635,15 @@ Call_000_16ab:
     ld a, d
     or a
     jr z, jr_000_16d0
-
 jr_000_16bd:
     push bc
     push hl
-
 jr_000_16bf:
     ld a, [de]
     inc de
     ld [hl+], a
     dec c
     jr nz, jr_000_16bf
-
     pop hl
     ld b, $00
     ld c, $20
@@ -3820,88 +3651,46 @@ jr_000_16bf:
     pop bc
     dec b
     jr nz, jr_000_16bd
-
     ret
-
-
 jr_000_16d0:
     ld a, e
-
 jr_000_16d1:
     push bc
     push hl
-
 jr_000_16d3:
     ld [hl+], a
     inc a
     dec c
     jr nz, jr_000_16d3
-
     pop hl
     ld bc, $0020
     add hl, bc
     pop bc
     dec b
     jr nz, jr_000_16d1
-
     ret
 
-;this is code
+
 Call_000_16e2:
     ld hl, $da5f ;start at offset 0xda5f
     ld a, [hl+]
     ld e, a
     ld a, [hl+]
     ld d, a
+
+    REPT 15
     ld a, [hl+]
     ld [de], a
     inc de
+    ENDR
+
     ld a, [hl+]
     ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
+    
+    ;Switch to bank 4
     ld a, $04
     ld [$2000], a
+
     ld a, [hl+]
     ld e, a
     ld a, [hl+]
@@ -3909,51 +3698,13 @@ Call_000_16e2:
     ld a, [hl+]
     ld h, [hl]
     ld l, a
+    
+    REPT 15
     ld a, [hl+]
     ld [de], a
     inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
-    ld a, [hl+]
-    ld [de], a
-    inc de
+    ENDR
+
     ld a, [hl]
     ld [de], a
 Call_000_1753:
@@ -3981,7 +3732,7 @@ Call_000_1761:
     ld [$ddb4], a
     dec a
     ld [$ddb3], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 jr_000_177a:
     add a
     ld h, $00
@@ -4843,13 +4594,13 @@ GotoNextScene:
     ld hl, hCurrentScene
     inc [hl]
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
 .end
     ret
 
 
-IncrementFF90:
-    ld hl, hFF90
+IncrementFunctionTableIndex:
+    ld hl, hFunctionTableIndex
     inc [hl]
     ret
 
@@ -6480,7 +6231,7 @@ jr_000_2549:
     jr nz, jr_000_2549
 jr_000_2557:
     ld a, $1d
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld a, $01
     rst $10
     call Call_000_30ed
@@ -6494,39 +6245,48 @@ Decompress:
     ld b, a
 DecompressNoHeader:
     push hl
-    ld hl, $c809
+    ;Save the uncompressed length in wUncompressedLength
+    ld hl, wUncompressedLength
     ld a, c
     ld [hl+], a
     ld a, b
     ld [hl+], a
+    ;Save the base destination address in wDecompressDestinationAddress 
     ld a, e
     ld [hl+], a
     ld [hl], d
-    ld de, $0000
+    ld de, $0000 ;Set the destination offset to 0
     pop hl
 .newByte:
-    ld a, [hl+]
+    ld a, [hl+] ;Get the next byte
     ld b, a
-    ld c, $08
+    ld c, $08 ;Set c to the number of bits left
 .loop:
-    push bc
+    push bc ;Save the values of the number of bits left/current byte for later
+    ;Check if the bit is 0/1
     bit 0, b
-    jr z, .jr_000_2592
+    jr z, .zeroBit
+    ;If the bit is 1, then copy the next byte directly to the destination
     ld a, [hl+]
     call CopyTileByte
-    ld a, [$c809]
+    ;If the current offset isn't the same as the length, continue
+    ld a, [wUncompressedLength]
     cp e
-    jr nz, .jr_000_25c6
-    ld a, [$c80a]
+    jr nz, .continue
+    ld a, [wUncompressedLength + 1]
     cp d
-    jr nz, .jr_000_25c6
+    jr nz, .continue
     jr .done
-.jr_000_2592:
+.zeroBit:
+    ;Copy the next two bytes into bc (the top byte is copied to b after the
+    ;push hl instruction for some reason)
     ld a, [hl+]
     ld c, a
     ld a, [hl+]
+    ;Save the current offset
     push hl
     ld b, a
+    ;Set a to the upper nybble of the top byte
     and $f0
     swap a
     ld h, a
@@ -6540,10 +6300,11 @@ DecompressNoHeader:
     and $0f
     add $03
     ld c, a
-    ld a, [$c80b]
+    ;Add the offset in hl to the base destination address
+    ld a, [wDecompressDestinationAddress]
     add l
     ld l, a
-    ld a, [$c80c]
+    ld a, [wDecompressDestinationAddress + 1]
     adc h
     ld h, a
 .copyTileLoop:
@@ -6552,18 +6313,19 @@ DecompressNoHeader:
     dec c
     jr nz, .copyTileLoop
     pop hl
-    ld a, [$c809]
+    ;If the current offset isn't the same as the length, continue
+    ld a, [wUncompressedLength]
     cp e
-    jr nz, .jr_000_25c6
-    ld a, [$c80a]
+    jr nz, .continue
+    ld a, [wUncompressedLength + 1]
     cp d
     jr z, .done
-.jr_000_25c6:
-    pop bc
-    srl b
-    dec c
+.continue:
+    pop bc ;Get back the current byte/number of bits left in bc
+    srl b ;Go to the next bit in the byte
+    dec c ;If there are still bits left the current value byte, keep going
     jr nz, .loop
-    jr .newByte
+    jr .newByte ;Go to the next byte
 .done:
     pop bc
     ret
@@ -6572,7 +6334,7 @@ DecompressNoHeader:
 CopyTileByte:
     ld b, a
     push hl
-    ld hl, $c80b
+    ld hl, wDecompressDestinationAddress
     ld a, [hl+]
     ld h, [hl]
     ld l, a
@@ -6686,7 +6448,7 @@ Call_000_2633:
 jr_000_2662:
     ld a, $01
     rst $10
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     rst $08
 
 ;function table used by the above function
@@ -6741,7 +6503,7 @@ Call_000_269e:
     ld [$c860], a
     ld [$c861], a
     ld [$c600], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ld a, $04
     call LoadGraphicsDataHeader
     ld a, $18
@@ -6938,13 +6700,13 @@ Jump_000_27f5:
     call Call_000_2874
     ld a, $1d
     call Call_000_1d6b
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     cp $0d
     jr nz, jr_000_280f
     ld a, $2d
     ldh [$ff8f], a
 jr_000_280f:
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     cp $02
     jr nc, jr_000_282f
     ld a, [wIsOnSGB]
@@ -6960,7 +6722,7 @@ jr_000_2827:
     jr z, jr_000_282f
     ld a, $0f
 jr_000_282d:
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
 jr_000_282f:
     ld c, $09
     ld hl, $c860
@@ -6971,7 +6733,7 @@ jr_000_282f:
     cp c
     jr nz, jr_000_2840
     ld a, $01
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
 jr_000_2840:
     call Call_000_10c6
     xor a
@@ -7027,7 +6789,7 @@ Call_2884:
 Call_288e:
     ld a, $01
     rst $10
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     rst $08
 
 ;function table
@@ -7065,7 +6827,7 @@ Call_289c:
     xor a
     ld [$ce1c], a
     call Call_000_1e27
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     call Call_000_0fe6
     ld a, $2f
     call SendSGBPacketFromTable
@@ -7080,7 +6842,7 @@ Call_28e6:
 Call_28f0:
     ld a, $17
     rst $10
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     rst $08
 
 
@@ -7260,7 +7022,7 @@ jr_000_29c2:
     ld hl, wIsOnSGB
     res 4, [hl]
     xor a
-    ldh [hFF90], a
+    ldh [hFunctionTableIndex], a
     ld [$c70f], a
     ret
 
@@ -9016,11 +8778,12 @@ ds 4
 IntroTitleSceneLoop:
     ld a, $01 ;switch to bank 1
     rst $10
-    ldh a, [hFF90]
+    ;Jump to the function in the below table at the index based on hFunctionTableIndex
+    ldh a, [hFunctionTableIndex]
     rst $08
 
 ;function table at offset 33fa
-FunctionTable33fa::
+FunctionTable_33fa::
     dw InitIntroTitleScreen
     dw Call_01_4998 ;points to function in bank 1 used for loading the intro graphics
     dw Call_01_49bf
@@ -9064,12 +8827,12 @@ Call_000_342c:
     ld [hl+], a
     ld [hl], $00
     ldh [$ff95], a
-    jp IncrementFF90
+    jp IncrementFunctionTableIndex
 
 Call_3452:
     ld a, $01
     rst $10
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     rst $08
 
 
@@ -9114,7 +8877,7 @@ Call_000_349a:
     xor a
     ldh [$ff8f], a
     call Call_000_1e27
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     ld a, $01
     rst $10
     ret
@@ -9137,7 +8900,7 @@ Call_000_34b0:
 
     ld a, $01
     rst $10
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     rst $08
 
     sub $34
@@ -9232,7 +8995,7 @@ Call_000_3537:
 
     ld a, $01
     rst $10
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     rst $08
 
     rla
@@ -9254,7 +9017,7 @@ Call_000_3537:
 FileSelectJump:
     ld a, $01
     rst $10
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     rst $08
 
 
@@ -9321,7 +9084,7 @@ Call_35cb:
     ldh [rWX], a
     ld a, $2b
     ld [$c836], a
-    call IncrementFF90
+    call IncrementFunctionTableIndex
     call Call_000_10c6
     call Call_000_0fe6
     ld a, $0c
@@ -9352,7 +9115,7 @@ Call_360b:
 Call_3638::
     ld a, $01
     rst $10
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     rst $08
 
 FunctionTable_363e::
@@ -9364,7 +9127,7 @@ dw $5957
 Call_3644::
     ld a, $0c
     rst $10
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     rst $08
 
 
@@ -9382,7 +9145,7 @@ dw $5680
 Call_365a::
     ld a, $0c
     rst $10
-    ldh a, [hFF90]
+    ldh a, [hFunctionTableIndex]
     rst $08
 
 

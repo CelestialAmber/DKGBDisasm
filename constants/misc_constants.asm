@@ -12,6 +12,7 @@ ScenePauseScreen equ $11
 SceneStageMapScreen equ $14
 SceneBonusGameCircle equ $15
 SceneBonusGameSlots equ $16
+ScenePlaceObject equ $18
 SceneCredits equ $1a
 SceneGameOverScreen equ $1c
 SceneCutscene equ $1e
