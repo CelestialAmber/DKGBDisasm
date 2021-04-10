@@ -1936,7 +1936,7 @@ jr_008_4a89:
 
 jr_008_4a9b:
     ldh a, [$ff8d]
-    jp Bankswitch0fce
+    jp Bankswitch
 
 
 Call_008_4aa0:
@@ -6495,7 +6495,7 @@ jr_008_5be4:
     inc hl
     ld [hl], d
     ldh a, [$ff8d]
-    jp Bankswitch0fce
+    jp Bankswitch
 
 
     ld hl, $dd98
@@ -6888,7 +6888,7 @@ jr_008_5e0a:
 Jump_008_5e16:
 jr_008_5e16:
     ldh a, [$ff8d]
-    jp Bankswitch0fce
+    jp Bankswitch
 
 
 Jump_008_5e1b:
@@ -6913,7 +6913,7 @@ jr_008_5e2c:
     inc hl
     ld [hl], d
     ldh a, [$ff8d]
-    jp Bankswitch0fce
+    jp Bankswitch
 
 
     ld a, [$c105]
@@ -7024,7 +7024,7 @@ jr_008_5ebd:
     ld [hl+], a
     ld [hl], a
     ldh a, [$ff8d]
-    jp Bankswitch0fce
+    jp Bankswitch
 
 
 jr_008_5ec8:
@@ -7059,7 +7059,7 @@ jr_008_5ec8:
     ld [hl+], a
     ld [hl], d
     ldh a, [$ff8d]
-    jp Bankswitch0fce
+    jp Bankswitch
 
 
     nop

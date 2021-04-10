@@ -10180,7 +10180,7 @@ jr_00a_784b:
     ld b, a
     call Call_00a_7c51
     pop af
-    jp Bankswitch0fce
+    jp Bankswitch
 
 
     jr jr_00a_7879
@@ -10860,7 +10860,7 @@ jr_00a_7b5b:
     ld a, [de]
     ld [bc], a
     ldh a, [$ff8d]
-    jp Bankswitch0fce
+    jp Bankswitch
 
 
     ld hl, $c0c7

@@ -152,7 +152,7 @@ DelayMainLoop:
 
 InitRegistersSGBPacket:
     ldh a, [rIE]
-    ld [$c0a3], a
+    ld [wIERegisterTemp], a
     res 0, a
     ldh [rIE], a
 .loop:
@@ -162,7 +162,7 @@ InitRegistersSGBPacket:
     ldh a, [rLCDC]
     and $7f ;and the lcdc register with 7f
     ldh [rLCDC], a
-    ld a, [$c0a3]
+    ld a, [wIERegisterTemp]
     ldh [rIE], a ;set the IE register
     ret
 

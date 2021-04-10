@@ -1398,7 +1398,7 @@ jr_007_4745:
     call Call_007_6f3e
     call Call_007_6ea7
     ldh a, [$ff8d]
-    jp Bankswitch0fce
+    jp Bankswitch
 
 
 Call_007_4803:

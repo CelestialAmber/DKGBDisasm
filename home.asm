@@ -77,7 +77,7 @@ RST_38::
     rst $38
 
 VBlankInterrupt::
-    jp MainLoop
+    jp VBlankInterruptFunction
     rst $38
     rst $38
     rst $38
@@ -85,7 +85,7 @@ VBlankInterrupt::
     rst $38
 
 LCDCInterrupt::
-    jp Jump_000_02ad
+    jp LCDCInterruptFunction
     rst $38
     rst $38
     rst $38
@@ -93,7 +93,7 @@ LCDCInterrupt::
     rst $38
 
 TimerOverflowInterrupt::
-    jp Jump_000_02c4
+    jp TimerOverflowInterruptFunction
     rst $38
     rst $38
     rst $38

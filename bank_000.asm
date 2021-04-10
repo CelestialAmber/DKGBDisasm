@@ -9,17 +9,18 @@ Start:
     ld sp, $fffe
     ld a, $01
     rst $10
-    call Call_000_0221
+    call Init
     call GetOAMDmaCodeAddress
     ld a, $03
     call Call_000_1e38
     call CheckIfOnSGB
     call Call_000_018e
     ld a, $07
-    ld [$c0a3], a
+    ld [wIERegisterTemp], a
     ldh [rIE], a
     ei
-.loop:
+
+MainLoop:
     call PollInput
     call CheckIfResetCombinationPressed
     call GotoSceneLoop
@@ -27,13 +28,16 @@ Start:
     res 0, [hl]
     ld hl, $c0a0
     halt
-.jr_000_0182:
+    ;Keep looping until bit 0 of c0a0 is 1
+.loop:
     bit 0, [hl]
-    jr z, .jr_000_0182
-    res 0, [hl]
+    jr z, .loop
+    res 0, [hl] ;Reset bit 0 of c0a0
     ld hl, $ff95
     inc [hl]
-    jr .loop
+    jr MainLoop
+
+
 
 Call_000_018e:
     ld a, $40
@@ -104,7 +108,7 @@ Reset:    ;reset the game
     ;Send Packet_80
     ld a, $5f
     call SendSGBPacketFromTable
-    call Call_000_0fd9
+    call DisableLCD
     ld a, $03
     call Call_000_1e38
     call Call_000_1094
@@ -112,31 +116,34 @@ Reset:    ;reset the game
     and $fa
     ldh [rIE], a
     ei
-    call Call_000_0221
+    call Init
     ld a, $07
-    ld [$c0a3], a
+    ld [wIERegisterTemp], a
     ldh [rIE], a
     xor a
     ldh [hFunctionTableIndex], a
     ld a, SceneIntroTitle
     ldh [hCurrentScene], a
-    jp Call_000_0fe6
+    jp UpdateLCDCIERegisters
 
 
-Call_000_0221:
+Init:
     ld a, [wIsOnSGB]
     push af
     ld a, [wHUDTextType]
     push af
+    ;Clear RAM from C000 to DEF7
     ld hl, $c000
     ld bc, $1ef7 ;number of bytes to fill starting from 0xc000
     xor a
     call FillMemory16
+    ;Clear RAM from DF00 to DFFF
     ld hl, $df00
-    ld bc, $0100
+    ld bc, $100
     xor a
     call FillMemory16
-    ld hl, hJoypad
+    ;Clear HRAM from FF8A to FFA9
+    ld hl, $ff8a
     ld c, $20
     xor a
     call FillMemory
@@ -145,12 +152,13 @@ Call_000_0221:
     pop af
     and $cd ;and isOnSGB with cd, and store as the new value
     ld [wIsOnSGB], a
+    ;Switch to bank 3
     ld a, $3
     rst $10
     call InitSound
     call Call_000_1cfa
     ld a, $e7
-    ld [$c0a2], a
+    ld [wLCDCRegisterTemp], a
     ld a, $01
     ld [$c851], a
     ld a, $04 ;set lives to 4
@@ -162,7 +170,8 @@ Call_000_0221:
     ld [hl], a
     ret
 
-MainLoop:
+
+VBlankInterruptFunction:
     push af
     push bc
     push de
@@ -190,7 +199,7 @@ MainLoop:
     ld a, [hl]
     ldh [rSCX], a
 jr_000_029e:
-    ld a, [$c0a3]
+    ld a, [wIERegisterTemp]
     ldh [rIE], a
     ld hl, $c0a0
     set 0, [hl]
@@ -200,7 +209,7 @@ jr_000_029e:
     pop af
     reti
 
-Jump_000_02ad:
+LCDCInterruptFunction:
     push af
     push bc
     push de
@@ -220,7 +229,7 @@ Jump_000_02ad:
     reti
 
 
-Jump_000_02c4:
+TimerOverflowInterruptFunction:
     push af
     push bc
     push de
@@ -924,7 +933,7 @@ Call_0719:
     ld a, $01
     rst $10
 Call_0734:
-    call Call_000_0fd4
+    call SendSGBPacket7
     call Call_000_2c48
     call Call_000_1094
     call Call_000_0e4d
@@ -987,12 +996,12 @@ jr_000_079d:
     ld [hl], a
     ld a, $32
     ldh [$ff8f], a
-    call Call_000_0fe6
+    call UpdateLCDCIERegisters
     ld a, $30
     call SendSGBPacketFromTable
     jr jr_000_07d7
 jr_000_07ce:
-    call Call_000_0fe6
+    call UpdateLCDCIERegisters
     ld hl, $d88c
     call SendSGBPacketCheckSGB
 jr_000_07d7:
@@ -2234,16 +2243,16 @@ db $27,$9C,$01,$07,$90,$0F,$0B,$0C,$0D,$0E,$00,$0F,$10,$00,$00,$00,$00,$00,$78,$
 
 
 GetOAMDmaCodeAddress:
+    ;Set bc to 0xa80
     ld c, $80
     ld b, $0a
     ld hl, OAMDMACode
-
-jr_000_0fb1:
+.loop:
     ld a, [hl+]
     ld [c], a
     inc c
     dec b
-    jr nz, jr_000_0fb1
+    jr nz, .loop
     ret
 
 ;ff80 oam dma code, offset: 0xfb8
@@ -2251,9 +2260,9 @@ OAMDMACode:
     ld a, $c0
     ldh [rDMA], a
     ld a, $28
-jr_000_0fbe:
+.loop:
     dec a
-    jr nz, jr_000_0fbe
+    jr nz, .loop
     ret
 
 ;address to jump to:
@@ -2276,46 +2285,49 @@ JumpFunctionTable:
     ld l, a
     jp hl
 
-Bankswitch0fce:
+Bankswitch:
     ldh [hCurrentBank], a
     ld [$2000], a
     ret
 
 
-Call_000_0fd4:
+SendSGBPacket7:
     ld a, $07
     call SendSGBPacketFromTable
 
-Call_000_0fd9:
+DisableLCD:
     di
     ldh a, [rIE]
-    ld [$c0a3], a
+    ld [wIERegisterTemp], a
     and $fe
     ldh [rIE], a
     ei
-    jr jr_000_0ff9
+    jr DisableLCD1
 
-Call_000_0fe6:
-    ld a, [$c0a3]
+
+UpdateLCDCIERegisters:
+    ld a, [wIERegisterTemp]
     ldh [rIE], a
-    ld a, [$c0a2]
+    ld a, [wLCDCRegisterTemp]
     ldh [rLCDC], a
     ret
 
-
-    call Call_000_0fe6
+;0xff1
+SendSGBPacket0B:
+    call UpdateLCDCIERegisters
     ld a, $0b
     jp SendSGBPacketFromTable
 
 
-jr_000_0ff9:
+DisableLCD1:
+.loop
     ldh a, [rLY]
-    cp $91
-    jr c, jr_000_0ff9
+    cp $91 ;is the current scanline 0x91?
+    jr c, .loop ;no, go back the start
     ldh a, [rLCDC]
-    and $7f
+    and $7f ;Set the 7th bit of rLCDC to 0 (disable lcd)
     ldh [rLCDC], a
-    ld a, [$c0a3]
+    ld a, [wIERegisterTemp]
     ldh [rIE], a
     ret
 
@@ -6483,7 +6495,7 @@ dw $43F9
 
 ;269e
 Call_000_269e:
-    call Call_000_0fd4
+    call SendSGBPacket7
     call Call_000_1cfa
     call Call_000_162c
     call Call_000_0f5d
@@ -6738,7 +6750,7 @@ jr_000_2840:
     call Call_000_10c6
     xor a
     ld [$c20b], a
-    call Call_000_0fe6
+    call UpdateLCDCIERegisters
     ld hl, $299c
     ld a, [$c860]
     ld d, $00
@@ -6801,7 +6813,7 @@ FunctionTable_00_288e:
 
 Call_289c:
     call Call_000_1cfa
-    call Call_000_0fd4
+    call SendSGBPacket7
     call Call_000_162c
     xor a
     call Call_000_1e38
@@ -6828,7 +6840,7 @@ Call_289c:
     ld [$ce1c], a
     call Call_000_1e27
     call IncrementFunctionTableIndex
-    call Call_000_0fe6
+    call UpdateLCDCIERegisters
     ld a, $2f
     call SendSGBPacketFromTable
 Call_28e6:
@@ -8797,10 +8809,10 @@ FunctionTable_33fa::
     dw Call_01_4b2a
 
 InitIntroTitleScreen:
-    call Call_000_0fd9
+    call DisableLCD
     call Call_000_1e27
     call Call_000_342c
-    call Call_000_0fe6
+    call UpdateLCDCIERegisters
     ld a, [wIsOnSGB]
     bit 7, a
     ret z
@@ -8865,13 +8877,13 @@ Call_3464:
     xor a
     ld [$c809], a
     call Call_000_10c6
-    call Call_000_0fe6
+    call UpdateLCDCIERegisters
     ld a, $08
     jp SendSGBPacketFromTable
 
 
 Call_000_349a:
-    call Call_000_0fd4
+    call SendSGBPacket7
     call Call_000_1cfa
     call Call_000_162c
     xor a
@@ -8955,7 +8967,7 @@ jr_000_351a:
     ld [$c809], a
     call Call_000_0eb6
     call Call_000_10c6
-    call Call_000_0fe6
+    call UpdateLCDCIERegisters
     ld a, $06
     jp SendSGBPacketFromTable
 
@@ -9064,7 +9076,7 @@ dw $5259
 
 Call_35cb:
     call Call_000_1cfa
-    call Call_000_0fd4
+    call SendSGBPacket7
     call Call_000_162c
     call Call_000_1ebb
     call Call_000_1fdf
@@ -9086,12 +9098,12 @@ Call_35cb:
     ld [$c836], a
     call IncrementFunctionTableIndex
     call Call_000_10c6
-    call Call_000_0fe6
+    call UpdateLCDCIERegisters
     ld a, $0c
     jp SendSGBPacketFromTable
 
 Call_360b:
-    call Call_000_0fd4
+    call SendSGBPacket7
     ld a, [$c202]
     push af
     ld a, [$c207]
@@ -9107,7 +9119,7 @@ Call_360b:
     sub $25
     ld [$c202], a
     call Call_000_10c6
-    call Call_000_0fe6
+    call UpdateLCDCIERegisters
     ld a, $0c
     jp SendSGBPacketFromTable
 

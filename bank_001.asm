@@ -4488,13 +4488,13 @@ jr_001_5950:
     ldh [hFunctionTableIndex], a
     ld a, [hl]
     ldh [hCurrentScene], a
-    ld hl, $c0a2
+    ld hl, wLCDCRegisterTemp
     set 1, [hl]
     ret
 
 
 Call_001_5966:
-    ld hl, $c0a2
+    ld hl, wLCDCRegisterTemp
     res 1, [hl]
     ld a, [$c818]
     add a

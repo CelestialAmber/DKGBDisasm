@@ -1,5 +1,15 @@
 SECTION "WRAM Bank 0", WRAM0
-ds $809
+ds $a2
+
+;c0a2
+wLCDCRegisterTemp::
+ds 1
+
+;c0a3
+wIERegisterTemp::
+ds 1
+
+ds $765
 
 ;c809
 wUncompressedLength::

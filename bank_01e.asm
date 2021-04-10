@@ -285,4 +285,4 @@ UnknownData_1e_64c5::
     db $f1, $70, $f8, $ff, $00
 
 ;0x74c5
-INCLUDE "data/graphics_data_headers_1e.asm"
+INCLUDE "data/graphics_data_headers.asm"
