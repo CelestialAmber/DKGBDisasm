@@ -111,23 +111,23 @@ ENDM
 
 SGBPacketTable:
     dw Packet_0 ;index 0
-    dw Packet_1
+    dw MaskEnBlankBlackPacket
     dw Packet_2
     dw Packet_3
     dw Packet_4
-    dw Packet_5
+    dw PalPriPacket
     dw Packet_6
-    dw Packet_7
+    dw MaskEnFreezePacket
     dw Packet_8
     dw MltReq1Packet
     dw MltReq2Packet ;index 10
-    dw Packet_11
+    dw MaskEnCancelPacket
     dw Packet_12
     dw Packet_13
     dw Packet_14
     dw Packet_15
-    dw Packet_16
-    dw Packet_17
+    dw PalTrnPacket
+    dw AttrTrnPacket
     dw Packet_18
     dw Packet_18
     dw Packet_18 ;index 20
@@ -142,7 +142,7 @@ SGBPacketTable:
     dw Packet_26
     dw Packet_27 ;index 30
     dw Packet_28
-    dw Packet_29
+    dw SouTrnPacket
     dw Packet_30
     dw Packet_31
     dw Packet_32
@@ -187,8 +187,8 @@ SGBPacketTable:
     dw Packet_69
     dw Packet_70
     dw Packet_71
-    dw Packet_72
-    dw Packet_73
+    dw AttractionDisablePacket
+    dw AttractionEnablePacket
     dw Packet_74
     dw Packet_75 ;index 80
     dw Packet_77
@@ -214,19 +214,19 @@ SGBPacketTable:
     dw Packet_82
     dw Packet_83
     dw Packet_84
-    dw Packet_89
-    dw Packet_90
-    dw Packet_91
-    dw Packet_92
-    dw Packet_93
-    dw Packet_94
-    dw Packet_95 ;index 110
-    dw Packet_96
+    dw SGBPatch1
+    dw SGBPatch2
+    dw SGBPatch3
+    dw SGBPatch4
+    dw SGBPatch5
+    dw SGBPatch6
+    dw SGBPatch7 ;index 110
+    dw SGBPatch8
 
 ;offset 40e0
 Packet_0:
     sgb_pal_set $2C, $2D, $2C, $2D, 0
-Packet_1:
+MaskEnBlankBlackPacket:
     sgb_mask_en 2
 Packet_2:
     sgb_sound $0C, $00, 0, 2, 0, 2, 0
@@ -236,11 +236,11 @@ Packet_4:
     attr_blk 1
     attr_blk_data 1, 0, 0, 0, 0, 0, $13, $11
     ds 8
-Packet_5:
+PalPriPacket:
     sgb_pal_pri 1
 Packet_6:
     sgb_pal_set $B0, $B1, $B2, $B3, $D1
-Packet_7:
+MaskEnFreezePacket:
     sgb_mask_en 1
 Packet_8:
     sgb_pal_set $B4, $B5, $B6, $B7, $D2
@@ -248,7 +248,7 @@ MltReq1Packet:
     sgb_mlt_req 1
 MltReq2Packet:
     sgb_mlt_req 2
-Packet_11:
+MaskEnCancelPacket:
     sgb_mask_en 0
 Packet_12:
     sgb_pal_set $AC, $AD, $AE, $AF, $D0
@@ -258,9 +258,9 @@ Packet_14:
     attr_set $01
 Packet_15:
     attr_set $17
-Packet_16:
+PalTrnPacket:
     sgb_pal_trn
-Packet_17:
+AttrTrnPacket:
     sgb_attr_trn
 Packet_18:
     sgb_pal_set $04, $05, $06, $07, $C3
@@ -284,7 +284,7 @@ Packet_27:
     sgb_pal_set $28, $29, $2A, $2B, $CF
 Packet_28:
     sgb_sound $80, $80, 0, 3, 0, 2, 0
-Packet_29:
+SouTrnPacket:
     sgb_sou_trn
 Packet_30:
     sgb_pal_set $00, $2D, $2E, $2F, $40
@@ -378,9 +378,9 @@ Packet_70:
     sgb_pal_set $C8, $C9, $CA, $CB, $C5
 Packet_71:
     sgb_pal_set $108, $109, $10A, $10B, $E2
-Packet_72:
+AttractionDisablePacket:
     sgb_atrc_en 0
-Packet_73:
+AttractionEnablePacket:
     sgb_atrc_en 1
 Packet_74:
     sgb_sound $00, $00, 0, 0, 0, 0, 3
@@ -435,27 +435,74 @@ Packet_88:
     attr_chr 1, $10, $10, 3, 0
     db $FC
     ds 9
-Packet_89:
+
+;These packets contain SNES code which patches the SGB's code
+;by sending it to the SNES's RAM, which apparently fixes a bug.
+;https://forums.nesdev.com/viewtopic.php?f=12&t=16610#p206526
+SGBPatch1:
     sgb_data_snd $85D, $00, $04
-    db $8C, $D0, $F4, $60, $00, $00, $00, $00, $00, $00, $00
-Packet_90:
+    db $8C ;used by last instruction of next packet
+    db $D0, $F4 ;bne -0xC
+    db $60 ;rts
+    ds 7
+
+SGBPatch2:
     sgb_data_snd $852, $00, $0B
-    db $A9, $E7, $9F, $01, $C0, $7E, $E8, $E8, $E8, $E8, $E0
-Packet_91:
+    db $A9, $E7 ;lda 0xE7
+    db $9F, $01, $C0, $7E ;sta $7EC001,x
+    db $E8 ;inx
+    db $E8 ;inx
+    db $E8 ;inx
+    db $E8 ;inx
+    db $E0 ;cpx 0x8C (uses first byte of the previous packet)
+
+SGBPatch3:
     sgb_data_snd $847, $00, $0B
-    db $C4, $D0, $16, $A5, $CB, $C9, $05, $D0, $10, $A2, $28
-Packet_92:
+    db $C4
+    db $D0, $16 ;bne 0x16
+    db $A5, $CB ;lda $CB
+    db $C9, $05 ;cmp 5
+    db $D0, $10 ;bne 0x10
+    db $A2, $28 ;ldx 0x28
+
+SGBPatch4:
     sgb_data_snd $83C, $00, $0B
-    db $F0, $12, $A5, $C9, $C9, $C8, $D0, $1C, $A5, $CA, $C9
-Packet_93:
+    db $F0, $12 ;beq 0x12
+    db $A5, $C9 ;lda $C9
+    db $C9, $C8 ;cmp 0xC9
+    db $D0, $1C ;bne 0x1C
+    db $A5, $CA ;lda $CA
+    db $C9 ;cmp 0xC4
+
+SGBPatch5:
     sgb_data_snd $831, $00, $0B
-    db $0C, $A5, $CA, $C9, $7E, $D0, $06, $A5, $CB, $C9, $7E
-Packet_94:
+    db $0C ;used by last instruction of next packet
+    db $A5, $CA ;lda $CA
+    db $C9, $7E ;cmp 0x7E
+    db $D0, $06 ;bne 0x06
+    db $A5, $CB ;lda $CB
+    db $C9, $7E ;cmp 0x7E
+
+SGBPatch6:
     sgb_data_snd $826, $00, $0B
-    db $39, $CD, $48, $0C, $D0, $34, $A5, $C9, $C9, $80, $D0
-Packet_95:
+    db $39 ;used by last instruction of next packet
+    db $CD, $48, $0C ;cmp $C48
+    db $D0, $34 ;bne 0x34
+    db $A5, $C9 ;lda $C9
+    db $C9, $80 ;cmp 0x80
+    db $D0 ;bne 0x0C (uses first byte of the previous packet)
+
+SGBPatch7:
     sgb_data_snd $81B, $00, $0B
-    db $EA, $EA, $EA, $EA, $EA, $A9, $01, $CD, $4F, $0C, $D0
-Packet_96:
+    db $EA, $EA, $EA, $EA, $EA ;5 nop instructions
+    db $A9, $01 ;0x820: lda 1
+    db $CD, $4F, $0C ;cmp $C4f
+    ;0x825
+    db $D0 ;bne 0x39 (uses first byte of the previous packet)
+
+SGBPatch8:
     sgb_data_snd $810, $00, $0B
-    db $4C, $20, $08, $EA, $EA, $EA, $EA, $EA, $60, $EA, $EA
+    db $4C, $20, $08 ;jmp $820
+    db $EA, $EA, $EA, $EA, $EA ;5 nop instructions
+    db $60 ;rts
+    db $EA, $EA ;2 nop instructions

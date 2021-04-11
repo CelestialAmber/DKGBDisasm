@@ -131,7 +131,7 @@ CheckIfOnSGB:
     call SendSGBPacketFromTable
     ld a, $09
     call SendSGBPacketFromTable
-    jp SendSGBSoundDataPackets
+    jp SendSGBPatchPackets
 
 
 SendSGBPacketFromTableDelay:
@@ -287,10 +287,11 @@ CheckInputSGB:
     ldh [rP1], a
     ret
 
-;Sends the 8 last sound data packets in the table.
-SendSGBSoundDataPackets:
+;Sends the 8 last data_snd packets in the table, which send a patch for the
+;SGB's code to the SNES's RAM.
+SendSGBPatchPackets:
     ld c, $08
-    ld a, $68 ;Set a to the index of the first sound data packet
+    ld a, $68 ;Set a to the index of the first data_snd packet
 .loop:
     push af
     push bc
