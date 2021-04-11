@@ -1,37 +1,38 @@
+# build
+*.o
+*.gbc
+*.1bpp
+*.2bpp
+*.lz
+
+# bin
+Z80Dis
+DumpBanks
+
+# rgbasm extras
+*.sym
+*.map
+
 # precompiled python
 *.pyc
 
-# compiled object file
-*.o
+# swap files
+*.swp
 
-# no binaries
+# visual studio
+*.pdb
 *.exe
+*.ilk
+*.obj
+*.sln
+*.suo
 
-# roms
-*.gbc
-*.gb
+# macos files
+*.DS_Store
 
-# rgbds extras
-*.sym
+# temporary editor backups
+*~
 
-# converted image data
-*.2bpp
-*.1bpp
-*.pic
-
-# swap files for vim
-.*.swp
-
-# no data from extras/
-*.json
-
-# for any of the poor souls with save game files in their working directory
-*.sgm
+# save files
 *.sav
-*.sys
-
-# for vim configuration
-# url: http://www.vim.org/scripts/script.php?script_id=441
-.lvimrc
-
-.DS_Store
+*.ss*
