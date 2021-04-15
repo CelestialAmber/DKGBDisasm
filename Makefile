@@ -25,7 +25,7 @@ all: $(ROM)
 
 compare: $(ROM)
 	@$(SHA1) -c rom.sha1
-	tools/unnamed.py -r . donkeykong.sym
+#tools/unnamed.py -r . donkeykong.sym
 
 tidy:
 	rm -f $(ROM) $(OBJS) $(ROM:.gb=.sym) $(ROM:.gb=.map)
