@@ -1209,7 +1209,7 @@ jr_001_469d:
     inc a
     ld [$c812], a
     ld b, $04
-    call $3841
+    call DelayMainLoop
     jp IncrementFunctionTableIndex
 
 
@@ -1972,9 +1972,9 @@ Call_01_4b14:
     ret
 
 Call_01_4b21:
-    call $0fd4
+    call SendSGBPacket7
     call $342c
-    jp $0fe6
+    jp UpdateLCDCIERegisters
 
 Call_01_4b2a:
     ld a, $06
@@ -2493,7 +2493,7 @@ jr_001_4dee:
     jp Call_000_1eb2
 
 
-    call $0fd4
+    call SendSGBPacket7
     call $10a1
     call $0e4d
     ld a, [$c70b]
@@ -2533,7 +2533,7 @@ jr_001_4e3a:
     ld [hl+], a
     ld a, [de]
     ld [hl], a
-    call $0fe6
+    call UpdateLCDCIERegisters
     ld hl, $d88c
     call $3894
     xor a
@@ -2681,7 +2681,7 @@ Call_001_4f09:
     ret
 
 
-    call $0fd4
+    call SendSGBPacket7
     call $1cfa
     call Call_000_162c
     xor a
@@ -2755,7 +2755,7 @@ jr_001_4f76:
     call IncrementFunctionTableIndex
     ld a, $35
     ld [$c836], a
-    call $0fe6
+    call UpdateLCDCIERegisters
     pop af
     add $24
     jp SendSGBPacketFromTable
@@ -4407,7 +4407,7 @@ jr_001_58b9:
     call $1cfa
     ld a, $01
     call SendSGBPacketFromTable
-    call $0fd9
+    call DisableLCD
     call Call_000_162c
     ld a, $0e
     call LoadGraphicsDataHeader
@@ -4429,7 +4429,7 @@ jr_001_58b9:
     ldh [$ff8f], a
     call Call_000_1e27
     call IncrementFunctionTableIndex
-    call $0fe6
+    call UpdateLCDCIERegisters
     ld a, $0b
     jp SendSGBPacketFromTable
 

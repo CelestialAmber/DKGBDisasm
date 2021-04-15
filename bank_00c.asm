@@ -3705,7 +3705,7 @@ jr_00c_5523:
     add a
 
     call $1cfa
-    call $0fd4
+    call SendSGBPacket7
     call Call_000_162c
     call Call_000_1e27
     ld a, $07
@@ -3754,7 +3754,7 @@ jr_00c_5523:
 
 jr_00c_55ad:
     call IncrementFunctionTableIndex
-    call $0fe6
+    call UpdateLCDCIERegisters
     ld a, $29
     jp SendSGBPacketFromTable
 
@@ -4133,7 +4133,7 @@ jr_00c_57c5:
     ret
 
 
-    call $0fd4
+    call SendSGBPacket7
     call $1cfa
     call Call_000_162c
     call Call_000_1e2f
@@ -4175,7 +4175,7 @@ jr_00c_57ff:
     ld [hl+], a
     ld [hl], $08
     call Call_00c_58ed
-    call $0fe6
+    call UpdateLCDCIERegisters
     ld a, $2b
     jp SendSGBPacketFromTable
 

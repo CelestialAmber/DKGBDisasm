@@ -834,7 +834,7 @@ Call_17_731f:
 
 Call_017_732b:
     call $1cfa
-    call $0fd4
+    call SendSGBPacket7
     call Call_000_162c
     call Call_000_1e2f
     ld hl, $c70f
@@ -989,7 +989,7 @@ jr_017_7436:
     ld [$c835], a
 jr_017_7445:
     call Call_13d0
-    call $0fe6
+    call UpdateLCDCIERegisters
     pop hl
     inc [hl]
     ld a, [$ca66]
