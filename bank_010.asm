@@ -5402,20 +5402,16 @@ Call_10_6179:
 
     ld hl, $c8f1
     ld d, $00
-
 jr_010_61f7:
     ld e, $00
     ld c, $1e
-
 jr_010_61fb:
     ld a, [hl+]
     cp $06
     jr nz, jr_010_6205
-
     ld a, [hl]
     cp $09
     jr z, jr_010_621a
-
 jr_010_6205:
     inc e
     inc hl
@@ -5423,7 +5419,6 @@ jr_010_6205:
     inc hl
     dec c
     jr nz, jr_010_61fb
-
     push de
     ld de, $0008
     add hl, de
@@ -5432,9 +5427,7 @@ jr_010_6205:
     ld a, d
     cp $1b
     jr c, jr_010_61f7
-
     ld d, $00
-
 jr_010_621a:
     push hl
     ld a, $f0
@@ -5442,15 +5435,13 @@ jr_010_621a:
     ld a, [$c201]
     rra
     jr nc, jr_010_6234
-
     ld a, [$c705]
     ld c, a
     ld b, $00
-    ld hl, $62fc
+    ld hl, UnknownData_10_62fc
     add hl, bc
     ld a, [hl]
     ld [$c1f2], a
-
 jr_010_6234:
     ld hl, $c220
     xor a
@@ -5485,10 +5476,8 @@ jr_010_6234:
     ld a, [$c201]
     rra
     jr nc, jr_010_626e
-
     ld de, $75f9
     inc b
-
 jr_010_626e:
     ld a, b
     ld [$c234], a
@@ -5518,9 +5507,7 @@ jr_010_626e:
     ld a, [$c201]
     rra
     jr nc, jr_010_62a5
-
     ld de, $7560
-
 jr_010_62a5:
     ld hl, $c218
     ld [hl], e
@@ -5584,27 +5571,22 @@ jr_010_62a5:
     ret
 
 
-    xor b
-    ld hl, sp-$58
-    ld hl, sp-$58
-    xor b
-    db $f8
+UnknownData_10_62fc:
+db $A8,$F8,$A8,$F8,$A8,$A8,$F8
+
+
 
     ld hl, $c8f1
     ld b, $00
-
 jr_010_6308:
     ld c, $00
-
 jr_010_630a:
     ld a, [hl+]
     cp $06
     jr nz, jr_010_6314
-
     ld a, [hl]
     cp $09
     jr z, jr_010_6329
-
 jr_010_6314:
     inc hl
     inc hl
@@ -5613,16 +5595,13 @@ jr_010_6314:
     ld a, c
     cp $1e
     jr c, jr_010_630a
-
     ld de, $0008
     add hl, de
     inc b
     ld a, b
     cp $1b
     jr c, jr_010_6308
-
     ld b, $00
-
 jr_010_6329:
     ld hl, $c1f1
     ld [hl], c
@@ -5642,48 +5621,37 @@ jr_010_6329:
     ld a, [$c705]
     and a
     jr z, jr_010_635b
-
     cp $03
     jr nc, jr_010_635b
-
     ld a, [$c1f2]
     cp $08
     jr c, jr_010_635b
-
     sub $08
     cp $0a
     jr c, jr_010_6357
-
     ld a, $0a
-
 jr_010_6357:
     add a
     add a
     add a
     ld [hl], a
-
 jr_010_635b:
     inc hl
     ld a, [$c705]
     rra
     jr nc, jr_010_6375
-
     ld a, [$c1f1]
     cp $09
     jr c, jr_010_6375
-
     sub $09
     cp $0a
     jr c, jr_010_6371
-
     ld a, $0a
-
 jr_010_6371:
     add a
     add a
     add a
     ld [hl], a
-
 jr_010_6375:
     ld hl, $c22f
     ld a, [$c1f2]
@@ -7440,7 +7408,7 @@ jr_010_6d20:
     ld l, l
     push bc
     ld l, l
-    rst $10
+    rst BankswitchRST
     ld l, l
     ei
     ld l, l

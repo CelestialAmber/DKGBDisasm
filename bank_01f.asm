@@ -8230,7 +8230,7 @@ Jump_01f_6ec5:
     dec c
     ld hl, $c109
     set 4, [hl]
-    ld hl, $6f5d
+    ld hl, UnknownData_1f_6f5d
     ld de, $c1c4
     ld c, $1c
     call CopyData
@@ -8244,28 +8244,12 @@ Jump_01f_6ec5:
     jp Jump_01f_7033
 
 
-    ld d, [hl]
-    ld d, a
-    ld e, b
-    ld e, c
-    ld e, d
-    ld e, e
-    ld e, h
-    ld e, l
-    rst $08
-    ld e, a
-    ld h, b
-    ld h, c
-    xor $ef
-    ldh a, [$fff1]
-    ld a, [c]
-    di
-    db $f4
-    push af
-    or $f7
-    ld hl, sp-$07
-    call nc, $db4b
-    ld c, e
+UnknownData_1f_6f5d:
+db $56,$57,$58,$59,$5A,$5B,$5C,$5D,$CF,$5F,$60,$61,$EE,$EF,$F0,$F1
+db $F2,$F3,$F4,$F5,$F6,$F7,$F8,$F9,$D4,$4B,$DB,$4B
+
+
+
     ld hl, $c868
     ld a, [hl]
     xor $04

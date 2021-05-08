@@ -4,7 +4,6 @@
 
 INCLUDE "hardware.inc"
 INCLUDE "constants.asm"
-INCLUDE "macros.asm"
 INCLUDE "home.asm"
 
 

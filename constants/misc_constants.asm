@@ -1,6 +1,4 @@
-INCLUDE "charmap.asm"
 INCLUDE "hram.asm"
-
 
 ;Game State/Scene Values
 SceneIntroTitle equ $2

@@ -2056,9 +2056,9 @@ jr_008_4acf:
     ld c, a
     inc d
     ld d, b
-    rst $10
+    rst BankswitchRST
     ld d, b
-    rst $10
+    rst BankswitchRST
     ld d, b
     ld a, c
     ld d, c
@@ -12246,7 +12246,7 @@ jr_008_796e:
 jr_008_7a0a:
     call z, $cf7b
     ld a, e
-    rst $10
+    rst BankswitchRST
     ld a, e
     ld l, d
     ld a, l

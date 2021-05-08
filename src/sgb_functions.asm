@@ -48,7 +48,7 @@ CheckIfOnSGB:
     dec b
     jr nz, .loop1
     ld a, $1e ;switch to bank 1e, which contains alot of the sgb exclusive graphics
-    rst $10
+    rst BankswitchRST
     ;load the sgb border graphics
     ld hl, SGBBorderGraphics1
     ld de, $8800 ;vram offset to copy graphics to
@@ -106,7 +106,7 @@ CheckIfOnSGB:
     di
     call InitRegistersSGBPacket
     ld a, $0c
-    rst $10 ;switch to bank C
+    rst BankswitchRST ;switch to bank C
     ld hl, UnknownData_0c_5ddd
     ld de, $8800
     ld bc, $0680
@@ -193,7 +193,7 @@ SendSGBPacketFromTable:
     ldh a, [hCurrentBank]
     push af
     ld a, BANK(SGBPacketTable) ;load the bank with the table (bank 1e)
-    rst $10
+    rst BankswitchRST
     ld hl, SGBPacketTable
     ld a, b
     add a
@@ -206,7 +206,7 @@ SendSGBPacketFromTable:
     call SendSGBPacket
     call Delay2
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 

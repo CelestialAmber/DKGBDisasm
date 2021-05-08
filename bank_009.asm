@@ -128,7 +128,7 @@ SECTION "ROM Bank $009", ROMX[$4000], BANK[$9]
     dec e
     ld [de], a
     dec e
-    rst $10
+    rst BankswitchRST
     ld c, c
     sub d
     ld c, d
@@ -8046,7 +8046,7 @@ jr_009_6616:
     ld l, b
     sub e
     ld l, b
-    rst $10
+    rst BankswitchRST
     ld l, b
 
     ld a, [$c10e]
@@ -9506,8 +9506,7 @@ jr_009_6e56:
 
 
     xor b
-    ld hl, sp-$58
-    ld hl, sp-$58
+    db $F8, $A8, $F8, $A8
     xor b
     ld hl, sp+$21
     nop

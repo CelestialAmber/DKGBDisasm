@@ -1,5 +1,14 @@
 SECTION "WRAM Bank 0", WRAM0
-ds $a2
+ds $a0
+
+;c0a0
+;bit 0: set to 1 at the end of the vblank interrupt function
+wVBlankInterruptFinished::
+ds 1
+
+;c0a1
+wc0a1:
+ds 1
 
 ;c0a2
 wLCDCRegisterTemp::

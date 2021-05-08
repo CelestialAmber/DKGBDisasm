@@ -8,7 +8,7 @@ Start:
     di
     ld sp, $fffe
     ld a, $01
-    rst $10
+    rst BankswitchRST
     call Init
     call GetOAMDmaCodeAddress
     ld a, $03
@@ -26,13 +26,13 @@ MainLoop:
     call GotoSceneLoop
     ld hl, $c72f
     res 0, [hl]
-    ld hl, $c0a0
+    ld hl, wVBlankInterruptFinished
     halt
-    ;Keep looping until bit 0 of c0a0 is 1
+    ;Keep looping until bit 0 of wVBlankInterruptFinished is 1
 .loop:
     bit 0, [hl]
     jr z, .loop
-    res 0, [hl] ;Reset bit 0 of c0a0
+    res 0, [hl] ;Reset bit 0 of wVBlankInterruptFinished
     ld hl, $ff95
     inc [hl]
     jr MainLoop
@@ -154,7 +154,7 @@ Init:
     ld [wIsOnSGB], a
     ;Switch to bank 3
     ld a, $3
-    rst $10
+    rst BankswitchRST
     call InitSound
     call Call_000_1cfa
     ld a, $e7
@@ -201,7 +201,7 @@ VBlankInterruptFunction:
 jr_000_029e:
     ld a, [wIERegisterTemp]
     ldh [rIE], a
-    ld hl, $c0a0
+    ld hl, wVBlankInterruptFinished
     set 0, [hl]
     pop hl
     pop de
@@ -242,13 +242,13 @@ TimerOverflowInterruptFunction:
     ldh a, [hCurrentBank]
     push af
     ld a, $2
-    rst $10
+    rst BankswitchRST
     call Call_02_4003
     ld a, $3
-    rst $10
+    rst BankswitchRST
     call Call_03_4003
     pop af
-    rst $10
+    rst BankswitchRST
     pop af
     ldh [rIE], a
     pop hl
@@ -841,7 +841,7 @@ jr_000_0680:
     or a
     jr nz, Jump_000_06a2
     ld a, $c
-    rst $10
+    rst BankswitchRST
     call Call_0c_4d05
     ldh [$ff8b], a
     ldh [hJoypad], a
@@ -928,10 +928,10 @@ Call_0719:
     ld [hl], a
     call IncrementFunctionTableIndex
     ld a, $07
-    rst $10
+    rst BankswitchRST
     call Call_07_7157
     ld a, $01
-    rst $10
+    rst BankswitchRST
 Call_0734:
     call SendSGBPacket7
     call Call_000_2c48
@@ -948,11 +948,11 @@ Call_0734:
     xor a
     call FillMemory16
     ld a, $01
-    rst $10
+    rst BankswitchRST
     call Call_000_1c12
     call Call_000_3048
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     call Call_0c_432c
     call Call_0c_46a9
     call Call_0c_47a7
@@ -1006,7 +1006,7 @@ jr_000_07ce:
     call SendSGBPacketCheckSGB
 jr_000_07d7:
     ld a, $01
-    rst $10
+    rst BankswitchRST
     call $494d
 Call_07dd:
     ld a, [$da4b]
@@ -1031,10 +1031,10 @@ jr_000_07f5:
     ld [hl+], a
     ld [hl], a
     ld a, $07
-    rst $10
+    rst BankswitchRST
     call Call_07_7158
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld hl, wIsOnSGB
     res 3, [hl]
     ld a, [$c85b]
@@ -1077,22 +1077,22 @@ jr_000_0851:
 
 Call_000_0857:
     ld a, $09
-    rst $10
+    rst BankswitchRST
     call Call_000_0be8
 Call_000_085d:
     call Call_000_1c7a
     ld a, $08
-    rst $10
+    rst BankswitchRST
     call Call_000_29f0
     call Call_000_0ef2
     ld a, $10
-    rst $10
+    rst BankswitchRST
     call Call_10_5194
     ld a, $08
-    rst $10
+    rst BankswitchRST
     call Call_10_4000
     ld a, $10
-    rst $10
+    rst BankswitchRST
     call Call_10_4abc
     call Call_000_17ee
     ldh a, [$ff8b]
@@ -1136,7 +1136,7 @@ jr_000_08b9:
 Call_08c1:
     call Call_000_1c7a
     ld a, $08
-    rst $10
+    rst BankswitchRST
     call $7588
     call Call_000_12e2
     call Call_000_17ee
@@ -1151,7 +1151,7 @@ Call_08da:
 Call_08dd:
     call Call_000_1c7a
     ld a, $07
-    rst $10
+    rst BankswitchRST
     call $6f60
     call Call_000_12e2
     jp Call_000_0f7e
@@ -1159,13 +1159,13 @@ Call_08dd:
 Call_08ec:
     call Call_000_1c7a
     ld a, $10
-    rst $10
+    rst BankswitchRST
     call Call_10_59d8
     ld a, $08
-    rst $10
+    rst BankswitchRST
     call $4000
     ld a, $10
-    rst $10
+    rst BankswitchRST
     call Call_10_4e55
     call Call_000_12e2
     call Call_000_17ee
@@ -1218,16 +1218,16 @@ jr_000_0942:
 Call_095a:
     call Call_000_1c7a
     ld a, $08
-    rst $10
+    rst BankswitchRST
     call Call_000_29f0
     ld a, $10
-    rst $10
+    rst BankswitchRST
     call Call_10_59d8
     ld a, $08
-    rst $10
+    rst BankswitchRST
     call $4000
     ld a, $10
-    rst $10
+    rst BankswitchRST
     call Call_10_4e55
     call Call_000_10c6
     call Call_000_17ee
@@ -1235,7 +1235,7 @@ Call_095a:
 
 Call_097e:
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld a, ScenePlaceObject
     ldh [hCurrentScene], a
     xor a
@@ -1272,7 +1272,7 @@ jr_000_09ab:
 Call_09b8:
     call Call_000_17ee
     ld a, $10
-    rst $10
+    rst BankswitchRST
     call Call_10_6143
     call Call_000_0f7e
     jp Jump_000_10be
@@ -1351,7 +1351,7 @@ Call_000_0a38:
     ldh a, [hCurrentBank]
     push af
     ld a, $09
-    rst $10
+    rst BankswitchRST
     ld hl, $db15
 Jump_000_0a41:
     ld c, $00
@@ -1388,12 +1388,12 @@ jr_000_0a66:
     cp $20
     jr nz, jr_000_0a43
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 Call_0a73:
     ld a, $01
-    rst $10
+    rst BankswitchRST
     call Call_001_48fd
     call IncrementFunctionTableIndex
     jr Call_0a81
@@ -1403,7 +1403,7 @@ Call_0a81:
     call Call_000_1c7a
 jr_000_0a84:
     ld a, $10
-    rst $10
+    rst BankswitchRST
     call Call_000_0dc3
     ld a, [wIsOnSGB]
     bit 4, a
@@ -1427,7 +1427,7 @@ Call_0aa5:
     jr jr_000_0a84
 Call_0aad:
     ld a, $01
-    rst $10
+    rst BankswitchRST
     call $4929
     ld a, [$da45]
     ld [$c836], a
@@ -1451,7 +1451,7 @@ Call_0ac7:
 Call_0ad9:
     call Call_000_0dc3
     ld a, $10
-    rst $10
+    rst BankswitchRST
     ld a, b
     call Call_10_6465
     call IncrementFunctionTableIndex
@@ -1463,7 +1463,7 @@ Call_0aeb:
 jr_000_0aee:
     call Call_000_1c7a
     ld a, $10
-    rst $10
+    rst BankswitchRST
     call Call_000_0dc3
     ld a, b
     call Call_10_6b4c
@@ -1486,7 +1486,7 @@ Call_0b11:
     ldh a, [hCurrentBank]
     push af
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld a, [$c860]
     or a
     jr z, jr_000_0b28
@@ -1499,7 +1499,7 @@ jr_000_0b28:
     call $5b51
 jr_000_0b2b:
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 Call_0b2e:
@@ -1710,10 +1710,10 @@ jr_000_0c6a:
     ld a, $0c
     ldh [hFunctionTableIndex], a
     ld a, $10
-    rst $10
+    rst BankswitchRST
     call Call_10_5354
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld hl, $ff8f
 jr_000_0c7e:
     ld a, [hl]
@@ -1780,10 +1780,10 @@ Call_000_0cd5:
     ldh a, [hCurrentBank]
     push af
     ld a, $01
-    rst $10
+    rst BankswitchRST
     call $495c
     pop af
-    rst $10
+    rst BankswitchRST
 Call_000_0ced:
     jp Jump_000_0d73
 
@@ -1794,11 +1794,11 @@ GoBackToLastScene:
     ldh a, [hCurrentBank]
     push af
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     call Call_00c_4b71
     call Call_000_309e
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 Call_000_0d03:
@@ -1949,7 +1949,7 @@ Call_000_0dc3:
     ldh a, [hCurrentBank]
     push af
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     ld hl, $c85c
     ld a, [hl+]
     ld e, a
@@ -1962,7 +1962,7 @@ Call_000_0dc3:
     ld [$c85b], a
     ld b, [hl]
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -2132,10 +2132,10 @@ jr_000_0ec9:
 
 Call_000_0ef2:
     ld a, $07
-    rst $10
+    rst BankswitchRST
     call $4000
     ld a, $10
-    rst $10
+    rst BankswitchRST
     jp Call_10_4000
 
 
@@ -2167,7 +2167,7 @@ Call_000_0f22:
     ldh a, [hCurrentBank]
     push af
     ld a, $0c
-    rst $10 ;switch to bank C
+    rst BankswitchRST ;switch to bank C
     ld hl, $c85c
     ld a, [hl+]
     ld e, a
@@ -2191,7 +2191,7 @@ jr_000_0f40:
     or e
     jr nz, jr_000_0f35
     pop af
-    rst $10
+    rst BankswitchRST
     ld a, c
     dec a
     ret
@@ -2200,7 +2200,7 @@ jr_000_0f40:
     ldh a, [hCurrentBank]
     push af
     ld a, $01 ;switch to bank 1
-    rst $10
+    rst BankswitchRST
     ld hl, $c85c
     inc [hl]
     push hl
@@ -2208,7 +2208,7 @@ jr_000_0f40:
     pop hl
     dec [hl]
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -2449,13 +2449,13 @@ Jump_000_10be:
     ldh a, [hCurrentBank]
     push af
     ld a, $1d
-    rst $10
+    rst BankswitchRST
     jr jr_000_10d0
 Call_000_10c6:
     ldh a, [hCurrentBank]
     push af
     ld a, $0b
-    rst $10
+    rst BankswitchRST
     xor a
     ld [$c701], a
 jr_000_10d0:
@@ -2491,7 +2491,7 @@ jr_000_10f0:
     jr jr_000_10f0
 jr_000_10fb:
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -2510,7 +2510,7 @@ jr_000_10fe:
     xor a
     ld [$c701], a
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -2667,7 +2667,7 @@ jr_000_11ca:
     ldh a, [hCurrentBank]
     push af
     ld a, $0b
-    rst $10
+    rst BankswitchRST
     xor a
     ld [$c701], a
     ld de, $c000
@@ -2704,7 +2704,7 @@ jr_000_1201:
     jr jr_000_1201
 jr_000_120c:
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 jr_000_120f:
     ld a, [hl+]
@@ -2721,7 +2721,7 @@ jr_000_120f:
     xor a
     ld [$c701], a
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -2879,7 +2879,7 @@ Call_000_12e2:
     ldh a, [hCurrentBank]
     push af
     ld a, $0b
-    rst $10
+    rst BankswitchRST
     xor a
     ld [$c701], a
     ld de, $c000
@@ -2914,7 +2914,7 @@ jr_000_130c:
     jr jr_000_130c
 jr_000_1317:
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 jr_000_131a:
     ld a, [hl+]
@@ -2931,7 +2931,7 @@ jr_000_131a:
     xor a
     ld [$c701], a
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -3059,7 +3059,7 @@ Call_13d0:
     ldh a, [hCurrentBank]
     push af
     ld a, $1c
-    rst $10
+    rst BankswitchRST
     xor a
     ld [$c701], a
     ld de, $c000
@@ -3115,7 +3115,7 @@ jr_000_1419:
     jr jr_000_1419
 jr_000_1424:
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -3299,13 +3299,13 @@ jr_000_1504:
 
 Call_000_150b:
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     jp Call_00c_4bcd
 
 
 Jump_000_1511:
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     jp Call_00c_4bf1
 
 
@@ -4490,13 +4490,13 @@ jr_000_1c5c:
 Call_1c73:
     call Call_000_1c7a
     ld a, $17
-    rst $10
+    rst BankswitchRST
     ret
 
 
 Call_000_1c7a:
     ld a, $1e
-    rst $10
+    rst BankswitchRST
     call Call_000_1ce0
     push hl
     inc hl
@@ -4697,7 +4697,7 @@ Call_000_1d6b:
     ldh a, [hCurrentBank]
     push af
     ld a, $0f
-    rst $10
+    rst BankswitchRST
     ld a, [hl+]
     ld h, [hl]
     ld l, a
@@ -4717,7 +4717,7 @@ jr_000_1d7e:
     dec c
     jr nz, jr_000_1d7e
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 ;this is also used for graphics loading
@@ -4727,7 +4727,7 @@ LoadGraphicsDataHeader:
     ldh a, [hCurrentBank] ;save the current bank
     push af
     ld a, $1e
-    rst $10 ;switch to bank 1e
+    rst BankswitchRST ;switch to bank 1e
     ld h, $00
     ld l, b
     add hl, hl
@@ -4741,7 +4741,7 @@ LoadGraphicsDataHeader:
 .loop
     push bc
     ld a, $1e
-    rst $10
+    rst BankswitchRST
     push hl
     ld a, [hl+]
     ld b, a
@@ -4759,7 +4759,7 @@ LoadGraphicsDataHeader:
     ld a, [hl+] ;store the 7th byte into a, and save it temporarily
     push af
     ld a, b
-    rst $10 ;switch to the bank in b
+    rst BankswitchRST ;switch to the bank in b
     pop af
     ld b, a
     pop hl
@@ -4785,7 +4785,7 @@ LoadGraphicsDataHeader:
     dec c ;are we past the last entry?
     jr nz, .loop ;keep going
     pop af
-    rst $10 ;go back to the starting bank
+    rst BankswitchRST ;go back to the starting bank
     ret
 
 
@@ -4802,7 +4802,7 @@ Call_000_1de6:
     ldh a, [hCurrentBank]
     push af
     ld a, $1b
-    rst $10 ;do bankswitch to bank 1b
+    rst BankswitchRST ;do bankswitch to bank 1b
     ld a, [hl+]
     ld h, [hl]
     ld l, a
@@ -4849,7 +4849,7 @@ jr_000_1df9:
     dec c
     jr nz, jr_000_1df9
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -4898,19 +4898,14 @@ Jump_000_1e38:
     ldh a, [$ff8b]
     or a
     jr nz, jr_000_1e65
-
     dec [hl]
     jr nz, jr_000_1e6a
-
     ldh a, [hJoypad]
     ld c, $04
-
 jr_000_1e65:
     ld [hl], c
     ld [$c81a], a
     ret
-
-
 jr_000_1e6a:
     xor a
     ld [$c81a], a
@@ -5714,14 +5709,14 @@ jr_000_2286:
     push hl
     call $5cbc
     ld a, $0a
-    rst $10
+    rst BankswitchRST
     ld a, [$c811]
     ld b, a
     call $7caa
     ld hl, $c70e
     inc [hl]
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld a, [$c815]
     ld l, a
     ld a, [$c816]
@@ -5813,7 +5808,7 @@ Jump_000_2300:
     add $40
     ld [hl], a
     ld a, $0a
-    rst $10
+    rst BankswitchRST
     pop de
     ld b, c
     ld a, [$c80d]
@@ -5821,7 +5816,7 @@ Jump_000_2300:
     ld hl, $c70e
     inc [hl]
     ld a, $01
-    rst $10
+    rst BankswitchRST
     pop bc
     pop de
     pop hl
@@ -6005,10 +6000,10 @@ Call_000_2400:
     ldh a, [hCurrentBank]
     push af
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld b, [hl]
     pop af
-    rst $10
+    rst BankswitchRST
     pop hl
     ld [hl], b
     ret
@@ -6077,7 +6072,7 @@ jr_000_2459:
     ldh a, [hCurrentBank]
     push af
     ld a, $0e
-    rst $10
+    rst BankswitchRST
     ld a, h
     cp $7e
     jr c, jr_000_2486
@@ -6089,10 +6084,10 @@ jr_000_2459:
     push bc
     push de
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     call Call_0c_4a3e
     ld a, [$c810]
-    rst $10
+    rst BankswitchRST
     push hl
     add hl, de
     ld a, [hl+]
@@ -6108,12 +6103,12 @@ jr_000_2486:
     cp b
     jr nc, jr_000_2496
     ld a, $0d
-    rst $10
+    rst BankswitchRST
     ld a, $af
     cp b
     jr nc, jr_000_2496
     ld a, $1c
-    rst $10
+    rst BankswitchRST
 jr_000_2496:
     push bc
     swap c
@@ -6144,7 +6139,7 @@ jr_000_24b8:
 jr_000_24bb:
     pop bc
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -6168,7 +6163,7 @@ LoadStage:
     ;switch to level data bank (this potentially gets changed later 
     ;depending on the level to either bank 6 or 12)
     ld a, $05
-    rst $10
+    rst BankswitchRST
     call Call_000_20a3
     call Call_000_2093
     call Call_000_2098
@@ -6245,7 +6240,7 @@ jr_000_2557:
     ld a, $1d
     ldh [hFunctionTableIndex], a
     ld a, $01
-    rst $10
+    rst BankswitchRST
     call Call_000_30ed
     jp Jump_000_30f2
 
@@ -6391,12 +6386,12 @@ SwitchLevelRombank:
     cp $2d ;If the level id is between 45 and 80, the level data is in bank 6
     ret c
     ld a, $06
-    rst $10
+    rst BankswitchRST
     ld a, e
     cp $50 ;If the level id is 80 and above, the level data is in bank 12
     ret c
     ld a, $12
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -6427,10 +6422,10 @@ Call_2629:
     ldh a, [hCurrentBank]
     push af
     ld a, $09
-    rst $10 ;switch to bank 9
+    rst BankswitchRST ;switch to bank 9
     call Call_000_2633
     pop af
-    rst $10 ;switch back to the original bank
+    rst BankswitchRST ;switch back to the original bank
     ret
 
 
@@ -6459,7 +6454,7 @@ Call_000_2633:
     jp nz, Jump_000_06a2
 jr_000_2662:
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ldh a, [hFunctionTableIndex]
     rst $08
 
@@ -6519,7 +6514,7 @@ Call_000_269e:
     ld a, $04
     call LoadGraphicsDataHeader
     ld a, $18
-    rst $10
+    rst BankswitchRST
     call Call_000_0dc3
     ld a, b
     cp $c8
@@ -6586,10 +6581,10 @@ jr_000_2743:
     ld c, $06
     call CopyData
     ld a, $01
-    rst $10
+    rst BankswitchRST
     call $44b4
     ld a, $18
-    rst $10
+    rst BankswitchRST
     pop hl
     ld de, $0005
     add hl, de
@@ -6700,7 +6695,7 @@ jr_000_27d7:
     ld h, [hl]
     ld l, a
     pop af
-    rst $10
+    rst BankswitchRST
     ld de, $8800
     call Decompress
 
@@ -6790,17 +6785,17 @@ jr_000_287f:
 
 Call_2884:
     ld a, $18
-    rst $10
+    rst BankswitchRST
     ld a, [hl+]
     ld b, a
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld a, b
     ret
 
 Call_288e:
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ldh a, [hFunctionTableIndex]
     rst $08
 
@@ -6830,11 +6825,11 @@ Call_289c:
     ld a, $08
     call Call_000_1de1
     ld a, $10
-    rst $10
+    rst BankswitchRST
     xor a
     call Call_10_6179
     ld a, $01
-    rst $10
+    rst BankswitchRST
     call Call_000_20b2
     xor a
     ld [$ce1c], a
@@ -6845,7 +6840,7 @@ Call_289c:
     call SendSGBPacketFromTable
 Call_28e6:
     ld a, $10
-    rst $10
+    rst BankswitchRST
     xor a
     call Call_10_6af9
     jp Jump_000_10be
@@ -6853,7 +6848,7 @@ Call_28e6:
 
 Call_28f0:
     ld a, $17
-    rst $10
+    rst BankswitchRST
     ldh a, [hFunctionTableIndex]
     rst $08
 
@@ -6885,14 +6880,14 @@ Call_2902:
     add $24
     call Call_000_1d6b
     ld a, $17
-    rst $10
+    rst BankswitchRST
     ret
 
 
     ldh a, [hCurrentBank]
     push af
     ld a, $01
-    rst $10
+    rst BankswitchRST
     push hl
     ld c, $ff
     ld hl, $c85c
@@ -6932,7 +6927,7 @@ jr_000_294e:
     pop hl
     pop hl
     pop af
-    rst $10
+    rst BankswitchRST
     ld a, c
     ret
 
@@ -7008,7 +7003,7 @@ jr_000_297d:
     ld c, $0f
     db $10
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     ld hl, $c85c
     ld a, [hl+]
     ld d, [hl]
@@ -7040,7 +7035,7 @@ jr_000_29c2:
 
 
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     ld hl, $c85c
     ld a, [hl+]
     ld d, [hl]
@@ -7101,7 +7096,7 @@ jr_000_2a1e:
     bit 3, a
     jr nz, jr_000_2a3f
     ld a, $08
-    rst $10
+    rst BankswitchRST
     ld a, [$c105]
     ld c, a
     ld b, $00
@@ -7109,7 +7104,7 @@ jr_000_2a1e:
     add hl, bc
     ld b, [hl]
     ld a, $0a
-    rst $10
+    rst BankswitchRST
     jp $772a
 jr_000_2a3f:
     ld hl, $2a58
@@ -7124,7 +7119,7 @@ jr_000_2a3f:
     ld de, $2b2e
     add hl, de
     ld a, [hl+]
-    rst $10
+    rst BankswitchRST
     ld a, [hl+]
     ld h, [hl]
     ld l, a
@@ -7138,7 +7133,7 @@ jr_000_2a3f:
     bit 5, a
     jr nz, jr_000_2a6b
     ld a, $08
-    rst $10
+    rst BankswitchRST
     jp $7311
 jr_000_2a6b:
     pop de
@@ -7164,11 +7159,11 @@ Jump_000_2a7f:
     and a
     jr z, jr_000_2a93
     ld a, $1f
-    rst $10
+    rst BankswitchRST
     call $7dda
 jr_000_2a93:
     ld a, $08
-    rst $10
+    rst BankswitchRST
     jp $7526
 
 
@@ -7181,7 +7176,7 @@ jr_000_2a99:
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
-    rst $10
+    rst BankswitchRST
     jp $5a5e
 
 ;2aa7
@@ -7189,7 +7184,7 @@ jr_000_2a99:
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
-    rst $10
+    rst BankswitchRST
     jp $5ab4
 
 ;2ab3
@@ -7197,7 +7192,7 @@ jr_000_2a99:
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
-    rst $10
+    rst BankswitchRST
     jp $5905
 
 ;2abf
@@ -7205,7 +7200,7 @@ jr_000_2a99:
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
-    rst $10
+    rst BankswitchRST
     jp $5962
 
 ;2acb
@@ -7213,7 +7208,7 @@ jr_000_2a99:
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
-    rst $10
+    rst BankswitchRST
     jp $59cb
 
 ;2ad7
@@ -7221,7 +7216,7 @@ jr_000_2a99:
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
-    rst $10
+    rst BankswitchRST
     jp $5a32
 
 ;2ae3
@@ -7229,7 +7224,7 @@ jr_000_2a99:
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
-    rst $10
+    rst BankswitchRST
     bit 0, b
     jp nz, $5c51
 ;2af1
@@ -7240,14 +7235,14 @@ jr_000_2a99:
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
-    rst $10
+    rst BankswitchRST
     jp $5e37
 
 ;2b00
     ldh a, [hCurrentBank]
     ldh [$ff8d], a
     ld a, $0a
-    rst $10
+    rst BankswitchRST
     jp $7b66
 
 ;2b0a
@@ -7255,7 +7250,7 @@ jr_000_2a99:
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $08
-    rst $10
+    rst BankswitchRST
     jp $4a04
 
 ;2b16
@@ -7263,7 +7258,7 @@ jr_000_2a99:
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $0a
-    rst $10
+    rst BankswitchRST
     jp $7810
 
 Call_2b22:
@@ -7271,7 +7266,7 @@ Call_2b22:
     ld a, [hl]
     ldh [$ff8d], a
     ld a, $07
-    rst $10
+    rst BankswitchRST
     jp $4789
 
 UnknownData_2b2e::
@@ -7298,10 +7293,10 @@ Call_000_2c48:
     ldh a, [hCurrentBank]
     push af
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     call Call_0c_4afa
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -7372,7 +7367,7 @@ Call_000_2ca7:
     ldh a, [hCurrentBank]
     push af
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     ld hl, $4e8b
     ld de, $c71f
     ld c, $04
@@ -7385,7 +7380,7 @@ Call_000_2ca7:
     ld [de], a
     call Call_000_20a8
     ld a, $01
-    rst $10
+    rst BankswitchRST
     call Call_000_2d29
     ld a, [$c720]
     cp $88
@@ -7433,7 +7428,7 @@ jr_000_2d0c:
     dec c
     jr nz, jr_000_2d0c
     ld a, $04
-    rst $10
+    rst BankswitchRST
     ld hl, $5f30
     ld de, $8480
     ld bc, $0080
@@ -7441,7 +7436,7 @@ jr_000_2d0c:
     xor a
     ld [$d9e9], a
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -7829,7 +7824,7 @@ Call_000_2f25:
     ldh a, [hCurrentBank]
     push af
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     ld a, [$c725]
     push af
     ld hl, $d7cc
@@ -7839,7 +7834,7 @@ Call_000_2f25:
     pop af
     ld [$c725], a
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -7874,12 +7869,12 @@ Call_000_2f5b:
     ldh a, [hCurrentBank]
     push af
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld a, [hl+]
     ld e, a
     ld d, [hl]
     pop af
-    rst $10
+    rst BankswitchRST
     pop bc
     ld hl, $97ff
     add hl, bc
@@ -7897,7 +7892,7 @@ Call_000_2f86:
     ldh a, [hCurrentBank]
     push af
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld d, h
     ld e, l
     ld bc, $d44d
@@ -7922,7 +7917,7 @@ Call_000_2f86:
 jr_000_2fa7:
     ld l, a
     pop af
-    rst $10
+    rst BankswitchRST
     ld a, l
     ret
 
@@ -7931,7 +7926,7 @@ Call_000_2fac:
     ldh a, [hCurrentBank]
     push af
     ld a, $01
-    rst $10 ;switch to bank 1
+    rst BankswitchRST ;switch to bank 1
     ld hl, $c0a6
     ld c, $60
     xor a
@@ -7939,10 +7934,10 @@ Call_000_2fac:
     call Call_000_2fd6
     call Call_000_2fca
     ld a, $0c
-    rst $10 ;switch to bank c
+    rst BankswitchRST ;switch to bank c
     call Call_0c_4b11
     pop af
-    rst $10 ;return to original bank
+    rst BankswitchRST ;return to original bank
     ret
 
 Call_000_2fca:
@@ -8045,7 +8040,7 @@ Call_000_3048:
     ld bc, $0380
     call Call_000_3063
     pop af
-    rst $10
+    rst BankswitchRST
     jp Jump_000_1eb2
 
 
@@ -8075,14 +8070,14 @@ jr_000_3063:
     ld d, h
     ld e, l
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld a, [hl]
     pop de
     pop hl
     push bc
     ld c, a
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     call $404b
     pop bc
 
@@ -8116,7 +8111,7 @@ Call_000_309e:
     ldh a, [hCurrentBank]
     push af
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld hl, $c726
     xor a
     ld [hl+], a
@@ -8141,7 +8136,7 @@ jr_000_30c5:
     ld a, c
     ld [$c725], a
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -8174,7 +8169,7 @@ jr_000_30f5:
     ldh a, [hCurrentBank]
     push af
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld bc, $0380
 
 jr_000_30fe:
@@ -8226,7 +8221,7 @@ jr_000_3128:
     jr nz, jr_000_30fe
 
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -8355,12 +8350,12 @@ Call_000_31b6:
     ldh a, [hCurrentBank]
     push af
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ld a, [hl+]
     ld h, [hl]
     ld l, a
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -8416,11 +8411,11 @@ jr_000_31ff:
     ld a, b
     push af
     ld a, $10
-    rst $10
+    rst BankswitchRST
     ld a, b
     call Call_10_6179
     ld a, $11
-    rst $10
+    rst BankswitchRST
     pop af
     ld hl, $4000
     ld d, $00
@@ -8434,7 +8429,7 @@ jr_000_31ff:
     ld bc, $04c0
     call CopyData16
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -8468,7 +8463,7 @@ Call_000_3223:
     ld e, a
     add hl, de
     ld a, $11
-    rst $10
+    rst BankswitchRST
     ld a, [hl+]
     inc hl
     or a
@@ -8487,7 +8482,7 @@ Call_000_3223:
     ld [hl], $c8
 jr_000_326e:
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 jr_000_3271:
     call Call_000_1761
@@ -8540,7 +8535,7 @@ jr_000_32ae:
     ld l, a
     add hl, de
     ld a, $11
-    rst $10
+    rst BankswitchRST
     ld a, [hl+]
     inc hl
     or a
@@ -8559,7 +8554,7 @@ jr_000_32ae:
     ld [hl], $c8
 jr_000_32d7:
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 jr_000_32da:
     pop hl
@@ -8574,21 +8569,21 @@ Call_000_32e2:
     ldh a, [hCurrentBank]
     push af
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     ld a, b
     call Call_00c_52d5
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 Call_32f5:
     ldh a, [hCurrentBank]
     push af
     ld a, $0a
-    rst $10
+    rst BankswitchRST
     call $7c51
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 Call_3301:
@@ -8596,11 +8591,11 @@ Call_3301:
     ldh a, [hCurrentBank]
     push af
     ld a, $07
-    rst $10
+    rst BankswitchRST
     ld a, b
     call $78a1
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 Call_330f:
@@ -8608,11 +8603,11 @@ Call_330f:
     ldh a, [hCurrentBank]
     push af
     ld a, $07
-    rst $10
+    rst BankswitchRST
     ld a, b
     call $7790
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 Call_331d:
@@ -8757,31 +8752,31 @@ Call_000_33c9:
     ldh a, [hCurrentBank]
     push af
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     call $4e15
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 Call_000_33d5:
     ldh a, [hCurrentBank]
     push af
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     call $4e35 ;label this later
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 Call_000_33e1:
     ldh a, [hCurrentBank]
     push af
     ld a, $0a
-    rst $10 ;switch to bank a
+    rst BankswitchRST ;switch to bank a
     call $7adf
     call $7c82
     pop af
-    rst $10
+    rst BankswitchRST
     ret
 
 ;4 bytes of unused space
@@ -8789,7 +8784,7 @@ ds 4
 
 IntroTitleSceneLoop:
     ld a, $01 ;switch to bank 1
-    rst $10
+    rst BankswitchRST
     ;Jump to the function in the below table at the index based on hFunctionTableIndex
     ldh a, [hFunctionTableIndex]
     rst $08
@@ -8843,7 +8838,7 @@ Call_000_342c:
 
 Call_3452:
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ldh a, [hFunctionTableIndex]
     rst $08
 
@@ -8891,7 +8886,7 @@ Call_000_349a:
     call Call_000_1e27
     call IncrementFunctionTableIndex
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ret
 
 
@@ -8911,7 +8906,7 @@ Call_000_34b0:
 
 
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ldh a, [hFunctionTableIndex]
     rst $08
 
@@ -8995,18 +8990,18 @@ Call_000_3537:
 
 
     ld a, $04
-    rst $10
+    rst BankswitchRST
     ld hl, $67b0
     ld de, $8000
     ld bc, $0300
     call CopyData16
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ret
 
 
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ldh a, [hFunctionTableIndex]
     rst $08
 
@@ -9028,7 +9023,7 @@ Call_000_3537:
 
 FileSelectJump:
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ldh a, [hFunctionTableIndex]
     rst $08
 
@@ -9126,7 +9121,7 @@ Call_360b:
 
 Call_3638::
     ld a, $01
-    rst $10
+    rst BankswitchRST
     ldh a, [hFunctionTableIndex]
     rst $08
 
@@ -9138,7 +9133,7 @@ dw $5957
 
 Call_3644::
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     ldh a, [hFunctionTableIndex]
     rst $08
 
@@ -9156,7 +9151,7 @@ dw $5680
 
 Call_365a::
     ld a, $0c
-    rst $10
+    rst BankswitchRST
     ldh a, [hFunctionTableIndex]
     rst $08
 
