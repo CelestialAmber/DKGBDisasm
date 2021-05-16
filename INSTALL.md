@@ -39,8 +39,21 @@ To compare the built `donkeykong.gb` to the original ROM:
 In the shell, run:
 
 	xcode-select --install
+	
+Install [**Homebrew**](https://brew.sh/). Follow the official instructions.
 
-Then follow the Linux instructions.
+Then, run this command:
+	
+	brew install rgbds gcc git make
+
+Then set up the repository. In the **terminal**:
+
+	git clone https://github.com/CelestialAmber/DKGBDisasm.git
+	cd DKGBDisasm
+
+To build `donkeykong.gb`:
+
+	make
 
 
 # Windows
@@ -53,7 +66,7 @@ Select the following packages:
 * git
 * gcc-core
 
-The latest compatible version of **rgbds** is  [**0.4.1**](https://github.com/gbdev/rgbds/releases/download/v0.4.1/rgbds-0.4.1-win32.zip). To install, put each of the files in the download in `C:\cygwin\usr\local\bin`.
+The latest compatible version of **rgbds** is  [**0.5.1**](https://github.com/gbdev/rgbds/releases/download/v0.5.1/rgbds-0.5.1-win64.zip). To install, put each of the files in the download in `C:\cygwin\usr\local\bin`.
 
 Then set up the repository. In the **Cygwin terminal**:
 
