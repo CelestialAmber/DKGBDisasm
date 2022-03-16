@@ -2,7 +2,7 @@
 
 This is a disassembly of Donkey Kong '94.
 
-It builds the following rom:
+It builds the following ROM:
 
 * Donkey Kong (Japan, USA) (SGB Enhanced).gb  `sha1: 6ed661bd1d6d8cdd48e1c10f8ca4e8dcba49128e`
 
