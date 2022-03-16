@@ -2334,23 +2334,23 @@ DisableLCD1:
 ;0x100b
 PollInput:
     ld a, $20
-    ldh [rP1], a
-    ldh a, [rP1]
-    ldh a, [rP1]
+    ldh [rJOYP], a
+    ldh a, [rJOYP]
+    ldh a, [rJOYP]
     cpl
     and $0f
     swap a
     ld b, a
     ld a, $30
-    ldh [rP1], a
+    ldh [rJOYP], a
     ld a, $10
-    ldh [rP1], a
-    ldh a, [rP1]
-    ldh a, [rP1]
-    ldh a, [rP1]
-    ldh a, [rP1]
-    ldh a, [rP1]
-    ldh a, [rP1]
+    ldh [rJOYP], a
+    ldh a, [rJOYP]
+    ldh a, [rJOYP]
+    ldh a, [rJOYP]
+    ldh a, [rJOYP]
+    ldh a, [rJOYP]
+    ldh a, [rJOYP]
     cpl
     and $0f
     or b
@@ -2362,7 +2362,7 @@ PollInput:
     ld a, c
     ldh [hJoypad], a
     ld a, $30
-    ldh [rP1], a
+    ldh [rJOYP], a
     ret
 
 

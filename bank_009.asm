@@ -9400,7 +9400,7 @@ Jump_009_6dc1:
     nop
     jr nz, @+$01
 
-    ldh [rP1], a
+    ldh [rJOYP], a
     ld b, b
     rst $38
     ret nz

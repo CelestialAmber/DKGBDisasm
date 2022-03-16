@@ -5,11 +5,11 @@ CheckIfOnSGB:
     ei ;enable interrupts
     ld a, $0a
     call SendSGBPacketFromTableSkipSGBCheck
-    ldh a, [rP1]
+    ldh a, [rJOYP]
     cp $ff
     jr nz, .onSGB
     call CheckInputSGB
-    ldh a, [rP1]
+    ldh a, [rJOYP]
     cp $ff
     jr nz, .onSGB
     ld a, $09
@@ -266,25 +266,25 @@ SendSGBPacket:
 
 CheckInputSGB:
     ld a, $20
-    ldh [rP1], a
-    ldh a, [rP1]
-    ldh a, [rP1]
+    ldh [rJOYP], a
+    ldh a, [rJOYP]
+    ldh a, [rJOYP]
     cpl
     and $0f
     swap a
     ld b, a
     ld a, $30
-    ldh [rP1], a
+    ldh [rJOYP], a
     ld a, $10
-    ldh [rP1], a
-    ldh a, [rP1]
-    ldh a, [rP1]
-    ldh a, [rP1]
-    ldh a, [rP1]
-    ldh a, [rP1]
-    ldh a, [rP1]
+    ldh [rJOYP], a
+    ldh a, [rJOYP]
+    ldh a, [rJOYP]
+    ldh a, [rJOYP]
+    ldh a, [rJOYP]
+    ldh a, [rJOYP]
+    ldh a, [rJOYP]
     ld a, $30
-    ldh [rP1], a
+    ldh [rJOYP], a
     ret
 
 ;Sends the 8 last data_snd packets in the table, which send a patch for the
