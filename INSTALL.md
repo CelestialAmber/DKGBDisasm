@@ -66,7 +66,7 @@ Select the following packages:
 * git
 * gcc-core
 
-The latest compatible version of **rgbds** is  [**0.5.1**](https://github.com/gbdev/rgbds/releases/download/v0.5.1/rgbds-0.5.1-win64.zip). To install, put each of the files in the download in `C:\cygwin\usr\local\bin`.
+The latest compatible version of **rgbds** is  [**0.5.2**](https://github.com/gbdev/rgbds/releases/download/v0.5.2/rgbds-0.5.2-win64.zip). To install, put each of the files in the download in `C:\cygwin\usr\local\bin`.
 
 Then set up the repository. In the **Cygwin terminal**:
 
